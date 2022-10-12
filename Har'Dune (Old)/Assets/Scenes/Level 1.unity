@@ -2287,10 +2287,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154266422}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.4597836, y: -10.829449, z: -6.289776}
+  m_LocalPosition: {x: -9.346849, y: 1.3001518, z: -5.2038493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 928505593}
+  m_Father: {fileID: 1231107875}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &159148599
@@ -6332,11 +6332,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576478567}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.887066, y: 12.129601, z: 1.0859265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 928505593}
+  m_Father: {fileID: 1231107875}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &576478569
@@ -9935,41 +9935,6 @@ Transform:
   m_Father: {fileID: 1462564100}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &928505592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 928505593}
-  m_Layer: 0
-  m_Name: Settings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &928505593
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 928505592}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.887066, y: 12.129601, z: 1.0859265}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1074126113}
-  - {fileID: 963194228}
-  - {fileID: 576478568}
-  - {fileID: 1534542141}
-  - {fileID: 154266425}
-  m_Father: {fileID: 1231107875}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &952169793
 GameObject:
   m_ObjectHideFlags: 0
@@ -10079,10 +10044,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.5, y: 1, z: -8}
+  m_LocalPosition: {x: -7.387066, y: 13.129601, z: -6.9140735}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 928505593}
+  m_Father: {fileID: 1231107875}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &963194229
@@ -10584,10 +10549,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074126111}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: -5.4597836, y: -0.8294487, z: -6.289776}
+  m_LocalPosition: {x: -9.346849, y: 11.300152, z: -5.2038493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 928505593}
+  m_Father: {fileID: 1231107875}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1088067313
@@ -12131,7 +12096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1214710551}
   m_Layer: 0
-  m_Name: Pathfinding Container
+  m_Name: Path Finder Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12144,7 +12109,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214710550}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -12315,7 +12280,11 @@ Transform:
   m_LocalPosition: {x: 9.346849, y: -1.3001523, z: 5.2038493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 928505593}
+  - {fileID: 1074126113}
+  - {fileID: 963194228}
+  - {fileID: 576478568}
+  - {fileID: 1534542141}
+  - {fileID: 154266425}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15808,11 +15777,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534542140}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.887066, y: 12.129601, z: 1.0859265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 928505593}
+  m_Father: {fileID: 1231107875}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1534542142
@@ -17446,7 +17415,6 @@ MonoBehaviour:
   scriptGameController: {fileID: 1667033356}
   scriptGameMenuController: {fileID: 1309683190}
   scriptAudioManager: {fileID: 1534542142}
-  scriptPathFinder: {fileID: 0}
   actionMenuPanel: {fileID: 1272810144}
   tileTypes:
   - name: Dirt Tile
@@ -17507,6 +17475,8 @@ MonoBehaviour:
   mapContainer: {fileID: 1912780014}
   cursorContainer: {fileID: 952169793}
   pathfindingContainer: {fileID: 1214710550}
+  mapSizeX: 19
+  mapSizeY: 12
   selectedUnit: {fileID: 0}
   unitSelected: 0
   selectedUnitPreviousX: 0

@@ -9,7 +9,6 @@ public class TileMap : MonoBehaviour
     public GameController scriptGameController;
     public GameMenuController scriptGameMenuController;
     public AudioManager scriptAudioManager;
-    public PathFinder scriptPathFinder;
 
     [Header("Menus")]
     public GameObject actionMenuPanel;
@@ -50,8 +49,8 @@ public class TileMap : MonoBehaviour
     public GameObject pathfindingContainer;
 
     [Header("Board Size")]
-    private int mapSizeX = 19;
-    private int mapSizeY = 12;
+    public int mapSizeX = 19;
+    public int mapSizeY = 12;
 
     [Header("Selected Unit Info")]
     public GameObject selectedUnit;
@@ -399,7 +398,7 @@ public class TileMap : MonoBehaviour
         }
 
         //Path Not Accessible
-        if (UnitCanEnterTile(x, y) == false)
+        if (isTileEnterable(x, y) == false)
         {
             return;
         }
@@ -482,7 +481,7 @@ public class TileMap : MonoBehaviour
 
     public float CostToEnterTile(int x, int y)
     {
-        if (UnitCanEnterTile(x, y) == false)
+        if (isTileEnterable(x, y) == false)
         {
             return Mathf.Infinity;
         }
@@ -494,7 +493,7 @@ public class TileMap : MonoBehaviour
     }
 
     //Bool for can a Unit Enter a Tile
-    public bool UnitCanEnterTile(int x, int y)
+    public bool isTileEnterable(int x, int y)
     {
         //Cannot Enter Tile Occupied by Other Team
         if (tilesOnMap[x, y].GetComponent<ClickableTile>().unitOnTile != null)
@@ -601,7 +600,7 @@ public class TileMap : MonoBehaviour
 
     //Highlight Total Range (Movement + Max Attack Range) for Movement State (Selected)
     public void HighlightUnitRange()
-    {              
+    {
         HashSet<Node> movementRange = new HashSet<Node>();
         HashSet<Node> attackableTiles = new HashSet<Node>();
         HashSet<Node> enemyUnitsInMovementRange = new HashSet<Node>(); 

@@ -414,7 +414,7 @@ public class GameController : MonoBehaviour
         }
 
         //Selected Tile != Accessible
-        if (scriptTileMap.UnitCanEnterTile(x, y) == false)
+        if (scriptTileMap.isTileEnterable(x, y) == false)
         {
             return null;
         }
