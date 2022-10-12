@@ -13,6 +13,7 @@ public class DruidSpells : MonoBehaviour
     public GameMenuController scriptGameMenuController;
     public CameraShake scriptCameraShake;
     public SpellSlots scriptSpellSlots;
+    public RangeFinder scriptRangeFinder;
 
     void Update()
     {
@@ -64,8 +65,8 @@ public class DruidSpells : MonoBehaviour
     //Highlight Tiles on Action Menu Button
     public void HighlightFrostbiteSpellRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     //Cast Frostbite
@@ -233,8 +234,8 @@ public class DruidSpells : MonoBehaviour
     //Highlight Tiles on Action Menu Button
     public void HighlightCharmPersonSpellRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     //Cast Charm Person
@@ -385,8 +386,8 @@ public class DruidSpells : MonoBehaviour
     //Highlight Tiles on Action Menu Button
     public void HighlightCureWoundsSpellRange()
     {
-        scriptTileMap.HighlightFriendlyUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightFriendlyUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     //Cast Cure Wounds

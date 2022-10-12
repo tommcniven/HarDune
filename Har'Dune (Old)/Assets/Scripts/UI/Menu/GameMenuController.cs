@@ -10,6 +10,7 @@ public class GameMenuController : MonoBehaviour
     [Header("Scripts")]
     public TileMap scriptTileMap;
     public UnitStats scriptUnitStats;
+    public MovementController scriptMovementController;
 
     [Header("Main Menus")]
     public GameObject gameMenuPanel;
@@ -164,7 +165,7 @@ public class GameMenuController : MonoBehaviour
     //Wait Action Menu Button
     public void Wait()
     {
-        scriptTileMap.DisableUnitRangeHighlight();
+        scriptMovementController.DisableMovementRangeHighlight();
         scriptTileMap.selectedUnit.GetComponent<UnitController>().Wait();
         scriptTileMap.selectedUnit.GetComponent<UnitController>().SetWaitAnimation();
         scriptTileMap.selectedUnit.GetComponent<UnitController>().SetMovementState(3);

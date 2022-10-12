@@ -13,6 +13,7 @@ public class GeneralActions : MonoBehaviour
     public TileMap scriptTileMap;
     public GameMenuController scriptGameMenuController;
     public CameraShake scriptCameraShake;
+    public RangeFinder scriptRangeFinder;
 
     //Update
     public void Update()
@@ -47,8 +48,8 @@ public class GeneralActions : MonoBehaviour
     //Highlight Tiles on Grapple Action Menu Button
     public void HighlightGrappleRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     //Attempt Grapple

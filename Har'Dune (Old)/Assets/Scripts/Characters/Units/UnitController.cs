@@ -279,7 +279,7 @@ public class UnitController : MonoBehaviour
         //Path Count != 0
         while (path.Count != 0)
         {
-            Vector3 endPosition = map.TilePositionInScene(path[0].x, path[0].y);
+            Vector3 endPosition = map.NodePositionInScene(path[0].x, path[0].y);
             StartCoroutine(SetUnitDirection());
             movingObject.transform.position = Vector3.Lerp(transform.position, endPosition, scriptUnitStats.visualMovementSpeed);
 
@@ -293,7 +293,7 @@ public class UnitController : MonoBehaviour
         }
 
         scriptUnitStats.visualMovementSpeed = 0.15f;
-        transform.position = map.TilePositionInScene(endNode.x, endNode.y);
+        transform.position = map.NodePositionInScene(endNode.x, endNode.y);
         transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
         x = endNode.x;
         y = endNode.y;
@@ -305,7 +305,7 @@ public class UnitController : MonoBehaviour
 
     public IEnumerator SetUnitDirection()
     {
-        Vector3 endPosition = map.TilePositionInScene(path[0].x, path[0].y);
+        Vector3 endPosition = map.NodePositionInScene(path[0].x, path[0].y);
 
         //Move Left
         if (endPosition.x < transform.position.x)

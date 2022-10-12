@@ -172,6 +172,7 @@ MonoBehaviour:
   healthBarCanvas: {fileID: 5650107391667728305}
   healthBarFill: {fileID: 7801275604758871362}
   damagePopupCanvas: {fileID: 43821926641596557}
+  damageDisplayPanel: {fileID: 0}
   damagePopupText: {fileID: 43821926285726091}
   damageBackdrop: {fileID: 43821926358565890}
   map: {fileID: 0}
@@ -241,6 +242,7 @@ MonoBehaviour:
   scriptTileMap: {fileID: 0}
   scriptGameMenuController: {fileID: 0}
   scriptCameraShake: {fileID: 0}
+  scriptRangeFinder: {fileID: 0}
 --- !u!114 &5314087781843051225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +262,7 @@ MonoBehaviour:
   scriptTileMap: {fileID: 0}
   scriptGameMenuController: {fileID: 0}
   scriptCameraShake: {fileID: 0}
+  scriptRangeFinder: {fileID: 0}
 --- !u!1 &43821926285726086
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,8 +330,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 54d36805821055a42a5477aaa0ebe810, type: 2}
+  m_sharedMaterial: {fileID: 4427561806928996606, guid: 54d36805821055a42a5477aaa0ebe810,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -352,8 +356,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.4
-  m_fontSizeBase: 0.4
+  m_fontSize: 1
+  m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -506,7 +510,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.525}
+  m_AnchoredPosition: {x: 0.5, y: 0.5}
   m_SizeDelta: {x: 1, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &43821926641596557

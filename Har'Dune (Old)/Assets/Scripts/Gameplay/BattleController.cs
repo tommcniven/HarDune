@@ -123,7 +123,7 @@ public class BattleController : MonoBehaviour
     //Attack Rolls
     public int AttackRoll()
     {
-        var selectedUnitStats= scriptTileMap.selectedUnit.GetComponent<UnitStats>();
+        var selectedUnitStats = scriptTileMap.selectedUnit.GetComponent<UnitStats>();
         var selectedUnitController = scriptTileMap.selectedUnit.GetComponent<UnitController>();
 
         //Attack Normal

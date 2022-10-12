@@ -12,6 +12,7 @@ public class AttackActions : MonoBehaviour
     public TileMap scriptTileMap;
     public GameMenuController scriptGameMenuController;
     public CameraShake scriptCameraShake;
+    public RangeFinder scriptRangeFinder;
 
     public void Update()
     {
@@ -69,8 +70,8 @@ public class AttackActions : MonoBehaviour
 
     public void HighlightGreatswordAttackRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeGreatswordAttack()
@@ -242,8 +243,8 @@ public class AttackActions : MonoBehaviour
 
     public void HighlightDaggerAttackRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeDaggerAttack()
@@ -413,8 +414,8 @@ public class AttackActions : MonoBehaviour
 
     public void HighlightQuarterstaffAttackRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeQuarterstaffAttack()
@@ -581,8 +582,8 @@ public class AttackActions : MonoBehaviour
 
     public void HighlightLightCrossbowAttackRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeLightCrossbowAttack()
@@ -753,8 +754,8 @@ public class AttackActions : MonoBehaviour
     //Highlight Tiles on Quarterstaff Attack Action Menu Button
     public void HighlightScimitarAttackRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeScimitarAttack()
@@ -923,8 +924,8 @@ public class AttackActions : MonoBehaviour
 
     public void HighlightDaggerThrowAttackRange()
     {
-        scriptTileMap.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightTileUnitIsOccupying();
+        scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeDaggerThrowAttack()
