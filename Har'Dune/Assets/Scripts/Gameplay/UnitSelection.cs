@@ -32,7 +32,7 @@ public class UnitSelection : MonoBehaviour
                 //Selected Unit Movement State is 0
                 if (tempSelectedUnit.GetComponent<UnitController>().unitMovementStates == tempSelectedUnit.GetComponent<UnitController>().GetMovementState(0))
                 {
-                    if (tempSelectedUnit.GetComponent<UnitController>().teamNumber == scriptManager.scriptGameController.currentTeam)
+                    if (tempSelectedUnit.GetComponent<UnitController>().teamNumber == scriptManager.scriptTurnController.currentTeam) //Note - Changed Here
                     {
                         scriptManager.scriptMovementController.DisableMovementRangeHighlight();
                         //selectedSound.Play();

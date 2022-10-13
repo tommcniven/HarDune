@@ -18591,8 +18591,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1667033356}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+      - m_Target: {fileID: 453078373}
+        m_TargetAssemblyTypeName: TurnController, Assembly-CSharp
         m_MethodName: EndTurn
         m_Mode: 1
         m_Arguments:

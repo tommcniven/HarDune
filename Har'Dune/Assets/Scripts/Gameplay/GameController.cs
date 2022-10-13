@@ -22,27 +22,9 @@ public class GameController : MonoBehaviour
     public GameObject tileDisplayed;
     public bool isUnitInforDisplayed;
 
-    [Header("Intro Canvas")] //Move to New Script (Turn Controller)
-    public GameObject turnChangeCanvas;
-    public GameObject turnChangeBGPanel;
-    public GameObject turnChangeLeftBarPanel;
-    public GameObject turnChangeRightBarPanel;
-    private Animator turnChangeLeftBarAnimator;
-    private Animator turnChangeRightBarAnimator;
-    public Animator turnChangeTextAnimator;
-    public TMP_Text turnChangeText;
-
     [Header("Winner Canvas")] //Move to New Script (Level Results Controller)
     public Canvas winnerCanvasUI;
     public bool isGameOver = false;
-
-    [Header("Team Tracking")]  //Move to New Script (Turn Controller)
-    public TMP_Text currentTeamUI;
-    public int numberOfTeams = 2;
-    public int currentTeam;
-    public GameObject unitsOnBoard;
-    public GameObject PCTeam;
-    public GameObject NPCTeam;
 
     [Header("Location Tracking")]
     private Ray ray;
@@ -70,15 +52,9 @@ public class GameController : MonoBehaviour
         SetScriptManager();
     }
 
-    public void Start() //Refractor this Code into a Method to Set all
+    public void Start()
     {
-        currentTeam = 0;
-        SetCurrentTeamPlayer();
         isUnitInforDisplayed = false;
-        turnChangeLeftBarAnimator = turnChangeLeftBarPanel.GetComponent<Animator>();
-        turnChangeRightBarAnimator = turnChangeRightBarPanel.GetComponent<Animator>();
-        turnChangeText = turnChangeCanvas.GetComponentInChildren<TextMeshProUGUI>();
-        turnChangeTextAnimator = turnChangeText.GetComponent<Animator>();
         unitPathToCursor = new List<Node>();
         doesUnitPathExist = false;
     }
@@ -179,81 +155,6 @@ public class GameController : MonoBehaviour
     {
         scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
         scriptManager.ConnectScripts();
-    }
-
-    //UI Element
-    public void SetCurrentTeamPlayer()
-    {
-        currentTeamUI.SetText("Players Turn");
-    }
-
-    public void SetCurrentTeamEnemy()
-    {
-        currentTeamUI.SetText("Bandits Turn");
-    }
-
-    //Reset Player Movements & Change Teams
-    public void SwitchCurrentPlayer()
-    {
-        ResetTeamUnitMovement(GetTeamNumber(currentTeam));
-        currentTeam++;
-
-        if (currentTeam == numberOfTeams)
-        {
-            currentTeam = 0;
-        }
-    }
-
-    public GameObject GetTeamNumber(int teamNumber)
-    {
-        GameObject currentTeam = null;
-
-        if (teamNumber == 0)
-        {
-            currentTeam = PCTeam;
-        }
-
-        else if (teamNumber == 1)
-        {
-            currentTeam = NPCTeam;
-        }
-
-        return currentTeam;
-    }
-
-    public void ResetTeamUnitMovement(GameObject teamToReset)
-    {
-        foreach (Transform unit in teamToReset.transform)
-        {
-            unit.GetComponent<UnitController>().ResetSingleUnitMovement();
-        }
-    }
-
-    public void EndTurn()
-    {
-        if (scriptManager.scriptTileMap.selectedUnit == null)
-        {
-            SwitchCurrentPlayer();
-            scriptGameMenu.CloseGameMenu();
-
-            if (currentTeam == 1)
-            {
-                turnChangeLeftBarAnimator.SetTrigger("Left-Bar-Animation");
-                turnChangeRightBarAnimator.SetTrigger("Right-Bar-Animation");
-                turnChangeTextAnimator.SetTrigger("Display-Text");
-                turnChangeText.SetText("Bandits Turn");
-                SetCurrentTeamEnemy();
-            }
-
-            else if (currentTeam == 0)
-            {
-                turnChangeLeftBarAnimator.SetTrigger("Left-Bar-Animation");
-                turnChangeRightBarAnimator.SetTrigger("Right-Bar-Animation");
-                turnChangeTextAnimator.SetTrigger("Display-Text");
-                turnChangeText.SetText("Players Turn");
-                SetCurrentTeamPlayer();
-            }
-        }
     }
 
     public void CheckIfUnitsRemain(GameObject unit, GameObject enemy)
@@ -709,7 +610,7 @@ public class GameController : MonoBehaviour
         }
 
         //All PC Units are Dead
-        if (PCTeam.transform.childCount == 0)
+        if (scriptManager.scriptTurnController.PCTeam.transform.childCount == 0)
         {
             winnerCanvasUI.enabled = true;
             isGameOver = true;
@@ -717,7 +618,7 @@ public class GameController : MonoBehaviour
         }
 
         //All NPC Units are Dead
-        else if (NPCTeam.transform.childCount == 0)
+        else if (scriptManager.scriptTurnController.NPCTeam.transform.childCount == 0)
         {
             winnerCanvasUI.enabled = true;
             isGameOver = true;

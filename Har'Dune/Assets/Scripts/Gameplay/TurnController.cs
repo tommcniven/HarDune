@@ -24,12 +24,13 @@ public class TurnController : MonoBehaviour
     public GameObject NPCTeam;
     public TMP_Text currentTeamUI;
     public int numberOfTeams = 2;
-    public int currentTeam;
+    public int currentTeam = 0;
 
     public void Awake()
     {
         SetScriptManager();
         SetTurnChangeVariables();
+        SetCurrentTeamPlayer();
     }
 
     public void SetScriptManager()
