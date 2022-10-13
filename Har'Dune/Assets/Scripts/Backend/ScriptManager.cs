@@ -15,6 +15,8 @@ public class ScriptManager : MonoBehaviour
     public RangeFinder scriptRangeFinder;
     public MovementController scriptMovementController;
     public UnitSelection scriptUnitSelection;
+    public CursorController scriptCursorController;
+    public TurnController scriptTurnController;
 
     public void ConnectScripts()
     {
@@ -28,5 +30,7 @@ public class ScriptManager : MonoBehaviour
         scriptRangeFinder = GameObject.Find("Range Finder").GetComponent<RangeFinder>();
         scriptMovementController = GameObject.Find("Movement Controller").GetComponent<MovementController>();
         scriptUnitSelection = GameObject.Find("Unit Selection").GetComponent<UnitSelection>();
+        scriptCursorController = GameObject.Find("Cursor Controller").GetComponent<CursorController>();
+        scriptTurnController = GameObject.Find("Turn Controller").GetComponent<TurnController>();
     }
 }

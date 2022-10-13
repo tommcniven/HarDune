@@ -8,8 +8,9 @@ public class GameController : MonoBehaviour
     [Header("Scripts")]
     public GameMenuController scriptGameMenu;
     public TileMap scriptTileMap;
+    public ScriptManager scriptManager;
 
-    [Header("Unit Canvas")]
+    [Header("Unit Canvas")] //Move to New Script (Overlay Information Controller)
     public TMP_Text currentHealthUI;
     public TMP_Text attackDamageUI;
     public TMP_Text attackRangeUI;
@@ -21,21 +22,21 @@ public class GameController : MonoBehaviour
     public GameObject tileDisplayed;
     public bool isUnitInforDisplayed;
 
-    [Header("Intro Canvas")]
+    [Header("Intro Canvas")] //Move to New Script (Turn Controller)
     public GameObject turnChangeCanvas;
     public GameObject turnChangeBGPanel;
     public GameObject turnChangeLeftBarPanel;
     public GameObject turnChangeRightBarPanel;
     private Animator turnChangeLeftBarAnimator;
     private Animator turnChangeRightBarAnimator;
-    private Animator turnChangeTextAnimator;
-    private TMP_Text turnChangeText;
+    public Animator turnChangeTextAnimator;
+    public TMP_Text turnChangeText;
 
-    [Header("Winner Canvas")]
+    [Header("Winner Canvas")] //Move to New Script (Level Results Controller)
     public Canvas winnerCanvasUI;
     public bool isGameOver = false;
 
-    [Header("Team Tracking")]
+    [Header("Team Tracking")]  //Move to New Script (Turn Controller)
     public TMP_Text currentTeamUI;
     public int numberOfTeams = 2;
     public int currentTeam;
@@ -46,14 +47,6 @@ public class GameController : MonoBehaviour
     [Header("Location Tracking")]
     private Ray ray;
     private RaycastHit hit;
-
-    [Header("Cursor Location")]
-    public int cursorX;
-    public int cursorY;
-
-    //Curent Tile Mouseover
-    public int selectedTileX;
-    public int selectedTileY;
 
     [Header("Movement Path")]
     //Potential Movement Path
@@ -72,7 +65,12 @@ public class GameController : MonoBehaviour
 
     public GameObject quadrantOneAway;
 
-    public void Start()
+    public void Awake()
+    {
+        SetScriptManager();
+    }
+
+    public void Start() //Refractor this Code into a Method to Set all
     {
         currentTeam = 0;
         SetCurrentTeamPlayer();
@@ -83,7 +81,6 @@ public class GameController : MonoBehaviour
         turnChangeTextAnimator = turnChangeText.GetComponent<Animator>();
         unitPathToCursor = new List<Node>();
         doesUnitPathExist = false;
-        scriptTileMap = GetComponent<TileMap>();
     }
 
     public void Update()
@@ -97,20 +94,20 @@ public class GameController : MonoBehaviour
             UpdateUnitUI();
 
             //Highlight Current Path if Unit Selected
-            if (scriptTileMap.selectedUnit != null && scriptTileMap.selectedUnit.GetComponent<UnitController>().GetMovementState(1) == scriptTileMap.selectedUnit.GetComponent<UnitController>().unitMovementStates)
+            if (scriptManager.scriptTileMap.selectedUnit != null && scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().GetMovementState(1) == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().unitMovementStates)
             {
                 //Check if Cursor is Within Movement Range
-                if (scriptTileMap.selectedUnitMovementRange.Contains(scriptTileMap.tileGraph[cursorX, cursorY]))
+                if (scriptManager.scriptTileMap.selectedUnitMovementRange.Contains(scriptTileMap.tileGraph[scriptManager.scriptCursorController.cursorX, scriptManager.scriptCursorController.cursorY]))
                 {
                     //Generate New Path to Cursor
-                    if (cursorX != scriptTileMap.selectedUnit.GetComponent<UnitController>().x || cursorY != scriptTileMap.selectedUnit.GetComponent<UnitController>().y)
+                    if (scriptManager.scriptCursorController.cursorX != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x || scriptManager.scriptCursorController.cursorY != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y)
                     {
                         //Check Movement Queue
-                        if (!doesUnitPathExist && scriptTileMap.selectedUnit.GetComponent<UnitController>().movementQueue.Count == 0)
+                        if (!doesUnitPathExist && scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().movementQueue.Count == 0)
                         {
-                            unitPathToCursor = GenerateRouteToCursor(cursorX, cursorY);
-                            routeToX = cursorX;
-                            routeToY = cursorY;
+                            unitPathToCursor = GenerateRouteToCursor(scriptManager.scriptCursorController.cursorX, scriptManager.scriptCursorController.cursorY);
+                            routeToX = scriptManager.scriptCursorController.cursorX;
+                            routeToY = scriptManager.scriptCursorController.cursorY;
 
                             //If Movement Available
                             if (unitPathToCursor.Count != 0)
@@ -148,7 +145,7 @@ public class GameController : MonoBehaviour
                         }
 
                         //Check if Route & Cursor Are Same
-                        else if (routeToX != cursorX || routeToY != cursorY)
+                        else if (routeToX != scriptManager.scriptCursorController.cursorX || routeToY != scriptManager.scriptCursorController.cursorY)
                         {
                             //Path is Not Cursor
                             if (unitPathToCursor.Count != 0)
@@ -168,7 +165,7 @@ public class GameController : MonoBehaviour
                     }
 
                     //Disable Route
-                    else if(cursorX == scriptTileMap.selectedUnit.GetComponent<UnitController>().x && cursorY == scriptTileMap.selectedUnit.GetComponent<UnitController>().y)
+                    else if(scriptManager.scriptCursorController.cursorX == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x && scriptManager.scriptCursorController.cursorY == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y)
                     {
                         scriptTileMap.DisableUnitRouteUI();
                         doesUnitPathExist = false;
@@ -176,6 +173,12 @@ public class GameController : MonoBehaviour
                 }               
             }
         }
+    }
+
+    public void SetScriptManager()
+    {
+        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
+        scriptManager.ConnectScripts();
     }
 
     //UI Element
@@ -228,7 +231,7 @@ public class GameController : MonoBehaviour
 
     public void EndTurn()
     {
-        if (scriptTileMap.selectedUnit == null)
+        if (scriptManager.scriptTileMap.selectedUnit == null)
         {
             SwitchCurrentPlayer();
             scriptGameMenu.CloseGameMenu();
@@ -267,25 +270,25 @@ public class GameController : MonoBehaviour
             //If Not Displayed
             if (tileDisplayed == null)
             {
-                selectedTileX = hit.transform.gameObject.GetComponent<ClickableTile>().tileX;
-                selectedTileY = hit.transform.gameObject.GetComponent<ClickableTile>().tileY;
-                cursorX = selectedTileX;
-                cursorY = selectedTileY;
-                scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = true;
+                scriptManager.scriptCursorController.tileUnderCursorX = hit.transform.gameObject.GetComponent<ClickableTile>().tileX;
+                scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.gameObject.GetComponent<ClickableTile>().tileY;
+                scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
+                scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
+                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                 tileDisplayed = hit.transform.gameObject;
             }
 
             //If Mousover is Not a gameObject
             else if (tileDisplayed != hit.transform.gameObject)
             {
-                selectedTileX = tileDisplayed.GetComponent<ClickableTile>().tileX;
-                selectedTileY = tileDisplayed.GetComponent<ClickableTile>().tileY;
-                scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = false;
-                selectedTileX = hit.transform.gameObject.GetComponent<ClickableTile>().tileX;
-                selectedTileY = hit.transform.gameObject.GetComponent<ClickableTile>().tileY;
-                cursorX = selectedTileX;
-                cursorY = selectedTileY;
-                scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = true;
+                scriptManager.scriptCursorController.tileUnderCursorX = tileDisplayed.GetComponent<ClickableTile>().tileX;
+                scriptManager.scriptCursorController.tileUnderCursorY = tileDisplayed.GetComponent<ClickableTile>().tileY;
+                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
+                scriptManager.scriptCursorController.tileUnderCursorX = hit.transform.gameObject.GetComponent<ClickableTile>().tileX;
+                scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.gameObject.GetComponent<ClickableTile>().tileY;
+                scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
+                scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
+                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                 tileDisplayed = hit.transform.gameObject;
             }
         }
@@ -296,11 +299,11 @@ public class GameController : MonoBehaviour
             //If Not Displayed
             if (tileDisplayed == null)
             {
-                selectedTileX = hit.transform.parent.gameObject.GetComponent<UnitController>().x;
-                selectedTileY = hit.transform.parent.gameObject.GetComponent<UnitController>().y;
-                cursorX = selectedTileX;
-                cursorY = selectedTileY;
-                scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = true;
+                scriptManager.scriptCursorController.tileUnderCursorX = hit.transform.parent.gameObject.GetComponent<UnitController>().x;
+                scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.parent.gameObject.GetComponent<UnitController>().y;
+                scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
+                scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
+                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                 tileDisplayed = hit.transform.parent.gameObject.GetComponent<UnitController>().occupiedTile;
             }
 
@@ -309,14 +312,14 @@ public class GameController : MonoBehaviour
             {
                 if (hit.transform.parent.gameObject.GetComponent<UnitController>().movementQueue.Count == 0)
                 {
-                    selectedTileX = tileDisplayed.GetComponent<ClickableTile>().tileX;
-                    selectedTileY = tileDisplayed.GetComponent<ClickableTile>().tileY;
-                    scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = false;
-                    selectedTileX = hit.transform.parent.gameObject.GetComponent<UnitController>().x;
-                    selectedTileY = hit.transform.parent.gameObject.GetComponent<UnitController>().y;
-                    cursorX = selectedTileX;
-                    cursorY = selectedTileY;
-                    scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = true;
+                    scriptManager.scriptCursorController.tileUnderCursorX = tileDisplayed.GetComponent<ClickableTile>().tileX;
+                    scriptManager.scriptCursorController.tileUnderCursorY = tileDisplayed.GetComponent<ClickableTile>().tileY;
+                    scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
+                    scriptManager.scriptCursorController.tileUnderCursorX = hit.transform.parent.gameObject.GetComponent<UnitController>().x;
+                    scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.parent.gameObject.GetComponent<UnitController>().y;
+                    scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
+                    scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
+                    scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                     tileDisplayed = hit.transform.parent.GetComponent<UnitController>().occupiedTile;
                 }
             }
@@ -325,13 +328,13 @@ public class GameController : MonoBehaviour
         //No Tile Under Cursor
         else
         {
-            scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = false;
+            scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
         }
 
         //Close Game Menu
         if (GameMenuController.menuOpen)
         {
-            scriptTileMap.cursorTiles[selectedTileX, selectedTileY].GetComponent<MeshRenderer>().enabled = false;
+            scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
         }
     }
 
@@ -405,7 +408,7 @@ public class GameController : MonoBehaviour
     public List<Node> GenerateRouteToCursor(int x, int y)
     {
         //Selected Unit is Standing on Tile Selected
-        if (scriptTileMap.selectedUnit.GetComponent<UnitController>().x == x && scriptTileMap.selectedUnit.GetComponent<UnitController>().y == y)
+        if (scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x == x && scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y == y)
         {
             currentRoutePath = new List<Node>();
             return currentRoutePath;
@@ -420,7 +423,7 @@ public class GameController : MonoBehaviour
         currentRoutePath = null;
         Dictionary<Node, float> distance = new Dictionary<Node, float>();
         Dictionary<Node, Node> previous = new Dictionary<Node, Node>();
-        Node source = scriptTileMap.tileGraph[scriptTileMap.selectedUnit.GetComponent<UnitController>().x, scriptTileMap.selectedUnit.GetComponent<UnitController>().y];
+        Node source = scriptTileMap.tileGraph[scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x, scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y];
         Node target = scriptTileMap.tileGraph[x, y];
         distance[source] = 0;
         previous[source] = null;

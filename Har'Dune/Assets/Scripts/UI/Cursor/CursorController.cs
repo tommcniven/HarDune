@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
-    //Variables
+    //Referenced in Game Controller Script
+    [Header("Cursor Information")]
     public Texture2D cursorIcon;
+    public int cursorX;
+    public int cursorY;
+    public int tileUnderCursorX;
+    public int tileUnderCursorY;
 
-    //Start
     void Awake()
     {
         SetCursor(cursorIcon);
-        //Cursor.lockState = CursorLockMode.Confined;
     }
 
-    //Out: Sets Cursor
     private void SetCursor (Texture2D mouseCursor)
     {
         Cursor.SetCursor(mouseCursor, Vector2.zero, CursorMode.Auto);

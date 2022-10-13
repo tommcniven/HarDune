@@ -5027,6 +5027,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430012897}
   m_CullTransparentMesh: 1
+--- !u!1 &453078371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 453078372}
+  - component: {fileID: 453078373}
+  m_Layer: 0
+  m_Name: Turn Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &453078372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453078371}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1667033353}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &453078373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453078371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b5d470db3974b4a968e1b10d111d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptManager: {fileID: 0}
+  turnChangeCanvas: {fileID: 1438215311}
+  turnChangeBGPanel: {fileID: 0}
+  turnChangeLeftBarPanel: {fileID: 1620636208}
+  turnChangeRightBarPanel: {fileID: 1639234562}
+  turnChangeTextAnimator: {fileID: 0}
+  turnChangeText: {fileID: 0}
+  unitsOnBoard: {fileID: 1045089602}
+  PCTeam: {fileID: 533756626}
+  NPCTeam: {fileID: 1943374290}
+  currentTeamUI: {fileID: 753442973}
+  numberOfTeams: 2
+  currentTeam: 0
 --- !u!1 &458969108
 GameObject:
   m_ObjectHideFlags: 0
@@ -6224,7 +6280,7 @@ GameObject:
   - component: {fileID: 576478568}
   - component: {fileID: 576478569}
   m_Layer: 0
-  m_Name: Cursor
+  m_Name: Cursor Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6257,6 +6313,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorIcon: {fileID: 2800000, guid: cb2a5852c7a17b742be8b48691fa26ec, type: 3}
+  cursorX: 0
+  cursorY: 0
+  tileUnderCursorX: 0
+  tileUnderCursorY: 0
 --- !u!1001 &610195103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14749,6 +14809,8 @@ MonoBehaviour:
   scriptRangeFinder: {fileID: 0}
   scriptMovementController: {fileID: 0}
   scriptUnitSelection: {fileID: 0}
+  scriptCursorController: {fileID: 0}
+  scriptTurnController: {fileID: 0}
 --- !u!1 &1447422455
 GameObject:
   m_ObjectHideFlags: 0
@@ -17146,6 +17208,7 @@ Transform:
   - {fileID: 222700834}
   - {fileID: 1443072389}
   - {fileID: 1196683137}
+  - {fileID: 453078372}
   m_Father: {fileID: 80582670}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17280,6 +17343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptGameMenu: {fileID: 1309683190}
   scriptTileMap: {fileID: 1667033354}
+  scriptManager: {fileID: 0}
   currentHealthUI: {fileID: 755250528}
   attackDamageUI: {fileID: 1503045351}
   attackRangeUI: {fileID: 400293287}
@@ -17294,6 +17358,8 @@ MonoBehaviour:
   turnChangeBGPanel: {fileID: 0}
   turnChangeLeftBarPanel: {fileID: 1620636208}
   turnChangeRightBarPanel: {fileID: 1639234562}
+  turnChangeTextAnimator: {fileID: 0}
+  turnChangeText: {fileID: 0}
   winnerCanvasUI: {fileID: 362769893}
   isGameOver: 0
   currentTeamUI: {fileID: 753442973}
@@ -17302,10 +17368,6 @@ MonoBehaviour:
   unitsOnBoard: {fileID: 1045089602}
   PCTeam: {fileID: 533756626}
   NPCTeam: {fileID: 1943374290}
-  cursorX: 0
-  cursorY: 0
-  selectedTileX: 0
-  selectedTileY: 0
   doesUnitPathExist: 0
   arrowBody: {fileID: 2100000, guid: 87e2cae87752aa346b7fca1f7f374845, type: 2}
   arrowCurve: {fileID: 2100000, guid: c0233804405c24045ab22ab92c20ea75, type: 2}
