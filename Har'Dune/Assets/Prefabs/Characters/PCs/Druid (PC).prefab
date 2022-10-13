@@ -85,11 +85,13 @@ GameObject:
   m_Component:
   - component: {fileID: 43821925479923861}
   - component: {fileID: 43821925479923858}
-  - component: {fileID: 1569001030}
-  - component: {fileID: 1793399117}
-  - component: {fileID: 1793399118}
+  - component: {fileID: 1020390254}
+  - component: {fileID: 1389427500}
+  - component: {fileID: 2097794358152281852}
+  - component: {fileID: 1257448879}
+  - component: {fileID: 1257448880}
   m_Layer: 0
-  m_Name: Rogue (PC)
+  m_Name: Druid (PC)
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d520ddb3588e494c96cc946005e3da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1569001030}
+  scriptUnitStats: {fileID: 1020390254}
   scriptAudioManager: {fileID: 0}
   unitAttackState: 0
   unitActionState: 0
@@ -143,7 +145,7 @@ MonoBehaviour:
   attackDamage: 3
   currentHP: 0
   armorClass: 0
-  unitSprite: {fileID: 21300000, guid: 29d1d5727b3fcc74dab87513cdfda329, type: 3}
+  unitSprite: {fileID: 21300000, guid: 878d9f2cfdc55674e8d26b371184a7c1, type: 3}
   healthBarCanvas: {fileID: 43821925669178094}
   healthBarFill: {fileID: 43821925364857777}
   damagePopupCanvas: {fileID: 43821926641596557}
@@ -155,7 +157,7 @@ MonoBehaviour:
   unitMovementStates: 0
   unitInMovement: 0
   completedMovement: 0
---- !u!114 &1569001030
+--- !u!114 &1020390254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,18 +169,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f94c51c4883581418d7c192ae40d667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Rex
-  unitClass: Rogue
-  unitSubClass: Assassin
-  unitRace: Tabaxi
+  unitName: Baedaldas Springstar
+  unitClass: Druid
+  unitSubClass: Circle of Stars
+  unitRace: Wood Elf
   unitLevel: 1
   proficiency: 0
-  strength: 8
-  dexterity: 17
+  strength: 10
+  dexterity: 15
   constitution: 14
-  intelligence: 10
-  wisdom: 12
-  charisma: 14
+  intelligence: 8
+  wisdom: 16
+  charisma: 12
   strengthModifier: 0
   dexterityModifier: 0
   constitutionModifier: 0
@@ -188,7 +190,7 @@ MonoBehaviour:
   armorClass: 0
   attackModifier: 0
   damageModifier: 0
-  maxAttackRange: 1
+  maxAttackRange: 3
   attackRange: 0
   damageType: 
   spellAttackModifier: 0
@@ -198,7 +200,7 @@ MonoBehaviour:
   visualMovementSpeed: 0.15
   maxHP: 0
   hitDie: 8
---- !u!114 &1793399117
+--- !u!114 &1389427500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,15 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1569001030}
+  scriptUnitStats: {fileID: 1020390254}
   scriptUnitController: {fileID: 43821925479923858}
-  scriptBattleController: {fileID: 0}
-  scriptGameController: {fileID: 0}
-  scriptTileMap: {fileID: 0}
-  scriptGameMenuController: {fileID: 0}
-  scriptCameraShake: {fileID: 0}
-  scriptRangeFinder: {fileID: 0}
---- !u!114 &1793399118
+  scriptManager: {fileID: 0}
+--- !u!114 &2097794358152281852
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,14 +227,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98eee5727ee95ba4f86586312f9b6f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1569001030}
+  scriptUnitStats: {fileID: 1020390254}
+  scriptUnitController: {fileID: 43821925479923858}
+  scriptManager: {fileID: 0}
+--- !u!114 &1257448879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43821925479923859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cac8fcebf9e5ec4489d3770b18671ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptUnitStats: {fileID: 1020390254}
   scriptUnitController: {fileID: 43821925479923858}
   scriptBattleController: {fileID: 0}
   scriptGameController: {fileID: 0}
   scriptTileMap: {fileID: 0}
   scriptGameMenuController: {fileID: 0}
   scriptCameraShake: {fileID: 0}
+  scriptSpellSlots: {fileID: 1257448880}
   scriptRangeFinder: {fileID: 0}
+  scriptManager: {fileID: 0}
+--- !u!114 &1257448880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43821925479923859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f02f83c5c891d040827a73a30ba1918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptUnitStats: {fileID: 1020390254}
+  scriptTileMap: {fileID: 0}
+  scriptGameMenuController: {fileID: 0}
+  maxLevelOneSpellSlots: 0
+  maxLevelTwoSpellSlots: 0
+  maxLevelThreeSpellSlots: 0
+  maxLevelFourSpellSlots: 0
+  maxLevelFiveSpellSlots: 0
+  currentLevelOneSpellSlots: 0
+  currentLevelTwoSpellSlots: 0
+  currentLevelThreeSpellSlots: 0
+  currentLevelFourSpellSlots: 0
+  currentLevelFiveSpellSlots: 0
 --- !u!1 &43821925669178090
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,7 +838,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 29d1d5727b3fcc74dab87513cdfda329, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 878d9f2cfdc55674e8d26b371184a7c1, type: 3}
   m_Color: {r: 1, g: 0.9386792, b: 0.9386792, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -833,7 +872,7 @@ Animator:
   m_GameObject: {fileID: 4275521981178448823}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b6ac5e213d16b314dbad0907146f46dd, type: 2}
+  m_Controller: {fileID: 9100000, guid: ca727b79872c0a34189766e62412f8c9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

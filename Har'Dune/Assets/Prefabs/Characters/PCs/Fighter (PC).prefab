@@ -212,12 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptUnitStats: {fileID: 1510347755}
   scriptUnitController: {fileID: 43821925479923858}
-  scriptBattleController: {fileID: 0}
-  scriptGameController: {fileID: 0}
-  scriptTileMap: {fileID: 0}
-  scriptGameMenuController: {fileID: 0}
-  scriptCameraShake: {fileID: 0}
-  scriptRangeFinder: {fileID: 0}
+  scriptManager: {fileID: 0}
 --- !u!114 &1439001623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,12 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptUnitStats: {fileID: 1510347755}
   scriptUnitController: {fileID: 43821925479923858}
-  scriptBattleController: {fileID: 0}
-  scriptGameController: {fileID: 0}
-  scriptTileMap: {fileID: 0}
-  scriptGameMenuController: {fileID: 0}
-  scriptCameraShake: {fileID: 0}
-  scriptRangeFinder: {fileID: 0}
+  scriptManager: {fileID: 0}
 --- !u!1 &43821925669178090
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,78 +7,84 @@ public class AttackActions : MonoBehaviour
     [Header("Scripts")]
     public UnitStats scriptUnitStats;
     public UnitController scriptUnitController;
-    public BattleController scriptBattleController;
-    public GameController scriptGameController;
-    public TileMap scriptTileMap;
-    public GameMenuController scriptGameMenuController;
-    public CameraShake scriptCameraShake;
-    public RangeFinder scriptRangeFinder;
+    public ScriptManager scriptManager;
+
+    public void Awake()
+    {
+        SetScriptManager();
+    }
 
     public void Update()
     {
         //Click to Use Respective Attack on Enemy Units
         if (Input.GetMouseButtonDown(0))
         {
-            if (scriptBattleController.battleStatus)
+            if (scriptManager.scriptBattleController.battleStatus)
             {
-                if (scriptBattleController.greatswordAttack)
+                if (scriptManager.scriptBattleController.greatswordAttack)
                 {
                     MakeGreatswordAttack();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
-                else if (scriptBattleController.daggerAttack)
+                else if (scriptManager.scriptBattleController.daggerAttack)
                 {
                     MakeDaggerAttack();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
-                else if (scriptBattleController.quarterstaffAttack)
+                else if (scriptManager.scriptBattleController.quarterstaffAttack)
                 {
                     MakeQuarterstaffAttack();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
-                else if (scriptBattleController.lightCrossbowAttack)
+                else if (scriptManager.scriptBattleController.lightCrossbowAttack)
                 {
                     MakeLightCrossbowAttack();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
-                else if (scriptBattleController.scimitarAttack)
+                else if (scriptManager.scriptBattleController.scimitarAttack)
                 {
                     MakeScimitarAttack();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
-                else if (scriptBattleController.daggerThrowAttack)
+                else if (scriptManager.scriptBattleController.daggerThrowAttack)
                 {
                     MakeDaggerThrowAttack();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
             }
         }
     }
 
+    public void SetScriptManager()
+    {
+        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
+        scriptManager.ConnectScripts();
+    }
+
     public void StartGreatswordAttack()
     {
         //Set Variables
-        scriptBattleController.greatswordAttack = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.greatswordAttack = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.damageType = "Slashing";
         scriptUnitStats.attackRange = 1;
 
         //Update UI
         HighlightGreatswordAttackRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     public void HighlightGreatswordAttackRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeGreatswordAttack()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -93,12 +99,12 @@ public class AttackActions : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(GreatswordAttackEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(GreatswordAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -113,13 +119,13 @@ public class AttackActions : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(GreatswordAttackEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(GreatswordAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -141,9 +147,9 @@ public class AttackActions : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_DealDamage_Greatsword(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
@@ -151,7 +157,7 @@ public class AttackActions : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -164,7 +170,7 @@ public class AttackActions : MonoBehaviour
         var recipientUnit = recipient.GetComponent<UnitController>();
         var recipientStats = recipient.GetComponent<UnitStats>();
 
-        int initiatorAttackRoll = scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
         int initiatorDamageRoll = Random.Range(1, 8) + initiatorStats.damageModifier;
         int initiatorCritDamageRoll = Random.Range(1, 8) + Random.Range(1, 8) + initiatorStats.damageModifier;
         int recipientArmorClass = recipientStats.armorClass;
@@ -198,17 +204,17 @@ public class AttackActions : MonoBehaviour
             //Destroy(tempParticle, 2f);
 
             //Kill Dead Units & Check for Winner
-            if (scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
-                scriptBattleController.battleStatus = false;
-                scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                scriptManager.scriptBattleController.battleStatus = false;
+                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
 
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -221,7 +227,7 @@ public class AttackActions : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Attack Missed");
 
             Debug.Log(initiatorStats.unitName + "'s Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Remove Disadvantage
@@ -231,27 +237,27 @@ public class AttackActions : MonoBehaviour
     public void StartDaggerAttack()
     {
         //Set Variables
-        scriptBattleController.daggerAttack = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.daggerAttack = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.damageType = "Stabbing";
         scriptUnitStats.attackRange = 1;
 
         //Update UI
         HighlightDaggerAttackRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     public void HighlightDaggerAttackRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeDaggerAttack()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -266,12 +272,12 @@ public class AttackActions : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(DaggerAttackEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(DaggerAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -286,13 +292,13 @@ public class AttackActions : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(DaggerAttackEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(DaggerAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -314,9 +320,9 @@ public class AttackActions : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().dexterityModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().dexterityModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_DealDamage_Dagger(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
@@ -324,7 +330,7 @@ public class AttackActions : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -337,7 +343,7 @@ public class AttackActions : MonoBehaviour
         var recipientStats = recipient.GetComponent<UnitStats>();
 
         //Calculate Hit, AC, & Damage
-        int initiatorAttackRoll = scriptBattleController.AttackRoll();
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll();
         int initiatorDamageRoll = Random.Range(1, 4) + initiatorStats.damageModifier;
         int initiatorCritDamageRoll = Random.Range(1, 4) + Random.Range(1, 4) + initiatorStats.damageModifier;
         int recipientArmorClass = recipientStats.armorClass;
@@ -370,17 +376,17 @@ public class AttackActions : MonoBehaviour
 
 
             //Kill Dead Units & Check for Winner
-            if (scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
-                scriptBattleController.battleStatus = false;
-                scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                scriptManager.scriptBattleController.battleStatus = false;
+                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
 
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -392,7 +398,7 @@ public class AttackActions : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Attack Missed");
 
             Debug.Log(initiatorStats.unitName + "'s Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Remove Disadvantage
@@ -402,27 +408,27 @@ public class AttackActions : MonoBehaviour
     public void StartQuarterstaffAttack()
     {
         //Set Variables
-        scriptBattleController.quarterstaffAttack = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.quarterstaffAttack = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.damageType = "Bludgeoning";
         scriptUnitStats.attackRange = 1;
 
         //Update UI
         HighlightQuarterstaffAttackRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     public void HighlightQuarterstaffAttackRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeQuarterstaffAttack()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -437,12 +443,12 @@ public class AttackActions : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(QuarterstaffAttackEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(QuarterstaffAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -457,13 +463,13 @@ public class AttackActions : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(QuarterstaffAttackEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(QuarterstaffAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -485,9 +491,9 @@ public class AttackActions : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_DealDamage_Quarterstaff(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
@@ -495,7 +501,7 @@ public class AttackActions : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -508,7 +514,7 @@ public class AttackActions : MonoBehaviour
         var recipientStats = recipient.GetComponent<UnitStats>();
 
         //Calculate Hit, AC, & Damage
-        int initiatorAttackRoll = scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
         int initiatorDamageRoll = Random.Range(1, 6) + initiatorStats.damageModifier;
         int initiatorCritDamageRoll = Random.Range(1, 6) + Random.Range(1, 6) + initiatorStats.damageModifier;
         int recipientArmorClass = recipientStats.armorClass;
@@ -538,17 +544,17 @@ public class AttackActions : MonoBehaviour
             //Destroy(tempParticle, 2f);
 
             //Kill Dead Units & Check for Winner
-            if (scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
-                scriptBattleController.battleStatus = false;
-                scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                scriptManager.scriptBattleController.battleStatus = false;
+                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
 
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -559,7 +565,7 @@ public class AttackActions : MonoBehaviour
             Destroy(tempParticle, 2f);
 
             Debug.Log(initiatorStats.unitName + "'s Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Remove Disadvantage
@@ -570,27 +576,27 @@ public class AttackActions : MonoBehaviour
     public void StartLightCrossbowAttack()
     {
         //Set Variables
-        scriptBattleController.lightCrossbowAttack = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.lightCrossbowAttack = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.damageType = "Piercing";
         scriptUnitStats.attackRange = 6;
 
         //Update UI
         HighlightLightCrossbowAttackRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     public void HighlightLightCrossbowAttackRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeLightCrossbowAttack()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -605,12 +611,12 @@ public class AttackActions : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(LightCrossbowAttackEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(LightCrossbowAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -625,13 +631,13 @@ public class AttackActions : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(LightCrossbowAttackEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(LightCrossbowAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -653,9 +659,9 @@ public class AttackActions : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_DealDamage_LightCrossbow(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
@@ -663,7 +669,7 @@ public class AttackActions : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -676,7 +682,7 @@ public class AttackActions : MonoBehaviour
         var recipientStats = recipient.GetComponent<UnitStats>();
 
         //Calculate Hit, AC, & Damage
-        int initiatorAttackRoll = scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
         int initiatorDamageRoll = Random.Range(1, 8) + initiatorStats.damageModifier;
         int initiatorCritDamageRoll = Random.Range(1, 8) + Random.Range(1, 8) + initiatorStats.damageModifier;
         int recipientArmorClass = recipientStats.armorClass;
@@ -709,17 +715,17 @@ public class AttackActions : MonoBehaviour
             //Destroy(tempParticle, 2f);
 
             //Kill Dead Units & Check for Winner
-            if (scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
-                scriptBattleController.battleStatus = false;
-                scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                scriptManager.scriptBattleController.battleStatus = false;
+                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
 
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -731,7 +737,7 @@ public class AttackActions : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Attack Missed");
 
             Debug.Log(initiatorStats.unitName + "'s Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Remove Disadvantage
@@ -741,28 +747,28 @@ public class AttackActions : MonoBehaviour
     public void StartScimitarAttack()
     {
         //Set Variables
-        scriptBattleController.scimitarAttack = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.scimitarAttack = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.damageType = "Slashing";
         scriptUnitStats.attackRange = 1;
 
         //Update UI
         HighlightScimitarAttackRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     //Highlight Tiles on Quarterstaff Attack Action Menu Button
     public void HighlightScimitarAttackRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeScimitarAttack()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -777,12 +783,12 @@ public class AttackActions : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(ScimitarAttackEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(ScimitarAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -797,13 +803,13 @@ public class AttackActions : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(ScimitarAttackEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(ScimitarAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -825,9 +831,9 @@ public class AttackActions : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_DealDamage_Scimitar(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
@@ -835,7 +841,7 @@ public class AttackActions : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -848,7 +854,7 @@ public class AttackActions : MonoBehaviour
         var recipientStats = recipient.GetComponent<UnitStats>();
 
         //Calculate Hit, AC, & Damage
-        int initiatorAttackRoll = scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
         int initiatorDamageRoll = Random.Range(1, 6) + initiatorStats.damageModifier;
         int initiatorCritDamageRoll = Random.Range(1, 6) + Random.Range(1, 6) + initiatorStats.damageModifier;
         int recipientArmorClass = recipientStats.armorClass;
@@ -880,17 +886,17 @@ public class AttackActions : MonoBehaviour
             //Destroy(tempParticle, 2f);
 
             //Kill Dead Units & Check for Winner
-            if (scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
-                scriptBattleController.battleStatus = false;
-                scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                scriptManager.scriptBattleController.battleStatus = false;
+                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
 
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -902,7 +908,7 @@ public class AttackActions : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Attack Missed");
 
             Debug.Log(initiatorStats.unitName + "'s Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Remove Disadvantage
@@ -912,27 +918,27 @@ public class AttackActions : MonoBehaviour
     public void StartDaggerThrowAttack()
     {
         //Set Variables
-        scriptBattleController.daggerThrowAttack = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.daggerThrowAttack = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.damageType = "Piercing";
         scriptUnitStats.attackRange = 4;
 
         //Update UI
         HighlightDaggerThrowAttackRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     public void HighlightDaggerThrowAttackRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     public void MakeDaggerThrowAttack()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -947,12 +953,12 @@ public class AttackActions : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(DaggerThrowAttackEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(DaggerThrowAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -967,13 +973,13 @@ public class AttackActions : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(DaggerThrowAttackEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(DaggerThrowAttackEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -995,9 +1001,9 @@ public class AttackActions : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_DealDamage_DaggerThrow(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
@@ -1005,7 +1011,7 @@ public class AttackActions : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -1018,7 +1024,7 @@ public class AttackActions : MonoBehaviour
         var recipientStats = recipient.GetComponent<UnitStats>();
 
         //Calculate Hit, AC, & Damage
-        int initiatorAttackRoll = scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll() + initiatorStats.attackModifier;
         int initiatorDamageRoll = Random.Range(1, 4) + initiatorStats.damageModifier;
         int initiatorCritDamageRoll = Random.Range(1, 4) + Random.Range(1, 4) + initiatorStats.damageModifier;
         int recipientArmorClass = recipientStats.armorClass;
@@ -1050,17 +1056,17 @@ public class AttackActions : MonoBehaviour
             //Destroy(tempParticle, 2f);
 
             //Kill Dead Units & Check for Winner
-            if (scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
-                scriptBattleController.battleStatus = false;
-                scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                scriptManager.scriptBattleController.battleStatus = false;
+                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
 
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -1072,7 +1078,7 @@ public class AttackActions : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Attack Missed");
 
             Debug.Log(initiatorStats.unitName + "'s Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Remove Disadvantage

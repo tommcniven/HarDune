@@ -5,12 +5,7 @@ using UnityEngine;
 public class TileMap : MonoBehaviour    
 {
     [Header("Scripts")]
-    public BattleController scriptBattleController;
-    public GameController scriptGameController;
-    public GameMenuController scriptGameMenuController;
-    public AudioManager scriptAudioManager;
-    public MovementController scriptMovementController;
-    public RangeFinder scriptRangeFinder;
+    public ScriptManager scriptManager;
 
     [Header("Menus")]
     public GameObject actionMenuPanel;
@@ -73,6 +68,12 @@ public class TileMap : MonoBehaviour
     public Material lightTileHighlight;
     public Material lightBorderTileHighlight;
 
+    public void Awake()
+    {
+        SetScriptManager();
+    }
+
+
     private void Start()
     {
         GenerateMapInfo();
@@ -89,21 +90,20 @@ public class TileMap : MonoBehaviour
             //No Unit
             if (selectedUnit == null)
             {
-                ClickToSelectUnit();
+                scriptManager.scriptUnitSelection.ClickToSelectUnit();
             }
 
             //Move Unit
             else if (selectedUnit.GetComponent<UnitController>().unitMovementStates == selectedUnit.GetComponent<UnitController>().GetMovementState(1) && selectedUnit.GetComponent<UnitController>().movementQueue.Count == 0)
             {
-                if (scriptMovementController.isSelectedNodeAccessible())
+                if (scriptManager.scriptMovementController.isSelectedNodeAccessible())
                 {
-                    //scriptAudioManager.PlayFootstepAudio();
                     selectedUnitPreviousX = selectedUnit.GetComponent<UnitController>().x;
                     selectedUnitPreviousY = selectedUnit.GetComponent<UnitController>().y;
                     previousOccupiedTile = selectedUnit.GetComponent<UnitController>().occupiedTile;
                     selectedUnit.GetComponent<UnitController>().SetRunAnimation();
-                    scriptMovementController.MoveUnit();
-                    StartCoroutine(scriptMovementController.MoveUnitEnum());                   
+                    scriptManager.scriptMovementController.MoveUnit();
+                    StartCoroutine(scriptManager.scriptMovementController.MoveUnitEnum());                   
                 }
             }
         }
@@ -111,7 +111,7 @@ public class TileMap : MonoBehaviour
         //Unselect Unit & Set Game State to Idle on Right Click
         if (Input.GetMouseButtonDown(1))
         {
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
 
             if (selectedUnit != null)
             {
@@ -121,7 +121,7 @@ public class TileMap : MonoBehaviour
                     {
                         //unselectedSound.Play();
                         selectedUnit.GetComponent<UnitController>().SetIdleAnimation();
-                        DeselectUnit();
+                        scriptManager.scriptUnitSelection.DeselectUnit();
                     }
                 }
 
@@ -134,6 +134,11 @@ public class TileMap : MonoBehaviour
         }
     }
 
+    public void SetScriptManager()
+    {
+        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
+        scriptManager.ConnectScripts();
+    }
     public void GenerateMapInfo()
     {
         //Get Map Size [x,y]
@@ -500,88 +505,6 @@ public class TileMap : MonoBehaviour
         return tileTypes[tiles[x, y]].isWalkable;
     }
 
-    public void ClickToSelectUnit()
-    {
-        //No Unit Selected & Tile is Displayed
-        if (isUnitSelected == false && scriptGameController.tileDisplayed != null)
-        {
-            //Unit on Tile
-            if (scriptGameController.tileDisplayed.GetComponent<ClickableTile>().unitOnTile != null)
-            {
-                //Select Unit on Tile
-                GameObject tempSelectedUnit = scriptGameController.tileDisplayed.GetComponent<ClickableTile>().unitOnTile;
-
-                //Selected Unit Movement State is 0
-                if (tempSelectedUnit.GetComponent<UnitController>().unitMovementStates == tempSelectedUnit.GetComponent<UnitController>().GetMovementState(0))
-                {
-                    if (tempSelectedUnit.GetComponent<UnitController>().teamNumber == scriptGameController.currentTeam)
-                    {
-                        scriptMovementController.DisableMovementRangeHighlight();
-                        //selectedSound.Play();
-                        //Set Selected Unit & Setup UI
-                        selectedUnit = tempSelectedUnit;
-                        selectedUnit.GetComponent<UnitController>().map = this;
-                        selectedUnit.GetComponent<UnitController>().SetMovementState(1);
-                        selectedUnit.GetComponent<UnitController>().SetSelectedAnimation();
-                        isUnitSelected = true;
-                        scriptRangeFinder.HighlightUnitRange();
-                    }
-                }
-            }
-
-            //No Unit on Tile
-            else if (scriptGameController.tileDisplayed.GetComponent<ClickableTile>().unitOnTile == null)
-            {
-                if (GameMenuController.menuOpen == false && scriptGameController.isGameOver == false)
-                {
-                    scriptGameMenuController.OpenGameMenu();
-                }
-            }
-        }  
-    }
-
-    public void DeselectUnit()
-    {
-        //A Unit is Selected
-        if (selectedUnit != null)
-        {
-            //Unit Movment State is Selected
-            if (selectedUnit.GetComponent<UnitController>().unitMovementStates == selectedUnit.GetComponent<UnitController>().GetMovementState(1))
-            {
-                scriptMovementController.DisableMovementRangeHighlight();
-                DisableUnitRouteUI();
-                selectedUnit.GetComponent<UnitController>().SetMovementState(0);
-                selectedUnit = null;
-                isUnitSelected = false;
-            }
-
-            //Unit Movement State is Wait
-            else if (selectedUnit.GetComponent<UnitController>().unitMovementStates == selectedUnit.GetComponent<UnitController>().GetMovementState(3))
-            {
-                scriptMovementController.DisableMovementRangeHighlight();
-                DisableUnitRouteUI();
-                isUnitSelected = false;
-                selectedUnit = null;
-            }
-
-            //Unit Movement State is Not Selected or Wait
-            else
-            {
-                scriptMovementController.DisableMovementRangeHighlight();
-                DisableUnitRouteUI();
-                tilesOnMap[selectedUnit.GetComponent<UnitController>().x, selectedUnit.GetComponent<UnitController>().y].GetComponent<ClickableTile>().unitOnTile = null;
-                tilesOnMap[selectedUnitPreviousX, selectedUnitPreviousY].GetComponent<ClickableTile>().unitOnTile = selectedUnit;
-                selectedUnit.GetComponent<UnitController>().x = selectedUnitPreviousX;
-                selectedUnit.GetComponent<UnitController>().y = selectedUnitPreviousY;
-                selectedUnit.GetComponent<UnitController>().occupiedTile = previousOccupiedTile;
-                selectedUnit.transform.position = NodePositionInScene(selectedUnitPreviousX, selectedUnitPreviousY);
-                selectedUnit.GetComponent<UnitController>().SetMovementState(0);
-                selectedUnit = null;
-                isUnitSelected = false;
-            }
-        }
-    }
-
     public void DisableUnitRouteUI()
     {
         foreach(GameObject tile in pathfindingTiles)
@@ -594,38 +517,10 @@ public class TileMap : MonoBehaviour
         }
     }
 
-    //Get Attackable Units (Neighbord Nodes + Neighbor Node's Neighbors within Attack Range) for Movement State (Selected)
-    public HashSet<Node> GetAttackableUnits()
+    //Necessary for Unit Selection Script
+    public void SetThisState()
     {
-        HashSet<Node> tempNeighborNodes = new HashSet<Node>();
-        HashSet<Node> neighborNodes = new HashSet<Node>();
-        HashSet<Node> checkedNodes = new HashSet<Node>();
-        Node selectedUnitNode = tileGraph[selectedUnit.GetComponent<UnitController>().x, selectedUnit.GetComponent<UnitController>().y];
-        int attackRange = selectedUnit.GetComponent<UnitStats>().attackRange;
-
-        //Add Initial Node to Neighbor Nodes
-        neighborNodes = new HashSet<Node>();
-        neighborNodes.Add(selectedUnitNode);
-
-        //Add Each Neighboring Node & Each Neighbor to those Nodes within the Attack Range to the Variable(tempNeighborNodes)
-        for (int i = 0; i < attackRange; i++)
-        {
-            foreach (Node n in neighborNodes)
-            {
-                foreach (Node nn in n.neighbors)
-                {
-                    //Add Furthest Attackable Tiles
-                    tempNeighborNodes.Add(nn);
-                    tempNeighborNodes.Add(n);
-                }
-            }
-
-            //Set Variable(neighborNodes) to Temp Neighbor Nodes, then reset Temp Neighbor Nodes
-            neighborNodes = tempNeighborNodes;
-            tempNeighborNodes = new HashSet<Node>();
-        }
-
-        return neighborNodes;
+        selectedUnit.GetComponent<UnitController>().map = this;
     }
 
     public HashSet<Node> GetNodeUnitIsOccupying()
@@ -641,34 +536,7 @@ public class TileMap : MonoBehaviour
     {
         if (selectedUnit != null)
         {
-            scriptMovementController.EnableMovementRangeHighlight(GetNodeUnitIsOccupying());
+            scriptManager.scriptMovementController.EnableMovementRangeHighlight(GetNodeUnitIsOccupying());
         }
-    }
-
-    //Play Sound, Set Animation to Wait, Disable Highlight & Route, & Deselect Unit Enum
-    public IEnumerator DeselectUnitAfterMovement(GameObject unit, GameObject enemy)
-    {
-        //selectedSound.Play();
-        selectedUnit.GetComponent<UnitController>().SetMovementState(3);
-        scriptMovementController.DisableMovementRangeHighlight();
-        DisableUnitRouteUI();
-
-        //Required Yield to Avoid Errors
-        yield return new WaitForSeconds(.25f);
-
-        //Wait for Unit Combat to Complete
-        while (unit.GetComponent<UnitController>().combatQueue.Count > 0)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-
-        //Wait for Enemy Combat to Complete
-        while (enemy.GetComponent<UnitController>().combatQueue.Count > 0)
-        {
-            yield return new WaitForEndOfFrame();
-          
-        }
-
-        DeselectUnit();
     }
 }

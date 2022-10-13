@@ -85,11 +85,11 @@ GameObject:
   m_Component:
   - component: {fileID: 43821925479923861}
   - component: {fileID: 43821925479923858}
-  - component: {fileID: 1852209712}
-  - component: {fileID: 868641764}
-  - component: {fileID: 868641762}
+  - component: {fileID: 1507672890}
+  - component: {fileID: 697046650}
+  - component: {fileID: 2038977217512325041}
   m_Layer: 0
-  m_Name: Bandit Captain (NPC)
+  m_Name: Bandit Archer (NPC)
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d520ddb3588e494c96cc946005e3da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1852209712}
+  scriptUnitStats: {fileID: 1507672890}
   scriptAudioManager: {fileID: 0}
   unitAttackState: 0
   unitActionState: 0
@@ -138,12 +138,12 @@ MonoBehaviour:
   coroutineRunning: 0
   animator: {fileID: 0}
   unitName: Skeleton Soldier
-  moveSpeed: 4
+  moveSpeed: 3
   moveSpeedTime: 0.1
   attackDamage: 3
   currentHP: 0
   armorClass: 0
-  unitSprite: {fileID: 21300000, guid: c5527f7c9673e2443ad7d8e2fddde5b1, type: 3}
+  unitSprite: {fileID: 21300000, guid: ad6c6bd06f57b994e9e42a0dfea76541, type: 3}
   healthBarCanvas: {fileID: 43821925669178094}
   healthBarFill: {fileID: 43821925364857777}
   damagePopupCanvas: {fileID: 43821926641596557}
@@ -155,7 +155,7 @@ MonoBehaviour:
   unitMovementStates: 0
   unitInMovement: 0
   completedMovement: 0
---- !u!114 &1852209712
+--- !u!114 &1507672890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,18 +167,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f94c51c4883581418d7c192ae40d667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Ragnar
-  unitClass: Bandit Captain
-  unitSubClass: Captain
+  unitName: Bandit Archer
+  unitClass: Bandit Archer
+  unitSubClass: Archer
   unitRace: Humanoid
-  unitLevel: 2
+  unitLevel: 1
   proficiency: 0
-  strength: 15
-  dexterity: 16
-  constitution: 14
-  intelligence: 14
-  wisdom: 11
-  charisma: 14
+  strength: 11
+  dexterity: 12
+  constitution: 12
+  intelligence: 10
+  wisdom: 10
+  charisma: 10
   strengthModifier: 0
   dexterityModifier: 0
   constitutionModifier: 0
@@ -196,9 +196,9 @@ MonoBehaviour:
   spellDamageType: 
   movementSpeed: 6
   visualMovementSpeed: 0.15
-  maxHP: 35
+  maxHP: 12
   hitDie: 0
---- !u!114 &868641764
+--- !u!114 &697046650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,15 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1852209712}
+  scriptUnitStats: {fileID: 1507672890}
   scriptUnitController: {fileID: 43821925479923858}
-  scriptBattleController: {fileID: 0}
-  scriptGameController: {fileID: 0}
-  scriptTileMap: {fileID: 0}
-  scriptGameMenuController: {fileID: 0}
-  scriptCameraShake: {fileID: 0}
-  scriptRangeFinder: {fileID: 0}
---- !u!114 &868641762
+  scriptManager: {fileID: 0}
+--- !u!114 &2038977217512325041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,14 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98eee5727ee95ba4f86586312f9b6f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1852209712}
+  scriptUnitStats: {fileID: 1507672890}
   scriptUnitController: {fileID: 43821925479923858}
-  scriptBattleController: {fileID: 0}
-  scriptGameController: {fileID: 0}
-  scriptTileMap: {fileID: 0}
-  scriptGameMenuController: {fileID: 0}
-  scriptCameraShake: {fileID: 0}
-  scriptRangeFinder: {fileID: 0}
+  scriptManager: {fileID: 0}
 --- !u!1 &43821925669178090
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,7 +743,7 @@ Transform:
   m_GameObject: {fileID: 4275521981178448823}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.5, z: 0.5}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 0.25}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 43821926641596552}
   m_Father: {fileID: 43821925479923861}
@@ -799,7 +789,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c5527f7c9673e2443ad7d8e2fddde5b1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ad6c6bd06f57b994e9e42a0dfea76541, type: 3}
   m_Color: {r: 1, g: 0.9386792, b: 0.9386792, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -833,7 +823,7 @@ Animator:
   m_GameObject: {fileID: 4275521981178448823}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fbbab11b71f3a524cb98d865bc98d145, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9d624691200d2034fb41c18184cd5205, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

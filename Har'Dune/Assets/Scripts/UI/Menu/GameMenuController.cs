@@ -11,6 +11,7 @@ public class GameMenuController : MonoBehaviour
     public TileMap scriptTileMap;
     public UnitStats scriptUnitStats;
     public MovementController scriptMovementController;
+    public ScriptManager scriptManager;
 
     [Header("Main Menus")]
     public GameObject gameMenuPanel;
@@ -48,6 +49,11 @@ public class GameMenuController : MonoBehaviour
     public TMP_Text currentLevelFourSpellSlots;
     public TMP_Text currentLevelFiveSpellSlots;
 
+    public void Awake()
+    {
+        SetScriptManager();
+    }
+
     void Update()
     {
         //Game Menu Controls
@@ -73,11 +79,12 @@ public class GameMenuController : MonoBehaviour
         }
     }
 
-    //
-    //Game Menu
-    //
+    public void SetScriptManager()
+    {
+        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
+        scriptManager.ConnectScripts();
+    }
 
-    //Open Game Menu
     public void OpenGameMenu()
     {
         Vector3 mousePosition = Input.mousePosition;
@@ -150,7 +157,7 @@ public class GameMenuController : MonoBehaviour
                 {
                     //unselectedSound.Play();
                     scriptTileMap.selectedUnit.GetComponent<UnitController>().SetIdleAnimation();
-                    scriptTileMap.DeselectUnit();
+                    scriptManager.scriptUnitSelection.DeselectUnit();
                 }
             }
 
@@ -169,7 +176,7 @@ public class GameMenuController : MonoBehaviour
         scriptTileMap.selectedUnit.GetComponent<UnitController>().Wait();
         scriptTileMap.selectedUnit.GetComponent<UnitController>().SetWaitAnimation();
         scriptTileMap.selectedUnit.GetComponent<UnitController>().SetMovementState(3);
-        scriptTileMap.DeselectUnit();
+        scriptManager.scriptUnitSelection.DeselectUnit();
         CloseAllActionMenus();
     }
 

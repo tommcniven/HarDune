@@ -7,66 +7,72 @@ public class DruidSpells : MonoBehaviour
     [Header("Scripts")]
     public UnitStats scriptUnitStats;
     public UnitController scriptUnitController;
-    public BattleController scriptBattleController;
-    public GameController scriptGameController;
-    public TileMap scriptTileMap;
-    public GameMenuController scriptGameMenuController;
-    public CameraShake scriptCameraShake;
     public SpellSlots scriptSpellSlots;
-    public RangeFinder scriptRangeFinder;
+    public ScriptManager scriptManager;
+
+    public void Awake()
+    {
+        SetScriptManager();
+    }
 
     void Update()
     {
         //Click to Use Respective Attack on Enemy Units
         if (Input.GetMouseButtonDown(0))
         {
-            if (scriptBattleController.battleStatus)
+            if (scriptManager.scriptBattleController.battleStatus)
             {
-                if (scriptBattleController.frostbite)
+                if (scriptManager.scriptBattleController.frostbite)
                 {
                     CastFrostbiteSpell();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
-                else if (scriptBattleController.charmPerson)
+                else if (scriptManager.scriptBattleController.charmPerson)
                 {
                     CastCharmPersonSpell();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
-                else if (scriptBattleController.cureWounds)
+                else if (scriptManager.scriptBattleController.cureWounds)
                 {
                     CastCureWoundsSpell();
-                    scriptBattleController.ResetActionBools();
+                    scriptManager.scriptBattleController.ResetActionBools();
                 }
             }
         }
     }
 
+    public void SetScriptManager()
+    {
+        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
+        scriptManager.ConnectScripts();
+    }
+
     //Start Druidcraft Cast
     public void StartDruidcraftSpell()
     {
-        scriptGameMenuController.Wait();
-        scriptBattleController.ResetActionBools();
+        scriptManager.scriptGameMenuController.Wait();
+        scriptManager.scriptBattleController.ResetActionBools();
     }
 
     //Start Frostbite Cast Sequence
     public void StartFrostbiteSpell()
     {
         //Set Variables
-        scriptBattleController.frostbite = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.frostbite = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.damageType = "Cold";
         scriptUnitStats.attackRange = 6;
 
         //Update UI
         HighlightFrostbiteSpellRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     //Highlight Tiles on Action Menu Button
     public void HighlightFrostbiteSpellRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     //Cast Frostbite
@@ -74,7 +80,7 @@ public class DruidSpells : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -89,12 +95,12 @@ public class DruidSpells : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(FrostbiteSpellEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(FrostbiteSpellEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -109,13 +115,13 @@ public class DruidSpells : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(FrostbiteSpellEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(FrostbiteSpellEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -138,9 +144,9 @@ public class DruidSpells : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_DealDamage_Frostbite(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
@@ -148,7 +154,7 @@ public class DruidSpells : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -161,7 +167,7 @@ public class DruidSpells : MonoBehaviour
         var recipientUnit = recipient.GetComponent<UnitController>();
         var recipientStats = recipient.GetComponent<UnitStats>();
 
-        int recipientConSave = scriptBattleController.AttackRoll() + recipientStats.constitutionModifier;
+        int recipientConSave = scriptManager.scriptBattleController.AttackRoll() + recipientStats.constitutionModifier;
         int initiatorDamageRoll = Random.Range(1, 6);
         int initiatorCritDamageRoll = Random.Range(1, 6) + Random.Range(1, 6);
 
@@ -192,17 +198,17 @@ public class DruidSpells : MonoBehaviour
             //Destroy(tempParticle, 2f);
 
             //Kill Dead Units & Check for Winner
-            if (scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;
                 recipientUnit.UnitDie();
-                scriptBattleController.battleStatus = false;
-                scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                scriptManager.scriptBattleController.battleStatus = false;
+                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
                 return;
             }
 
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -213,7 +219,7 @@ public class DruidSpells : MonoBehaviour
             Destroy(tempParticle, 2f);
 
             Debug.Log(recipientStats.unitName + "'s Con Save Roll of " + recipientConSave + " was higher than " + initiatorStats.unitName + "'s Spell Save DC of " + initiatorStats.spellSaveModifier);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
     }
 
@@ -222,20 +228,20 @@ public class DruidSpells : MonoBehaviour
     public void StartCharmPersonSpell()
     {
         //Set Variables
-        scriptBattleController.charmPerson = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.charmPerson = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.attackRange = 6;
 
         //Update UI
         HighlightCharmPersonSpellRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     //Highlight Tiles on Action Menu Button
     public void HighlightCharmPersonSpellRange()
     {
-        scriptRangeFinder.HighlightAttackableUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     //Cast Charm Person
@@ -243,7 +249,7 @@ public class DruidSpells : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -258,12 +264,12 @@ public class DruidSpells : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(CharmPersonSpellEffects(scriptTileMap.selectedUnit, unitOnTile));
-                            StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(CharmPersonSpellEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
@@ -277,13 +283,13 @@ public class DruidSpells : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(CharmPersonSpellEffects(scriptTileMap.selectedUnit, unitClicked));
-                    StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(CharmPersonSpellEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
@@ -306,9 +312,9 @@ public class DruidSpells : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_CharmPerson(initiator, recipient);
             scriptSpellSlots.UpdateLevelOneCurrentSpellSlots();
             yield return new WaitForEndOfFrame();
@@ -317,7 +323,7 @@ public class DruidSpells : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -330,7 +336,7 @@ public class DruidSpells : MonoBehaviour
         var recipientUnit = recipient.GetComponent<UnitController>();
         var recipientStats = recipient.GetComponent<UnitStats>();
 
-        int recipientWisdomSave = scriptBattleController.AttackRoll() + recipientStats.wisdomModifier;
+        int recipientWisdomSave = scriptManager.scriptBattleController.AttackRoll() + recipientStats.wisdomModifier;
 
         //Initiator Attack Roll Hits
         if (recipientWisdomSave <= initiatorStats.spellSaveModifier)
@@ -353,7 +359,7 @@ public class DruidSpells : MonoBehaviour
             Destroy(tempParticle, 2f);
 
             //Update Status
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         //Initiator Attack Roll Does Not Hit
@@ -364,7 +370,7 @@ public class DruidSpells : MonoBehaviour
             Destroy(tempParticle, 2f);
 
             Debug.Log(recipientUnit.unitName + "'s Wisdom Save Roll of " + recipientWisdomSave + " was higher than " + initiatorStats.unitName + "'s Spell Save DC of " + initiatorStats.spellSaveModifier);
-            scriptBattleController.battleStatus = false;
+            scriptManager.scriptBattleController.battleStatus = false;
         }
 
         StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(recipientWisdomSave));
@@ -374,20 +380,20 @@ public class DruidSpells : MonoBehaviour
     public void StartCureWoundsSpell()
     {
         //Set Variables
-        scriptBattleController.cureWounds = true;
-        scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.cureWounds = true;
+        scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.attackRange = 1;
 
         //Update UI
         HighlightCureWoundsSpellRange();
-        scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllActionMenus();
     }
 
     //Highlight Tiles on Action Menu Button
     public void HighlightCureWoundsSpellRange()
     {
-        scriptRangeFinder.HighlightFriendlyUnitsInRange();
-        scriptTileMap.HighlightNodeUnitIsOccupying();
+        scriptManager.scriptRangeFinder.HighlightFriendlyUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
     //Cast Cure Wounds
@@ -395,7 +401,7 @@ public class DruidSpells : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        HashSet<Node> attackableTiles = scriptTileMap.GetAttackableUnits();
+        HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
         //Clicked
         if (Physics.Raycast(ray, out hit))
@@ -410,10 +416,10 @@ public class DruidSpells : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber == scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+                    if (unitOnTile.GetComponent<UnitController>().teamNumber == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
-                        StartCoroutine(CureWoundsSpellEffects(scriptTileMap.selectedUnit, unitOnTile));
-                        StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitOnTile));
+                        StartCoroutine(CureWoundsSpellEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                        StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                     }
                 }
             }
@@ -426,10 +432,10 @@ public class DruidSpells : MonoBehaviour
             int unitX = unitClicked.GetComponent<UnitController>().x;
             int unitY = unitClicked.GetComponent<UnitController>().y;
 
-            if (unitClicked.GetComponent<UnitController>().teamNumber == scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptTileMap.tileGraph[unitX, unitY]))
+            if (unitClicked.GetComponent<UnitController>().teamNumber == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
-                StartCoroutine(CureWoundsSpellEffects(scriptTileMap.selectedUnit, unitClicked));
-                StartCoroutine(scriptTileMap.DeselectUnitAfterMovement(scriptTileMap.selectedUnit, unitClicked));
+                StartCoroutine(CureWoundsSpellEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
             }
         }
     }
@@ -451,9 +457,9 @@ public class DruidSpells : MonoBehaviour
         }
 
         //Attack
-        while (scriptBattleController.battleStatus)
+        while (scriptManager.scriptBattleController.battleStatus)
         {
-            StartCoroutine(scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptBattleController.GetDirection(initiator, recipient)));
+            StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_HealDamage_CureWounds(initiator, recipient);
             scriptSpellSlots.UpdateLevelOneCurrentSpellSlots();
             yield return new WaitForEndOfFrame();
@@ -462,7 +468,7 @@ public class DruidSpells : MonoBehaviour
         //Return to Start Position After Attack
         if (initiator != null)
         {
-            StartCoroutine(scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
+            StartCoroutine(scriptManager.scriptBattleController.ReturnAfterAttack(initiator, initiatorPosition));
         }
     }
 
@@ -488,6 +494,6 @@ public class DruidSpells : MonoBehaviour
         GameObject tempParticle = Instantiate(recipientUnit.GetComponent<UnitController>().damageParticles, recipient.transform.position, recipient.transform.rotation);
         Destroy(tempParticle, 2f);
 
-        scriptBattleController.battleStatus = false;
+        scriptManager.scriptBattleController.battleStatus = false;
     }
 }
