@@ -6,11 +6,9 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     [Header("Scripts")]
-    public GameMenuController scriptGameMenu;
-    public TileMap scriptTileMap;
     public ScriptManager scriptManager;
 
-    [Header("Unit Canvas")] //Move to New Script (Overlay Information Controller)
+    [Header("Unit Canvas")] //Move to New Script (UnitUIDisplay)
     public TMP_Text currentHealthUI;
     public TMP_Text attackDamageUI;
     public TMP_Text attackRangeUI;
@@ -20,9 +18,9 @@ public class GameController : MonoBehaviour
     public Canvas unitCanvasUI;
     public GameObject activeUnitUI;
     public GameObject tileDisplayed;
-    public bool isUnitInforDisplayed;
+    public bool isUnitDisplayed = false;
 
-    [Header("Winner Canvas")] //Move to New Script (Level Results Controller)
+    [Header("Winner Canvas")] //Move to New Script (WinLossUIDisplay)
     public Canvas winnerCanvasUI;
     public bool isGameOver = false;
 
@@ -33,30 +31,20 @@ public class GameController : MonoBehaviour
     [Header("Movement Path")]
     //Potential Movement Path
     List<Node> currentRoutePath;
-    List<Node> unitPathToCursor;
-    public bool doesUnitPathExist;
+    List<Node> unitPathToCursor = new List<Node>();
+    public bool doesUnitPathExist = false;
 
     [Header("Arrows")]
     public Material arrowBody;
     public Material arrowCurve;
     public Material arrowTip;
     public Material cursorUI;
-
-    public int routeToX;
-    public int routeToY;
-
-    public GameObject quadrantOneAway;
+    public int pathToX;
+    public int pathToY;
 
     public void Awake()
     {
         SetScriptManager();
-    }
-
-    public void Start()
-    {
-        isUnitInforDisplayed = false;
-        unitPathToCursor = new List<Node>();
-        doesUnitPathExist = false;
     }
 
     public void Update()
@@ -73,7 +61,7 @@ public class GameController : MonoBehaviour
             if (scriptManager.scriptTileMap.selectedUnit != null && scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().GetMovementState(1) == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().unitMovementStates)
             {
                 //Check if Cursor is Within Movement Range
-                if (scriptManager.scriptTileMap.selectedUnitMovementRange.Contains(scriptTileMap.tileGraph[scriptManager.scriptCursorController.cursorX, scriptManager.scriptCursorController.cursorY]))
+                if (scriptManager.scriptTileMap.selectedUnitMovementRange.Contains(scriptManager.scriptTileMap.tileGraph[scriptManager.scriptCursorController.cursorX, scriptManager.scriptCursorController.cursorY]))
                 {
                     //Generate New Path to Cursor
                     if (scriptManager.scriptCursorController.cursorX != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x || scriptManager.scriptCursorController.cursorY != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y)
@@ -82,8 +70,8 @@ public class GameController : MonoBehaviour
                         if (!doesUnitPathExist && scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().movementQueue.Count == 0)
                         {
                             unitPathToCursor = GenerateRouteToCursor(scriptManager.scriptCursorController.cursorX, scriptManager.scriptCursorController.cursorY);
-                            routeToX = scriptManager.scriptCursorController.cursorX;
-                            routeToY = scriptManager.scriptCursorController.cursorY;
+                            pathToX = scriptManager.scriptCursorController.cursorX;
+                            pathToY = scriptManager.scriptCursorController.cursorY;
 
                             //If Movement Available
                             if (unitPathToCursor.Count != 0)
@@ -97,7 +85,7 @@ public class GameController : MonoBehaviour
                                     //Set Cursor UI
                                     if (i == 0)
                                     {
-                                        GameObject quadToUpdate = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+                                        GameObject quadToUpdate = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
                                         quadToUpdate.GetComponent<Renderer>().material = cursorUI;
                                     }
 
@@ -112,8 +100,8 @@ public class GameController : MonoBehaviour
                                     {
                                         SetRouteArrowTip(nodeX, nodeY, i);
                                     }
-                                    
-                                    scriptTileMap.pathfindingTiles[nodeX, nodeY].GetComponent<Renderer>().enabled = true;
+
+                                    scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY].GetComponent<Renderer>().enabled = true;
                                 }
                             }
 
@@ -121,7 +109,7 @@ public class GameController : MonoBehaviour
                         }
 
                         //Check if Route & Cursor Are Same
-                        else if (routeToX != scriptManager.scriptCursorController.cursorX || routeToY != scriptManager.scriptCursorController.cursorY)
+                        else if (pathToX != scriptManager.scriptCursorController.cursorX || pathToY != scriptManager.scriptCursorController.cursorY)
                         {
                             //Path is Not Cursor
                             if (unitPathToCursor.Count != 0)
@@ -132,7 +120,7 @@ public class GameController : MonoBehaviour
                                     int nodeX = unitPathToCursor[i].x;
                                     int nodeY = unitPathToCursor[i].y;
 
-                                    scriptTileMap.pathfindingTiles[nodeX, nodeY].GetComponent<Renderer>().enabled = false;
+                                    scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY].GetComponent<Renderer>().enabled = false;
                                 }
                             }
                             
@@ -143,7 +131,7 @@ public class GameController : MonoBehaviour
                     //Disable Route
                     else if(scriptManager.scriptCursorController.cursorX == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x && scriptManager.scriptCursorController.cursorY == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y)
                     {
-                        scriptTileMap.DisableUnitRouteUI();
+                        scriptManager.scriptTileMap.DisableUnitRouteUI();
                         doesUnitPathExist = false;
                     }
                 }               
@@ -175,7 +163,7 @@ public class GameController : MonoBehaviour
                 scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.gameObject.GetComponent<ClickableTile>().tileY;
                 scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
                 scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
-                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
+                scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                 tileDisplayed = hit.transform.gameObject;
             }
 
@@ -184,12 +172,12 @@ public class GameController : MonoBehaviour
             {
                 scriptManager.scriptCursorController.tileUnderCursorX = tileDisplayed.GetComponent<ClickableTile>().tileX;
                 scriptManager.scriptCursorController.tileUnderCursorY = tileDisplayed.GetComponent<ClickableTile>().tileY;
-                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
+                scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
                 scriptManager.scriptCursorController.tileUnderCursorX = hit.transform.gameObject.GetComponent<ClickableTile>().tileX;
                 scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.gameObject.GetComponent<ClickableTile>().tileY;
                 scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
                 scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
-                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
+                scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                 tileDisplayed = hit.transform.gameObject;
             }
         }
@@ -204,7 +192,7 @@ public class GameController : MonoBehaviour
                 scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.parent.gameObject.GetComponent<UnitController>().y;
                 scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
                 scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
-                scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
+                scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                 tileDisplayed = hit.transform.parent.gameObject.GetComponent<UnitController>().occupiedTile;
             }
 
@@ -215,12 +203,12 @@ public class GameController : MonoBehaviour
                 {
                     scriptManager.scriptCursorController.tileUnderCursorX = tileDisplayed.GetComponent<ClickableTile>().tileX;
                     scriptManager.scriptCursorController.tileUnderCursorY = tileDisplayed.GetComponent<ClickableTile>().tileY;
-                    scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
+                    scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
                     scriptManager.scriptCursorController.tileUnderCursorX = hit.transform.parent.gameObject.GetComponent<UnitController>().x;
                     scriptManager.scriptCursorController.tileUnderCursorY = hit.transform.parent.gameObject.GetComponent<UnitController>().y;
                     scriptManager.scriptCursorController.cursorX = scriptManager.scriptCursorController.tileUnderCursorX;
                     scriptManager.scriptCursorController.cursorY = scriptManager.scriptCursorController.tileUnderCursorY;
-                    scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
+                    scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = true;
                     tileDisplayed = hit.transform.parent.GetComponent<UnitController>().occupiedTile;
                 }
             }
@@ -229,26 +217,26 @@ public class GameController : MonoBehaviour
         //No Tile Under Cursor
         else
         {
-            scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
+            scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
         }
 
         //Close Game Menu
         if (GameMenuController.menuOpen)
         {
-            scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
+            scriptManager.scriptTileMap.cursorTiles[scriptManager.scriptCursorController.tileUnderCursorX, scriptManager.scriptCursorController.tileUnderCursorY].GetComponent<MeshRenderer>().enabled = false;
         }
     }
 
     public void UpdateUnitUI()
     {
         //No Unit Info Displayed
-        if (!isUnitInforDisplayed)
+        if (!isUnitDisplayed)
         {
             //Mouseover Unit
             if (hit.transform.CompareTag("Unit"))
             {
                 unitCanvasUI.enabled = true;
-                isUnitInforDisplayed = true;
+                isUnitDisplayed = true;
                 activeUnitUI = hit.transform.parent.gameObject;
                 UnitController unitController = hit.transform.parent.gameObject.GetComponent<UnitController>();
                 UnitStats unitStats = hit.transform.parent.gameObject.GetComponent<UnitStats>();
@@ -266,7 +254,7 @@ public class GameController : MonoBehaviour
                 {
                     activeUnitUI = hit.transform.GetComponent<ClickableTile>().unitOnTile;
                     unitCanvasUI.enabled = true;
-                    isUnitInforDisplayed = true;
+                    isUnitDisplayed = true;
                     UnitController unitController = activeUnitUI.GetComponent<UnitController>();
                     UnitStats unitStats = activeUnitUI.GetComponent<UnitStats>();
                     currentHealthUI.SetText(unitStats.maxHP.ToString());
@@ -284,13 +272,13 @@ public class GameController : MonoBehaviour
             if (hit.transform.GetComponent<ClickableTile>().unitOnTile == null)
             {
                 unitCanvasUI.enabled = false;
-                isUnitInforDisplayed = false;
+                isUnitDisplayed = false;
             }
             //Unit on Tile != Unit Displayed
             else if (hit.transform.GetComponent<ClickableTile>().unitOnTile != activeUnitUI)
             {
                 unitCanvasUI.enabled = false;
-                isUnitInforDisplayed = false;
+                isUnitDisplayed = false;
             }
         }
 
@@ -301,7 +289,7 @@ public class GameController : MonoBehaviour
             if (hit.transform.parent.gameObject != activeUnitUI)
             {
                 unitCanvasUI.enabled = false;
-                isUnitInforDisplayed = false;
+                isUnitDisplayed = false;
             }
         }
     }
@@ -316,7 +304,7 @@ public class GameController : MonoBehaviour
         }
 
         //Selected Tile != Accessible
-        if (scriptTileMap.isNodeEnterable(x, y) == false)
+        if (scriptManager.scriptTileMap.isNodeEnterable(x, y) == false)
         {
             return null;
         }
@@ -324,14 +312,14 @@ public class GameController : MonoBehaviour
         currentRoutePath = null;
         Dictionary<Node, float> distance = new Dictionary<Node, float>();
         Dictionary<Node, Node> previous = new Dictionary<Node, Node>();
-        Node source = scriptTileMap.tileGraph[scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x, scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y];
-        Node target = scriptTileMap.tileGraph[x, y];
+        Node source = scriptManager.scriptTileMap.tileGraph[scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().x, scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().y];
+        Node target = scriptManager.scriptTileMap.tileGraph[x, y];
         distance[source] = 0;
         previous[source] = null;
         List<Node> unvisited = new List<Node>();
 
         //Initialize Unvisited Nodes
-        foreach (Node n in scriptTileMap.tileGraph)
+        foreach (Node n in scriptManager.scriptTileMap.tileGraph)
         {
             //Nodes != Unit Current[x,y]
             if (n != source)
@@ -367,7 +355,7 @@ public class GameController : MonoBehaviour
             {
 
                 //float alt = dist[u] + u.DistanceTo(n);
-                float alt = distance[unvistedNodes] + scriptTileMap.CostToEnterTile(n.x, n.y);
+                float alt = distance[unvistedNodes] + scriptManager.scriptTileMap.CostToEnterTile(n.x, n.y);
                 if (alt < distance[n])
                 {
                     distance[n] = alt;
@@ -444,7 +432,7 @@ public class GameController : MonoBehaviour
         //Right
         if (previousNodeToCurrentNode == Vector2.right && currentNodeToNextNode == Vector2.right)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             updateQuadrant.GetComponent<Renderer>().material = arrowBody;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -453,7 +441,7 @@ public class GameController : MonoBehaviour
         //Right & Up
         else if (previousNodeToCurrentNode == Vector2.right && currentNodeToNextNode == Vector2.up)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -462,7 +450,7 @@ public class GameController : MonoBehaviour
         //Right & Down
         else if (previousNodeToCurrentNode == Vector2.right && currentNodeToNextNode == Vector2.down)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -471,7 +459,7 @@ public class GameController : MonoBehaviour
         //Left
         else if (previousNodeToCurrentNode == Vector2.left && currentNodeToNextNode == Vector2.left)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             updateQuadrant.GetComponent<Renderer>().material = arrowBody;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -480,7 +468,7 @@ public class GameController : MonoBehaviour
         //Left & Up
         else if (previousNodeToCurrentNode == Vector2.left && currentNodeToNextNode == Vector2.up)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -489,7 +477,7 @@ public class GameController : MonoBehaviour
         //Left & Down
         else if (previousNodeToCurrentNode == Vector2.left && currentNodeToNextNode == Vector2.down)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -498,7 +486,7 @@ public class GameController : MonoBehaviour
         //Up
         else if (previousNodeToCurrentNode == Vector2.up && currentNodeToNextNode == Vector2.up)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             updateQuadrant.GetComponent<Renderer>().material = arrowBody;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -507,7 +495,7 @@ public class GameController : MonoBehaviour
         //Up & Right
         else if (previousNodeToCurrentNode == Vector2.up && currentNodeToNextNode == Vector2.right)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -516,7 +504,7 @@ public class GameController : MonoBehaviour
         //Up & Left
         else if (previousNodeToCurrentNode == Vector2.up && currentNodeToNextNode == Vector2.left)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -525,7 +513,7 @@ public class GameController : MonoBehaviour
         //Down
         else if (previousNodeToCurrentNode == Vector2.down && currentNodeToNextNode == Vector2.down)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             updateQuadrant.GetComponent<Renderer>().material = arrowBody;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -534,7 +522,7 @@ public class GameController : MonoBehaviour
         //Down & Right
         else if (previousNodeToCurrentNode == Vector2.down && currentNodeToNextNode == Vector2.right)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -544,7 +532,7 @@ public class GameController : MonoBehaviour
         //Down & Left
         else if (previousNodeToCurrentNode == Vector2.down && currentNodeToNextNode == Vector2.left)
         {
-            GameObject updateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject updateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             updateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             updateQuadrant.GetComponent<Renderer>().material = arrowCurve;
             updateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -560,7 +548,7 @@ public class GameController : MonoBehaviour
         //Right
         if (previousNodetoCurrentNode == Vector2.right)
         {
-            GameObject UpdateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject UpdateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             UpdateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 270);
             UpdateQuadrant.GetComponent<Renderer>().material = arrowTip;
             UpdateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -569,7 +557,7 @@ public class GameController : MonoBehaviour
         //Left
         else if (previousNodetoCurrentNode == Vector2.left)
         {
-            GameObject UpdateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject UpdateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             UpdateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 90);
             UpdateQuadrant.GetComponent<Renderer>().material = arrowTip;
             UpdateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -579,7 +567,7 @@ public class GameController : MonoBehaviour
         //Up
         else if (previousNodetoCurrentNode == Vector2.up)
         {
-            GameObject UpdateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject UpdateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             UpdateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 0);
             UpdateQuadrant.GetComponent<Renderer>().material = arrowTip;
             UpdateQuadrant.GetComponent<Renderer>().enabled = true;
@@ -588,7 +576,7 @@ public class GameController : MonoBehaviour
         //Down
         else if (previousNodetoCurrentNode == Vector2.down)
         {
-            GameObject UpdateQuadrant = scriptTileMap.pathfindingTiles[nodeX, nodeY];
+            GameObject UpdateQuadrant = scriptManager.scriptTileMap.pathfindingTiles[nodeX, nodeY];
             UpdateQuadrant.GetComponent<Transform>().rotation = Quaternion.Euler(90, 0, 180);
             UpdateQuadrant.GetComponent<Renderer>().material = arrowTip;
             UpdateQuadrant.GetComponent<Renderer>().enabled = true;

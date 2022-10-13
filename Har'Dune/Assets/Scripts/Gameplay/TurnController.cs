@@ -15,8 +15,8 @@ public class TurnController : MonoBehaviour
     public GameObject turnChangeRightBarPanel;
     private Animator turnChangeLeftBarAnimator;
     private Animator turnChangeRightBarAnimator;
-    public Animator turnChangeTextAnimator;
-    public TMP_Text turnChangeText;
+    private Animator turnChangeTextAnimator;
+    private TMP_Text turnChangeText;
 
     [Header("Team Tracking")]
     public GameObject unitsOnBoard;
