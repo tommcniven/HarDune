@@ -17,6 +17,8 @@ public class ScriptManager : MonoBehaviour
     public UnitSelection scriptUnitSelection;
     public CursorController scriptCursorController;
     public TurnController scriptTurnController;
+    public UnitUIDisplay scriptUnitUIDisplay;
+    public PathFinder scriptPathFinder;
 
     public void ConnectScripts()
     {
@@ -32,5 +34,7 @@ public class ScriptManager : MonoBehaviour
         scriptUnitSelection = GameObject.Find("Unit Selection").GetComponent<UnitSelection>();
         scriptCursorController = GameObject.Find("Cursor Controller").GetComponent<CursorController>();
         scriptTurnController = GameObject.Find("Turn Controller").GetComponent<TurnController>();
+        scriptUnitUIDisplay = GameObject.Find("Unit UI Display").GetComponent<UnitUIDisplay>();
+        scriptPathFinder = GameObject.Find("Path Finder").GetComponent<PathFinder>();
     }
 }
