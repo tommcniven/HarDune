@@ -334,7 +334,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 868641764, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
 --- !u!4 &12029500 stripped
 Transform:
@@ -342,6 +343,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 12029499}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &15580475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 15580476}
+  - component: {fileID: 15580477}
+  m_Layer: 0
+  m_Name: Dagger Throw
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &15580476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15580475}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 127807579}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &15580477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15580475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979f9e7f56d48bc4dbf3b74c4e15a7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 68a890e80c0652242a2d6a7e23a0a1d5, type: 2}
 --- !u!1 &27946753
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,7 +823,7 @@ Transform:
   - {fileID: 952169794}
   - {fileID: 1214710551}
   m_Father: {fileID: 1231107875}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &55050119
 GameObject:
@@ -2048,6 +2093,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114398391}
   m_CullTransparentMesh: 1
+--- !u!1 &127807578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 127807579}
+  - component: {fileID: 127807580}
+  m_Layer: 0
+  m_Name: Weapon Attacks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &127807579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127807578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 913462384}
+  - {fileID: 553043436}
+  - {fileID: 1292079729}
+  - {fileID: 1188664890}
+  - {fileID: 741252051}
+  - {fileID: 15580476}
+  m_Father: {fileID: 1583469675}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &127807580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127807578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f85c7d767de79841888b8a7957905e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptManager: {fileID: 0}
+  scriptUnitStats_SelectedUnit: {fileID: 0}
+  weaponSO: {fileID: 0}
+  weaponReference: {fileID: 0}
 --- !u!1 &149795981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,7 +2356,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1231107875}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &159148599
 GameObject:
@@ -3618,18 +3716,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315966417}
   m_CullTransparentMesh: 1
---- !u!114 &320498964 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1685609799, guid: dab8d1a38b7dbf745adaa3454ea5906d,
-    type: 3}
-  m_PrefabInstance: {fileID: 610195103}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &332505548
 GameObject:
   m_ObjectHideFlags: 0
@@ -4869,9 +4955,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1690491938}
-        m_TargetAssemblyTypeName: AttackActions, Assembly-CSharp
-        m_MethodName: StartDaggerThrowAttack
+      - m_Target: {fileID: 127807580}
+        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
+        m_MethodName: DaggerThrowAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5685,7 +5771,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1793399117, guid: 89eeff820680b9343af35c25512b8454, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 89eeff820680b9343af35c25512b8454, type: 3}
 --- !u!4 &514255626 stripped
 Transform:
@@ -5936,6 +6023,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 546564562}
   m_CullTransparentMesh: 1
+--- !u!1 &553043435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 553043436}
+  - component: {fileID: 553043437}
+  m_Layer: 0
+  m_Name: Dagger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &553043436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553043435}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 127807579}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &553043437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553043435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979f9e7f56d48bc4dbf3b74c4e15a7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: a2e39d7a47d1b3a4589a61cfe4deb606, type: 2}
 --- !u!1 &555444499
 GameObject:
   m_ObjectHideFlags: 0
@@ -6219,18 +6350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98eee5727ee95ba4f86586312f9b6f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &567916238 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1084625647, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1607179293}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &576214011
 GameObject:
   m_ObjectHideFlags: 0
@@ -6481,7 +6600,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1685609799, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
 --- !u!4 &610195104 stripped
 Transform:
@@ -7476,7 +7596,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 697046650, guid: 872c9ee814c04334f9d5b64fcb625762, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 872c9ee814c04334f9d5b64fcb625762, type: 3}
 --- !u!4 &690967319 stripped
 Transform:
@@ -7484,18 +7605,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 690967318}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &690967320 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 697046650, guid: 872c9ee814c04334f9d5b64fcb625762,
-    type: 3}
-  m_PrefabInstance: {fileID: 690967318}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &706497132
 GameObject:
   m_ObjectHideFlags: 0
@@ -7751,6 +7860,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739845517}
   m_CullTransparentMesh: 1
+--- !u!1 &741252050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 741252051}
+  - component: {fileID: 741252052}
+  m_Layer: 0
+  m_Name: Scimitar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &741252051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741252050}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 127807579}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &741252052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741252050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979f9e7f56d48bc4dbf3b74c4e15a7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 5f504f82ee9f60c45b01979d0e5ad732, type: 2}
 --- !u!1 &753442971
 GameObject:
   m_ObjectHideFlags: 0
@@ -8555,9 +8708,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 690967320}
-        m_TargetAssemblyTypeName: AttackActions, Assembly-CSharp
-        m_MethodName: StartLightCrossbowAttack
+      - m_Target: {fileID: 127807580}
+        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
+        m_MethodName: LightCrossbowAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9055,50 +9208,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853428601}
   m_CullTransparentMesh: 1
---- !u!1 &855082347
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 855082348}
-  - component: {fileID: 855082349}
-  m_Layer: 0
-  m_Name: Weapon Container
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &855082348
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855082347}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1583469675}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &855082349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855082347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979f9e7f56d48bc4dbf3b74c4e15a7b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: d82fd6f52631f8245b08ddbc2b725b9d, type: 2}
 --- !u!1 &858555911
 GameObject:
   m_ObjectHideFlags: 0
@@ -9763,6 +9872,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910098638}
   m_CullTransparentMesh: 1
+--- !u!1 &913462383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 913462384}
+  - component: {fileID: 913462385}
+  m_Layer: 0
+  m_Name: Greatsword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &913462384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913462383}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 127807579}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &913462385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913462383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979f9e7f56d48bc4dbf3b74c4e15a7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: d82fd6f52631f8245b08ddbc2b725b9d, type: 2}
 --- !u!1 &921929600
 GameObject:
   m_ObjectHideFlags: 0
@@ -10907,9 +11060,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1389427501}
-        m_TargetAssemblyTypeName: AttackActions, Assembly-CSharp
-        m_MethodName: StartQuarterstaffAttack
+      - m_Target: {fileID: 127807580}
+        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
+        m_MethodName: QuarterstaffAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11522,6 +11675,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179499645}
   m_CullTransparentMesh: 1
+--- !u!1 &1188664889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1188664890}
+  - component: {fileID: 1188664891}
+  m_Layer: 0
+  m_Name: Light Crossbow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1188664890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188664889}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 127807579}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1188664891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188664889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979f9e7f56d48bc4dbf3b74c4e15a7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 9af37ecef86cd8242a6fba4fcab67105, type: 2}
 --- !u!1 &1196683136
 GameObject:
   m_ObjectHideFlags: 0
@@ -11796,9 +11993,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 320498964}
-        m_TargetAssemblyTypeName: FighterActions, Assembly-CSharp
-        m_MethodName: StartGreatswordAttack
+      - m_Target: {fileID: 127807580}
+        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
+        m_MethodName: GreatswordAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12324,7 +12521,6 @@ Transform:
   - {fileID: 1074126113}
   - {fileID: 963194228}
   - {fileID: 576478568}
-  - {fileID: 1534542141}
   - {fileID: 154266425}
   - {fileID: 1309683189}
   - {fileID: 47165980}
@@ -12583,7 +12779,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1389427500, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
 --- !u!4 &1257448877 stripped
 Transform:
@@ -12897,6 +13094,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276288520}
   m_CullTransparentMesh: 1
+--- !u!1 &1292079728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1292079729}
+  - component: {fileID: 1292079730}
+  m_Layer: 0
+  m_Name: Quarterstaff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1292079729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292079728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 127807579}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1292079730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292079728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979f9e7f56d48bc4dbf3b74c4e15a7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 26d3389a52f251e4d8c68b173169b3c3, type: 2}
 --- !u!1 &1292688724
 GameObject:
   m_ObjectHideFlags: 0
@@ -13424,7 +13665,7 @@ RectTransform:
   - {fileID: 757412006}
   - {fileID: 1694977354}
   m_Father: {fileID: 1231107875}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -14436,18 +14677,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352786432}
   m_CullTransparentMesh: 1
---- !u!114 &1389427501 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1389427500, guid: 2fdf122032edbf048afa3ea816726ded,
-    type: 3}
-  m_PrefabInstance: {fileID: 1257448876}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257448878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1400054212
 GameObject:
   m_ObjectHideFlags: 0
@@ -14936,8 +15165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c951b08832dd146925c187dded8ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 0}
-  scriptUnitController: {fileID: 0}
   scriptBattleController: {fileID: 0}
   scriptGameController: {fileID: 0}
   scriptTileMap: {fileID: 0}
@@ -14950,6 +15177,7 @@ MonoBehaviour:
   scriptTurnController: {fileID: 0}
   scriptUnitUIDisplay: {fileID: 0}
   scriptPathFinder: {fileID: 0}
+  scriptWeaponAttack: {fileID: 0}
 --- !u!1 &1447422455
 GameObject:
   m_ObjectHideFlags: 0
@@ -15193,6 +15421,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1470635123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1470635124}
+  - component: {fileID: 1470635125}
+  m_Layer: 0
+  m_Name: Inventory System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1470635124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470635123}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1667033353}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1470635125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470635123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c72f495216d8b34b984d7d10122d5e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1493324650
 GameObject:
   m_ObjectHideFlags: 0
@@ -15806,11 +16077,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534542140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.887066, y: 12.129601, z: 1.0859265}
+  m_LocalPosition: {x: 4.9597836, y: 10.329449, z: 5.789776}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1231107875}
-  m_RootOrder: 3
+  m_Father: {fileID: 1667033353}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1534542142
 MonoBehaviour:
@@ -16371,7 +16642,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 855082348}
+  - {fileID: 127807579}
   m_Father: {fileID: 80582670}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16659,7 +16930,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1084625647, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7, type: 3}
 --- !u!4 &1607179294 stripped
 Transform:
@@ -17377,6 +17649,8 @@ Transform:
   - {fileID: 453078372}
   - {fileID: 579718129}
   - {fileID: 1942989569}
+  - {fileID: 1534542141}
+  - {fileID: 1470635124}
   m_Father: {fileID: 80582670}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17479,10 +17753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacc86edf8313f94c87c113f04170c79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptCameraShake: {fileID: 963194231}
-  scriptGameController: {fileID: 1667033356}
-  scriptTileMap: {fileID: 1667033354}
-  scriptAttackActions: {fileID: 0}
+  scriptManager: {fileID: 0}
   battleStatus: 0
   grappleAction: 0
   hideAction: 0
@@ -17651,18 +17922,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669389265}
   m_CullTransparentMesh: 1
---- !u!114 &1690491938 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 868641764, guid: 33290b8a9c4759546adbb2f46fb82dba,
-    type: 3}
-  m_PrefabInstance: {fileID: 12029499}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1694977353
 GameObject:
   m_ObjectHideFlags: 0
@@ -18353,18 +18612,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783946186}
   m_CullTransparentMesh: 1
---- !u!114 &1793399117 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1793399117, guid: 89eeff820680b9343af35c25512b8454,
-    type: 3}
-  m_PrefabInstance: {fileID: 514255625}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1793399118 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1793399118, guid: 89eeff820680b9343af35c25512b8454,
@@ -19647,9 +19894,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1793399117}
-        m_TargetAssemblyTypeName: AttackActions, Assembly-CSharp
-        m_MethodName: StartDaggerAttack
+      - m_Target: {fileID: 127807580}
+        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
+        m_MethodName: DaggerAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20033,9 +20280,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1690491938}
-        m_TargetAssemblyTypeName: AttackActions, Assembly-CSharp
-        m_MethodName: StartScimitarAttack
+      - m_Target: {fileID: 127807580}
+        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
+        m_MethodName: ScimitarAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21488,9 +21735,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 567916238}
-        m_TargetAssemblyTypeName: AttackActions, Assembly-CSharp
-        m_MethodName: StartDaggerAttack
+      - m_Target: {fileID: 127807580}
+        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
+        m_MethodName: DaggerAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

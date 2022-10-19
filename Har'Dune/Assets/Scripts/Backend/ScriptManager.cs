@@ -5,8 +5,6 @@ using UnityEngine;
 public class ScriptManager : MonoBehaviour
 {
     [Header("Scripts")]
-    public UnitStats scriptUnitStats;
-    public UnitController scriptUnitController;
     public BattleController scriptBattleController;
     public GameController scriptGameController;
     public TileMap scriptTileMap;
@@ -19,11 +17,10 @@ public class ScriptManager : MonoBehaviour
     public TurnController scriptTurnController;
     public UnitUIDisplay scriptUnitUIDisplay;
     public PathFinder scriptPathFinder;
+    public WeaponAttack scriptWeaponAttack;
 
     public void ConnectScripts()
     {
-        //scriptUnitStats = GameObject.Find("Range Finder").GetComponent<RangeFinder>();
-        //scriptUnitController = GameObject.Find("Range Finder").GetComponent<RangeFinder>();
         scriptBattleController = GameObject.Find("Game Controller").GetComponent<BattleController>();
         scriptGameController = GameObject.Find("Game Controller").GetComponent<GameController>();
         scriptTileMap = GameObject.Find("Game Controller").GetComponent<TileMap>();
@@ -36,5 +33,6 @@ public class ScriptManager : MonoBehaviour
         scriptTurnController = GameObject.Find("Turn Controller").GetComponent<TurnController>();
         scriptUnitUIDisplay = GameObject.Find("Unit UI Display").GetComponent<UnitUIDisplay>();
         scriptPathFinder = GameObject.Find("Path Finder").GetComponent<PathFinder>();
+        scriptWeaponAttack = GameObject.Find("Weapon Attacks").GetComponent<WeaponAttack>();
     }
 }

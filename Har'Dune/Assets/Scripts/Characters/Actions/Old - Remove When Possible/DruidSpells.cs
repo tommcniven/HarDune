@@ -198,7 +198,7 @@ public class DruidSpells : MonoBehaviour
             //Destroy(tempParticle, 2f);
 
             //Kill Dead Units & Check for Winner
-            if (scriptManager.scriptBattleController.CheckIfDead(recipient))
+            if (scriptManager.scriptBattleController.isUnitDead(recipient))
             {
                 //Null Parent Required for unitDie() Method to Function
                 recipient.transform.parent = null;

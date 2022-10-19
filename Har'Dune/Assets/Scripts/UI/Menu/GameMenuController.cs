@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
 public class GameMenuController : MonoBehaviour
 {
     //Variables
@@ -184,6 +183,7 @@ public class GameMenuController : MonoBehaviour
     public void GetClassActionMenuOptions()
     {
         //PCs
+
         //Fighter
         string unitClass = scriptTileMap.selectedUnit.GetComponent<UnitStats>().unitClass;
 
@@ -203,6 +203,7 @@ public class GameMenuController : MonoBehaviour
         }
 
         //NPCs
+
         //Bandit
         else if (unitClass == "Bandit")
         {
