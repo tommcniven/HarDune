@@ -133,7 +133,7 @@ public class MovementController : MonoBehaviour
         selectedUnit.GetComponent<UnitController>().SetSelectedAnimation();
         tilesOnMap[selectedUnit.GetComponent<UnitController>().x, selectedUnit.GetComponent<UnitController>().y].GetComponent<ClickableTile>().unitOnTile = selectedUnit;
         selectedUnit.GetComponent<UnitController>().SetMovementState(2);
-        scriptGameMenuController.OpenActionMenu();
+        scriptGameMenuController.scriptCharacterMenu.OpenCharacterMenu();
     }
 
 

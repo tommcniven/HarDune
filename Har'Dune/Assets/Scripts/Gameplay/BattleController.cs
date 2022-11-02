@@ -17,6 +17,7 @@ public class BattleController : MonoBehaviour
     public bool stealthAction = false;
 
     [Header("Attacks")]
+    public bool unarmedStrike = false;
     public bool greatswordAttack = false;
     public bool daggerAttack = false;
     public bool quarterstaffAttack = false;

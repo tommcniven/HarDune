@@ -98,7 +98,7 @@ public class TurnController : MonoBehaviour
         if (scriptManager.scriptTileMap.selectedUnit == null)
         {
             SwitchCurrentPlayer();
-            scriptManager.scriptGameMenuController.CloseGameMenu();
+            scriptManager.scriptGameMenuController.CloseAllMenus();
 
             if (currentTeam == 1)
             {

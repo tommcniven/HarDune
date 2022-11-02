@@ -32,6 +32,7 @@ public class GeneralActions : MonoBehaviour
         }
     }
 
+
     public void SetScriptManager()
     {
         scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
@@ -48,7 +49,7 @@ public class GeneralActions : MonoBehaviour
 
         //Update UI
         HighlightGrappleRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
     }
 
     //Highlight Tiles on Grapple Action Menu Button
@@ -182,7 +183,7 @@ public class GeneralActions : MonoBehaviour
         //Run Methods
         //[Update] Add Hide Animation (May Conflict with Wait Animaiton)
         RollDice_Hide();
-        scriptManager.scriptGameMenuController.Wait();
+        scriptManager.scriptGameMenuController.WaitButton();
         scriptManager.scriptBattleController.ResetActionBools();
     }
 

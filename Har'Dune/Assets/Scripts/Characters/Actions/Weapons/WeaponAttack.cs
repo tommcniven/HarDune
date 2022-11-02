@@ -11,7 +11,8 @@ public class WeaponAttack : MonoBehaviour
     // 4. Copy & Paste New Weapon Attack from GreatswordAttack()
     // 5. Add Weapon Attack Bool to Battle Controller Script
     // 6. Add Weapon Attack Bool to GetSelectedWeapon()
-    // 7. Done!
+    // 7. Add Weapon to be Removed from Attack Options in ResetAttackMenuOptions()
+    // 8. Done!
 
 
     [Header("Scripts")]
@@ -36,6 +37,12 @@ public class WeaponAttack : MonoBehaviour
 
     public void GetSelectedWeapon()
     {
+        if (scriptManager.scriptBattleController.unarmedStrike == true)
+        {
+            weaponReference = GameObject.Find("Unarmed Strike").GetComponent<WeaponReference>();
+            selectedWeapon = "Unarmed Strike";
+        }
+
         if (scriptManager.scriptBattleController.greatswordAttack == true)
         {
             weaponReference = GameObject.Find("Greatsword").GetComponent<WeaponReference>();
@@ -79,7 +86,16 @@ public class WeaponAttack : MonoBehaviour
     // Weapon Attacks //
     // Weapon Attacks //
 
-
+    public void UnarmedStrike() //Called from Class Button
+    {
+        scriptManager.scriptBattleController.unarmedStrike = true;
+        scriptManager.scriptBattleController.battleStatus = true;
+        GetSelectedWeapon();
+        SetVariables();
+        HighlightAttackRange();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
+        StartAttack();
+    }
 
     public void GreatswordAttack() //Called from Class Button
     {
@@ -88,7 +104,7 @@ public class WeaponAttack : MonoBehaviour
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
@@ -99,7 +115,7 @@ public class WeaponAttack : MonoBehaviour
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
@@ -110,7 +126,7 @@ public class WeaponAttack : MonoBehaviour
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
@@ -121,7 +137,7 @@ public class WeaponAttack : MonoBehaviour
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
@@ -132,7 +148,7 @@ public class WeaponAttack : MonoBehaviour
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
@@ -143,7 +159,7 @@ public class WeaponAttack : MonoBehaviour
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 

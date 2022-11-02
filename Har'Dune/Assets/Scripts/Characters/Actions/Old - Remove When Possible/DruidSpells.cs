@@ -50,7 +50,7 @@ public class DruidSpells : MonoBehaviour
     //Start Druidcraft Cast
     public void StartDruidcraftSpell()
     {
-        scriptManager.scriptGameMenuController.Wait();
+        scriptManager.scriptGameMenuController.WaitButton();
         scriptManager.scriptBattleController.ResetActionBools();
     }
 
@@ -65,7 +65,7 @@ public class DruidSpells : MonoBehaviour
 
         //Update UI
         HighlightFrostbiteSpellRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
     }
 
     //Highlight Tiles on Action Menu Button
@@ -234,7 +234,7 @@ public class DruidSpells : MonoBehaviour
 
         //Update UI
         HighlightCharmPersonSpellRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
     }
 
     //Highlight Tiles on Action Menu Button
@@ -386,7 +386,7 @@ public class DruidSpells : MonoBehaviour
 
         //Update UI
         HighlightCureWoundsSpellRange();
-        scriptManager.scriptGameMenuController.CloseAllActionMenus();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
     }
 
     //Highlight Tiles on Action Menu Button

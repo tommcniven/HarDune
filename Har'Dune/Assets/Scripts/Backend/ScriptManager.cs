@@ -24,7 +24,7 @@ public class ScriptManager : MonoBehaviour
         scriptBattleController = GameObject.Find("Game Controller").GetComponent<BattleController>();
         scriptGameController = GameObject.Find("Game Controller").GetComponent<GameController>();
         scriptTileMap = GameObject.Find("Game Controller").GetComponent<TileMap>();
-        scriptGameMenuController = GameObject.Find("Menu Controller").GetComponent<GameMenuController>();
+        scriptGameMenuController = GameObject.Find("Game Menu Controller").GetComponent<GameMenuController>();
         scriptCameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         scriptRangeFinder = GameObject.Find("Range Finder").GetComponent<RangeFinder>();
         scriptMovementController = GameObject.Find("Movement Controller").GetComponent<MovementController>();
