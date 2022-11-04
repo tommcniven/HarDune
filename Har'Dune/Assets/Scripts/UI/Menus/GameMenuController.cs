@@ -34,7 +34,6 @@ public class GameMenuController : MonoBehaviour
     public GameObject banditCaptainActionMenuPanel;
 
     //Note - Move Spell SLots Out of this Script
-
     [Header("Druid Max Spell Slots")]
     public TMP_Text maxLevelOneSpellSlots;
     public TMP_Text maxLevelTwoSpellSlots;
@@ -129,12 +128,6 @@ public class GameMenuController : MonoBehaviour
         scriptManager.scriptUnitSelection.DeselectUnit();
         CloseAllMenus();
     }
-
-
-
-    //
-    // Game Menu
-    //
 
     public void OpenGameMenu()
     {
