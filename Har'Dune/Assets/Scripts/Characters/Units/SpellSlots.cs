@@ -163,28 +163,29 @@ public class SpellSlots : MonoBehaviour
 
     public IEnumerator CheckSpellSlots()
     {
-        if (scriptUnitStats.unitName == "Baedaldas Springstar")
+        if (currentLevelOneSpellSlots == 0)
         {
-            if (currentLevelOneSpellSlots == 0)
-            {
-                scriptGameMenuController.CloseLevelOneDruidSpellButtons();
-            }
-            else if (currentLevelTwoSpellSlots == 0)
-            {
+            
+        }
 
-            }
-            else if (currentLevelThreeSpellSlots == 0)
-            {
+        else if (currentLevelTwoSpellSlots == 0)
+        {
 
-            }
-            else if (currentLevelFourSpellSlots == 0)
-            {
+        }
 
-            }
-            else if (currentLevelFiveSpellSlots == 0)
-            {
+        else if (currentLevelThreeSpellSlots == 0)
+        {
 
-            }
+        }
+
+        else if (currentLevelFourSpellSlots == 0)
+        {
+
+        }
+
+        else if (currentLevelFiveSpellSlots == 0)
+        {
+
         }
 
         yield return new WaitForEndOfFrame();

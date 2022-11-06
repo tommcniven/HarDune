@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6fa5f527ba8a44782de273f077b8c4, type: 3}
+  m_Name: Healing Word
+  m_EditorClassIdentifier: 
+  spellName: Healing Word
+  spellDescription: 'A creature of your choice that you can see within range regains
+    hit points equal to 1d4 + your spellcasting ability modifier. This spell has
+    no effect on undead or constructs.  '
+  spellAtHigherLevels: 'When you cast this spell using a spell slot of 2nd level
+    or higher, the healing increases by 1d4 for each slot level above 1st. '
+  spellSchool: Evocation
+  spellLevel: 1
+  spellCastingTime: 1 Bonus Action
+  spellRange: 6
+  spellComponents: V
+  spellDuration: Instantaneous
+  sepllIconArtwork: {fileID: 21300000, guid: 70605d58a15b68b4bb80faf63d482deb, type: 3}

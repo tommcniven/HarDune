@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6fa5f527ba8a44782de273f077b8c4, type: 3}
+  m_Name: Barksin
+  m_EditorClassIdentifier: 
+  spellName: Barksin
+  spellDescription: "You touch a willing creature. Until the spell ends, the target\u2019s
+    skin has a rough, bark-like appearance, and the target\u2019s AC can\u2019t be
+    less than 16, regardless of what kind of armor it is wearing.  "
+  spellAtHigherLevels: N/A
+  spellSchool: Transmutation
+  spellLevel: 2
+  spellCastingTime: 1 Action
+  spellRange: 1
+  spellComponents: V, S, M (a handful of oak bark)
+  spellDuration: Concentration, up to 1 hour
+  spellIsConcentration: 1
+  sepllIconArtwork: {fileID: 21300000, guid: ccacfddc7f0f2aa489122e3ecaa1dc96, type: 3}

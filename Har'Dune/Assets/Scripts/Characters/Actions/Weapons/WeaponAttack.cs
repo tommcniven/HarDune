@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponAttack : MonoBehaviour
 {
     // Steps for Adding Weapon:
-    // 1. Create New Weapon from Asset Menu
+    // 1. Create New SO Weapon from Asset Menu
     // 2. Create New Empty Game Object as Child of Weapon Attacks
     // 3. Attach Weapon Script to Game Object
     // 4. Copy & Paste New Weapon Attack from GreatswordAttack()
