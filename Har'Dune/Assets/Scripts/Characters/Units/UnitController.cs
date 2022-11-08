@@ -16,6 +16,7 @@ public class UnitController : MonoBehaviour
     public ActionStates unitActionState;
     public SpellSaveStates unitSpellSaveState;
     public SpellCastStates unitSpellCastState;
+    public ConditionState unitConditionState;
 
     [Header("Info")]
     public int teamNumber;
@@ -573,6 +574,143 @@ public class UnitController : MonoBehaviour
         else if (i == 2)
         {
             unitSpellCastState = SpellCastStates.Disadvantage;
+        }
+    }
+
+    public enum ConditionState
+    {
+        Normal,
+        Blinded,
+        Charmed,
+        Deafened,
+        Frightened,
+        Grappled,
+        Paralyzed,
+        Petrified,
+        Restrained,
+        Stunned,
+        Hidden,
+        Unconscious
+    }
+
+    //Get Action Sate
+    public ConditionState GetConditionState(int i)
+    {
+        if (i == 0)
+        {
+            return ConditionState.Normal;
+        }
+
+        else if (i == 1)
+        {
+            return ConditionState.Charmed;
+        }
+
+        else if (i == 2)
+        {
+            return ConditionState.Deafened;
+        }
+
+        else if (i == 3)
+        {
+            return ConditionState.Frightened;
+        }
+
+        else if (i == 4)
+        {
+            return ConditionState.Grappled;
+        }
+
+        else if (i == 5)
+        {
+            return ConditionState.Paralyzed;
+        }
+
+        else if (i == 6)
+        {
+            return ConditionState.Petrified;
+        }
+
+        else if (i == 7)
+        {
+            return ConditionState.Restrained;
+        }
+
+        else if (i == 8)
+        {
+            return ConditionState.Stunned;
+        }
+
+        else if (i == 9)
+        {
+            return ConditionState.Hidden;
+        }
+
+        else if (i == 10)
+        {
+            return ConditionState.Unconscious;
+        }
+
+
+        return ConditionState.Normal;
+    }
+
+    //Set Action State
+    public void SetConditionState(int i)
+    {
+        if (i == 0)
+        {
+            unitConditionState = ConditionState.Normal;
+        }
+
+        else if (i == 1)
+        {
+            unitConditionState = ConditionState.Charmed;
+        }
+
+        else if (i == 2)
+        {
+            unitConditionState = ConditionState.Deafened;
+        }
+
+        else if (i == 3)
+        {
+            unitConditionState = ConditionState.Frightened;
+        }
+
+        else if (i == 4)
+        {
+            unitConditionState = ConditionState.Grappled;
+        }
+
+        else if (i == 5)
+        {
+            unitConditionState = ConditionState.Paralyzed;
+        }
+
+        else if (i == 6)
+        {
+            unitConditionState = ConditionState.Petrified;
+        }
+
+        else if (i == 7)
+        {
+            unitConditionState = ConditionState.Restrained;
+        }
+
+        else if (i == 8)
+        {
+            unitConditionState = ConditionState.Stunned;
+        }
+
+        else if (i == 9)
+        {
+            unitConditionState = ConditionState.Hidden;
+        }
+
+        else if (i == 9)
+        {
+            unitConditionState = ConditionState.Unconscious;
         }
     }
 }

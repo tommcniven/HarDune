@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 43821925479923861}
   - component: {fileID: 43821925479923858}
   - component: {fileID: 1020390254}
-  - component: {fileID: 1389427500}
   - component: {fileID: 2097794358152281852}
   - component: {fileID: 1257448879}
   - component: {fileID: 1257448880}
@@ -131,6 +130,7 @@ MonoBehaviour:
   unitActionState: 0
   unitSpellSaveState: 0
   unitSpellCastState: 0
+  unitConditionState: 0
   teamNumber: 0
   x: 0
   y: 0
@@ -197,24 +197,10 @@ MonoBehaviour:
   spellSaveModifier: 0
   spellDamageType: 
   movementSpeed: 6
+  baseMovementSpeed: 6
   visualMovementSpeed: 0.15
   maxHP: 0
   hitDie: 8
---- !u!114 &1389427500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43821925479923859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1020390254}
-  scriptUnitController: {fileID: 43821925479923858}
-  scriptManager: {fileID: 0}
 --- !u!114 &2097794358152281852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,13 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptUnitStats: {fileID: 1020390254}
   scriptUnitController: {fileID: 43821925479923858}
-  scriptBattleController: {fileID: 0}
-  scriptGameController: {fileID: 0}
-  scriptTileMap: {fileID: 0}
-  scriptGameMenuController: {fileID: 0}
-  scriptCameraShake: {fileID: 0}
   scriptSpellSlots: {fileID: 1257448880}
-  scriptRangeFinder: {fileID: 0}
   scriptManager: {fileID: 0}
 --- !u!114 &1257448880
 MonoBehaviour:

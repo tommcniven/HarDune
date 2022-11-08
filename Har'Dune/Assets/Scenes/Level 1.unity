@@ -265,10 +265,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1943374291}
     m_Modifications:
-    - target: {fileID: 1852209712, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
-      propertyPath: maxHP
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: 33290b8a9c4759546adbb2f46fb82dba,
         type: 3}
       propertyPath: scriptAudioManager
@@ -334,8 +330,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 868641764, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
 --- !u!4 &12029500 stripped
 Transform:
@@ -8417,8 +8412,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1793399117, guid: 89eeff820680b9343af35c25512b8454, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89eeff820680b9343af35c25512b8454, type: 3}
 --- !u!4 &514255626 stripped
 Transform:
@@ -10109,8 +10103,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1685609799, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
 --- !u!4 &610195104 stripped
 Transform:
@@ -11785,8 +11778,7 @@ PrefabInstance:
       propertyPath: scriptManager
       value: 
       objectReference: {fileID: 1443072390}
-    m_RemovedComponents:
-    - {fileID: 697046650, guid: 872c9ee814c04334f9d5b64fcb625762, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c9ee814c04334f9d5b64fcb625762, type: 3}
 --- !u!4 &690967319 stripped
 Transform:
@@ -15516,9 +15508,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1439001623}
+      - m_Target: {fileID: 1492882508}
         m_TargetAssemblyTypeName: GeneralActions, Assembly-CSharp
-        m_MethodName: StartGrapple
+        m_MethodName: GrappleAction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17296,6 +17288,49 @@ Transform:
   m_Father: {fileID: 237419467}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1049145461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1049145462}
+  - component: {fileID: 1049145463}
+  m_Layer: 0
+  m_Name: Dice Roller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1049145462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049145461}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1667033353}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1049145463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049145461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a31999fc30e36e45a511bfdc9223057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1049153983
 GameObject:
   m_ObjectHideFlags: 0
@@ -21041,30 +21076,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 533756627}
     m_Modifications:
-    - target: {fileID: 1257448879, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
-      propertyPath: scriptTileMap
-      value: 
-      objectReference: {fileID: 1667033354}
-    - target: {fileID: 1257448879, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
-      propertyPath: scriptCameraShake
-      value: 
-      objectReference: {fileID: 963194231}
-    - target: {fileID: 1257448879, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
-      propertyPath: scriptRangeFinder
-      value: 
-      objectReference: {fileID: 222700835}
-    - target: {fileID: 1257448879, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
-      propertyPath: scriptGameController
-      value: 
-      objectReference: {fileID: 1667033356}
-    - target: {fileID: 1257448879, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
-      propertyPath: scriptBattleController
-      value: 
-      objectReference: {fileID: 1667033355}
-    - target: {fileID: 1257448879, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
-      propertyPath: scriptGameMenuController
-      value: 
-      objectReference: {fileID: 1309683190}
     - target: {fileID: 1257448880, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
       propertyPath: scriptGameMenuController
       value: 
@@ -21134,8 +21145,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1389427500, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
 --- !u!4 &1257448877 stripped
 Transform:
@@ -24711,6 +24721,8 @@ MonoBehaviour:
   scriptUnitUIDisplay: {fileID: 0}
   scriptPathFinder: {fileID: 0}
   scriptWeaponAttack: {fileID: 0}
+  scriptUnitStats: {fileID: 0}
+  scriptDiceRoller: {fileID: 0}
 --- !u!1 &1447422455
 GameObject:
   m_ObjectHideFlags: 0
@@ -25292,6 +25304,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471499920}
   m_CullTransparentMesh: 1
+--- !u!1 &1492882506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1492882507}
+  - component: {fileID: 1492882508}
+  m_Layer: 0
+  m_Name: General Actions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1492882507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492882506}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1583469675}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1492882508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492882506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98eee5727ee95ba4f86586312f9b6f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptManager: {fileID: 0}
+  actionModifier: 0
 --- !u!1 &1493324650
 GameObject:
   m_ObjectHideFlags: 0
@@ -26752,6 +26809,7 @@ Transform:
   m_Children:
   - {fileID: 127807579}
   - {fileID: 1906944881}
+  - {fileID: 1492882507}
   m_Father: {fileID: 80582670}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27144,8 +27202,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1084625647, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7, type: 3}
 --- !u!4 &1607179294 stripped
 Transform:
@@ -28872,6 +28929,7 @@ Transform:
   - {fileID: 1942989569}
   - {fileID: 1534542141}
   - {fileID: 1470635124}
+  - {fileID: 1049145462}
   m_Father: {fileID: 80582670}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28978,7 +29036,8 @@ MonoBehaviour:
   battleStatus: 0
   grappleAction: 0
   hideAction: 0
-  stealthAction: 0
+  dodgeAction: 0
+  waitAction: 0
   unarmedStrike: 0
   greatswordAttack: 0
   daggerAttack: 0

@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class GeneralActions : MonoBehaviour
 {
-    //Variables
     [Header("Scripts")]
-    public UnitStats scriptUnitStats;
-    public UnitController scriptUnitController;
     public ScriptManager scriptManager;
+
+    [Header("UnitReferences")]
+    public int actionModifier;
 
     public void Awake()
     {
         SetScriptManager();
     }
 
-    //Update
     public void Update()
     {
         //Click to Use Respective Attack on Enemy Units
@@ -23,15 +22,11 @@ public class GeneralActions : MonoBehaviour
         {
             if (scriptManager.scriptBattleController.battleStatus)
             {
-                if (scriptManager.scriptBattleController.grappleAction)
-                {
-                    AttemptGrappleAction();
-                    scriptManager.scriptBattleController.ResetActionBools();
-                }
+                StartAction();
+                scriptManager.scriptBattleController.ResetActionBools();
             }
         }
     }
-
 
     public void SetScriptManager()
     {
@@ -39,34 +34,72 @@ public class GeneralActions : MonoBehaviour
         scriptManager.ConnectScripts();
     }
 
-    //Start Grapple Seqeuence
-    public void StartGrapple()
+    public int GetActionModifier(GameObject unit)
     {
-        //Set Variables
-        scriptManager.scriptBattleController.grappleAction = true;
-        scriptManager.scriptBattleController.battleStatus = true;
-        scriptUnitStats.attackRange = 1;
+        if (scriptManager.scriptBattleController.grappleAction == true)
+        {
+            actionModifier = unit.GetComponent<UnitStats>().strengthModifier;
+        }
 
-        //Update UI
-        HighlightGrappleRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
+        if (scriptManager.scriptBattleController.hideAction == true)
+        {
+            actionModifier = unit.GetComponent<UnitStats>().dexterityModifier;
+        }
+
+        return actionModifier;
     }
 
-    //Highlight Tiles on Grapple Action Menu Button
-    public void HighlightGrappleRange()
+
+
+    // Actions //
+    // Actions //
+    // Actions //
+
+
+
+    public void GrappleAction() //Called from Class Button
+    {
+        scriptManager.scriptBattleController.grappleAction = true;
+        scriptManager.scriptBattleController.battleStatus = true;
+        scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitStats>().attackRange = 1;
+        HighlightActionRange();
+        scriptManager.scriptGameMenuController.CloseAllMenus();
+        StartAction();
+    }
+
+
+
+    public void StartHide()
+    {
+        scriptManager.scriptBattleController.hideAction = true;
+        scriptManager.scriptBattleController.battleStatus = true;
+        StartAction();
+        //scriptManager.scriptGameMenuController.WaitButton();
+        //scriptManager.scriptBattleController.ResetActionBools();
+    }
+
+
+
+    // Template for Actions //
+    // Template for Actions //
+    // Template for Actions //
+
+
+    
+    public void HighlightActionRange()
     {
         scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
         scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
-    //Attempt Grapple
-    public void AttemptGrappleAction()
+    public void StartAction()
     {
+        //Set Variables
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
-        //Clicked
+        //Click
         if (Physics.Raycast(ray, out hit))
         {
             //Clicked a Tile
@@ -79,17 +112,19 @@ public class GeneralActions : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
+                    //Opposing Team & Within Attackable Tiles
                     if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                     {
+                        //Unit is Alive
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
-                            StartCoroutine(GrappleActionEffects(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            //Attack then Deselect
+                            StartCoroutine(UseAction(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                             StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
                 }
             }
-
         }
 
         //Clicked a Unit
@@ -104,16 +139,16 @@ public class GeneralActions : MonoBehaviour
                 //Enmy Unit is Alive
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
-                    StartCoroutine(GrappleActionEffects(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(UseAction(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                     StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
     }
 
-    //Action Animation & Movement
-    public IEnumerator GrappleActionEffects(GameObject initiator, GameObject recipient)
+    public IEnumerator UseAction(GameObject initiator, GameObject recipient)
     {
+        //Set Variables
         float timeElapsed = 0;
         Vector3 initiatorPosition = initiator.transform.position;
         Vector3 recipientPosition = recipient.transform.position;
@@ -127,10 +162,10 @@ public class GeneralActions : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        //Attack
+        //Action
         while (scriptManager.scriptBattleController.battleStatus)
         {
-            RollDice_Grapple(initiator, recipient);
+            CompareRolls(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }
 
@@ -141,63 +176,44 @@ public class GeneralActions : MonoBehaviour
         }
     }
 
-    //Grapple Rolls
-    public void RollDice_Grapple(GameObject initiator, GameObject recipient)
+    public void CompareRolls(GameObject initiator, GameObject recipient)
     {
-        //Initiator & Recipient
+        //Set Variables
         var initiatorUnit = initiator.GetComponent<UnitController>();
         var initiatorStats = initiator.GetComponent<UnitStats>();
+        int initiatorActionModifier = GetActionModifier(initiator);
         var recipientUnit = recipient.GetComponent<UnitController>();
         var recipientStats = recipient.GetComponent<UnitStats>();
+        int recipientActionModifier = GetActionModifier(recipient);
 
-        //Grapple Rolls
-        int initiatorGrappleRoll = Random.Range(1, 20) + initiatorStats.strengthModifier;
-        int recipientGrappleRoll = Random.Range(1, 20) + recipientStats.strengthModifier;
+        //Rolls
+        int initiatorRoll = scriptManager.scriptDiceRoller.RollD20(initiatorActionModifier);
+        int recipientRoll = scriptManager.scriptDiceRoller.RollD20(recipientActionModifier);
 
-        //Initiator Grapple Roll >= Recipient Grapple Roll
-        if (initiatorGrappleRoll >= recipientGrappleRoll)
+        //Compare Rolls
+        if (initiatorRoll >= recipientRoll)
         {
-            Debug.Log(initiatorStats.unitName + "'s Grapple Roll of " + initiatorGrappleRoll + " was higher than " + recipientStats.unitName + "'s Roll of " + recipientGrappleRoll);
-
-            //Particle Effect
-            //[Update] to New Graphic
-            GameObject tempParticle = Instantiate(recipientUnit.GetComponent<UnitController>().damageParticles, recipient.transform.position, recipient.transform.rotation);
             scriptManager.scriptBattleController.battleStatus = false;
+            ApplyConditions(initiatorUnit, recipientUnit);
+            Instantiate(recipientUnit.GetComponent<UnitController>().damageParticles, recipient.transform.position, recipient.transform.rotation);
         }
 
-        //Initiator Grapple Roll < Recipient Grapple Roll
         else
         {
-            Debug.Log(initiatorStats.unitName + "'s Grapple Roll of " + initiatorGrappleRoll + " was lower than " + recipientStats.unitName + "'s Roll of " + recipientGrappleRoll);
             scriptManager.scriptBattleController.battleStatus = false;
         }
     }
 
-    //Attempt Hide
-    public void StartHide()
+    public void ApplyConditions(UnitController initiator, UnitController recipient)
     {
-        //Set Statuses
-        scriptManager.scriptBattleController.hideAction = true;
-        scriptManager.scriptBattleController.battleStatus = true;
+        if (scriptManager.scriptBattleController.grappleAction == true)
+        {
+            recipient.SetConditionState(4); //Set Condition State as Grappled
+        }
 
-        //Run Methods
-        //[Update] Add Hide Animation (May Conflict with Wait Animaiton)
-        RollDice_Hide();
-        scriptManager.scriptGameMenuController.WaitButton();
-        scriptManager.scriptBattleController.ResetActionBools();
-    }
-
-    //Roll Hide
-    public void RollDice_Hide()
-    {
-        //Initiator & Recipient
-        var initiatorUnit = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>();
-        var initiatorStats = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitStats>();
-
-        //Hide Roll
-        int initiatorHideRoll = Random.Range(1, 20) + initiatorStats.dexterityModifier;
-        Debug.Log(scriptUnitStats.unitName + " Rolled a Stealth Roll of " + initiatorHideRoll);
-
-        scriptManager.scriptBattleController.battleStatus = false;
+        if (scriptManager.scriptBattleController.hideAction == true)
+        {
+            initiator.SetConditionState(9); //Set Condition State as Hidden
+        }
     }
 }

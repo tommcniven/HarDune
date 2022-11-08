@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 43821925479923861}
   - component: {fileID: 43821925479923858}
   - component: {fileID: 1510347755}
-  - component: {fileID: 1685609799}
   - component: {fileID: 1439001623}
   m_Layer: 0
   m_Name: Fighter (PC)
@@ -129,6 +128,7 @@ MonoBehaviour:
   unitActionState: 0
   unitSpellSaveState: 0
   unitSpellCastState: 0
+  unitConditionState: 0
   teamNumber: 0
   x: 0
   y: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
     type: 3}
   coroutineRunning: 0
   animator: {fileID: 0}
-  unitName: Skeleton Soldier
+  unitName: Fighter
   moveSpeed: 4
   moveSpeedTime: 0.1
   attackDamage: 3
@@ -195,24 +195,10 @@ MonoBehaviour:
   spellSaveModifier: 0
   spellDamageType: 
   movementSpeed: 6
+  baseMovementSpeed: 6
   visualMovementSpeed: 0.15
   maxHP: 0
   hitDie: 10
---- !u!114 &1685609799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43821925479923859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779064cedd1fdf2448a554f9082436ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1510347755}
-  scriptUnitController: {fileID: 43821925479923858}
-  scriptManager: {fileID: 0}
 --- !u!114 &1439001623
 MonoBehaviour:
   m_ObjectHideFlags: 0

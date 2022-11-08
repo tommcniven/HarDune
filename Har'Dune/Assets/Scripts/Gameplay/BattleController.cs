@@ -14,7 +14,8 @@ public class BattleController : MonoBehaviour
     [Header("Actions")]
     public bool grappleAction = false;
     public bool hideAction = false;
-    public bool stealthAction = false;
+    public bool dodgeAction = false;
+    public bool waitAction = false;
 
     [Header("Attacks")]
     public bool unarmedStrike = false;
@@ -60,7 +61,8 @@ public class BattleController : MonoBehaviour
         //Actions
         grappleAction = false;
         hideAction = false;
-        stealthAction = false;
+        dodgeAction = false;
+        waitAction = false;
 
         //Attacks
         greatswordAttack = false;

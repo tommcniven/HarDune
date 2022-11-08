@@ -43,6 +43,7 @@ public class UnitStats : MonoBehaviour
 
     [Header("Movement")]
     public int movementSpeed;
+    public int baseMovementSpeed;
     public float visualMovementSpeed = .15f;
 
     [Header("Health")]
@@ -56,6 +57,7 @@ public class UnitStats : MonoBehaviour
 
     private void SetVariables()
     {
+
         //Set Ability Modifiers
         strengthModifier = (int)Mathf.Floor((strength - 10) / 2);
         dexterityModifier = (int)Mathf.Floor((dexterity - 10) / 2);

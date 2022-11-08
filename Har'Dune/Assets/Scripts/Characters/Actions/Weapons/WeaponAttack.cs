@@ -262,9 +262,6 @@ public class WeaponAttack : MonoBehaviour
         while (scriptManager.scriptBattleController.battleStatus)
         {
             StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
-
-            //Note - Add --> GetWeaponSelected();
-            //Change RollDice_DealDamage_Greatsword(initiator, recipient) --> DealDamage(initiator, recipient);
             DealDamage(initiator, recipient);
             yield return new WaitForEndOfFrame();
         }

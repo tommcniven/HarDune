@@ -18,6 +18,8 @@ public class ScriptManager : MonoBehaviour
     public UnitUIDisplay scriptUnitUIDisplay;
     public PathFinder scriptPathFinder;
     public WeaponAttack scriptWeaponAttack;
+    public UnitStats scriptUnitStats;
+    public DiceRoller scriptDiceRoller;
 
     public void ConnectScripts()
     {
@@ -34,5 +36,6 @@ public class ScriptManager : MonoBehaviour
         scriptUnitUIDisplay = GameObject.Find("Unit UI Display").GetComponent<UnitUIDisplay>();
         scriptPathFinder = GameObject.Find("Path Finder").GetComponent<PathFinder>();
         scriptWeaponAttack = GameObject.Find("Weapon Attacks").GetComponent<WeaponAttack>();
+        scriptDiceRoller = GameObject.Find("Dice Roller").GetComponent<DiceRoller>();
     }
 }
