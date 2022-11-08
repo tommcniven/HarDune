@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class GeneralActions : MonoBehaviour
 
     [Header("UnitReferences")]
     public int actionModifier;
+    public static event Action onDodge;
 
     public void Awake()
     {
@@ -23,22 +25,9 @@ public class GeneralActions : MonoBehaviour
 
     public int GetActionModifier(GameObject unit)
     {
-        if (scriptManager.scriptBattleController.grappleAction == true)
+        if (scriptManager.scriptBattleController.isGrappling == true)
         {
             actionModifier = unit.GetComponent<UnitStats>().strengthModifier;
-        }
-
-        if (scriptManager.scriptBattleController.hideAction == true)
-        {
-            if (unit == scriptManager.scriptTileMap.selectedUnit)
-            {
-                actionModifier = unit.GetComponent<UnitStats>().dexterityModifier;
-            }
-
-            else
-            {
-                actionModifier = unit.GetComponent<UnitStats>().wisdomModifier;
-            }
         }
 
         return actionModifier;
@@ -52,22 +41,38 @@ public class GeneralActions : MonoBehaviour
 
 
 
-    public void GrappleAction() //Called from Class Button
+    public void GrappleAction() //Called from Actions Menu Button
     {
-        scriptManager.scriptBattleController.grappleAction = true;
+        scriptManager.scriptBattleController.isGrappling = true;
         scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitStats>().attackRange = 1;
         SetVariables();
         HighlightActionRange();
-        //StartAction();
     }
 
-
-
-    public void HideAction()
+    public void HideAction() //Called from Actions Menu Button
     {
-        scriptManager.scriptBattleController.hideAction = true;
-        SetVariables();
-        //StartAction();
+        //Set Variables
+        scriptManager.scriptBattleController.isHiding = true;
+        GameObject selectedUnit = scriptManager.scriptTileMap.selectedUnit;
+        int dexModifier = selectedUnit.GetComponent<UnitStats>().dexterityModifier;
+        SetWaitVariables();
+
+        //Roll for Hide
+        int rollResult = scriptManager.scriptDiceRoller.RollD20(dexModifier);
+        Debug.Log(selectedUnit.GetComponent<UnitStats>().unitName + " Rolled an " + rollResult + " to Hide");
+        //Note -- Need to Add Roll Pop Up
+    }
+
+    public void WaitAction() //Called from Actions Menu Button
+    {
+        SetWaitVariables();
+    }
+
+    public void DodgeAction()
+    {
+        scriptManager.scriptBattleController.isDodging = true;
+        onDodge?.Invoke();
+        SetWaitVariables();
     }
 
 
@@ -77,11 +82,21 @@ public class GeneralActions : MonoBehaviour
     // Template for Actions //
 
 
-    
-   public void SetVariables()
+
+    public void SetVariables()
     {
         scriptManager.scriptBattleController.battleStatus = true;
         scriptManager.scriptBattleController.actionSelected = true;
+        scriptManager.scriptGameMenuController.CloseAllMenus();
+    }
+
+    public void SetWaitVariables()
+    {
+        scriptManager.scriptMovementController.DisableMovementRangeHighlight();
+        scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().Wait();
+        scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().SetWaitAnimation();
+        scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().SetMovementState(3);
+        scriptManager.scriptUnitSelection.DeselectUnit();
         scriptManager.scriptGameMenuController.CloseAllMenus();
     }
 
@@ -207,31 +222,25 @@ public class GeneralActions : MonoBehaviour
     public void ApplyConditions(GameObject initiator, GameObject recipient)
     {
         //State Machine Variable References
-        int normal = 0;
-        int charmed = 1;
-        int deafend = 2;
-        int frightened = 3;
+        //int normal = 0;
+        //int charmed = 1;
+        //int deafend = 2;
+        //int frightened = 3;
         int grappled = 4;
-        int paralyzed = 5;
-        int petrified = 6;
-        int restrained = 7;
-        int stunned = 8;
-        int hidden = 9;
-        int unconscious = 10;
+        //int paralyzed = 5;
+        //int petrified = 6;
+        //int restrained = 7;
+        //int stunned = 8;
+        //int hidden = 9;
+        //int unconscious = 10;
 
         //Set Conditions
-        if (scriptManager.scriptBattleController.grappleAction == true)
+        if (scriptManager.scriptBattleController.isGrappling == true)
         {
             recipient.GetComponent<UnitController>().SetConditionState(grappled);
             recipient.GetComponent<UnitStats>().movementSpeed = 0;
+            recipient.GetComponent<UnitStats>().maxAttackRange = 1;
             Debug.Log(initiator.GetComponent<UnitStats>().unitName + " Grapple Roll Was Success & " + recipient.GetComponent<UnitStats>().unitName + " is Grappled");
-        }
-
-        if (scriptManager.scriptBattleController.hideAction == true)
-        {
-            initiator.GetComponent<UnitController>().SetConditionState(hidden);
-            Debug.Log(initiator.GetComponent<UnitStats>().unitName + " Hide Roll Was Success & " + initiator.GetComponent<UnitStats>().unitName + " is Hidden");
-
         }
     }
 }

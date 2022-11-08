@@ -15,10 +15,10 @@ public class BattleController : MonoBehaviour
     public bool spellSelected = false;
 
     [Header("Actions")]
-    public bool grappleAction = false;
-    public bool hideAction = false;
-    public bool dodgeAction = false;
-    public bool waitAction = false;
+    public bool isGrappling = false;
+    public bool isHiding = false;
+    public bool isDodging = false;
+    public bool isWaiting = false;
 
     [Header("Attacks")]
     public bool unarmedStrike = false;
@@ -60,8 +60,6 @@ public class BattleController : MonoBehaviour
                 {
                     //scriptManager.scriptSpellcasting.StartSpell();
                 }
-
-                //ResetActionBools();
             }
         }
     }
@@ -80,10 +78,10 @@ public class BattleController : MonoBehaviour
         spellSelected = false;
 
         //Actions
-        grappleAction = false;
-        hideAction = false;
-        dodgeAction = false;
-        waitAction = false;
+        isGrappling = false;
+        isHiding = false;
+        isDodging = false;
+        isWaiting = false;
 
         //Attacks
         greatswordAttack = false;

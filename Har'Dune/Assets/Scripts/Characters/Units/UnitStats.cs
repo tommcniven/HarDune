@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class UnitStats : MonoBehaviour
 {
-    //Variables
+    [Header("Scripts")]
+    public ScriptManager scriptManager;
+
     [Header("Unit Info")]
     public string unitName;
     public string unitClass;
@@ -30,6 +32,7 @@ public class UnitStats : MonoBehaviour
 
     [Header("Combat")]
     public int armorClass;
+    public int baseArmorClass;
     public int attackModifier;
     public int damageModifier;
     public int maxAttackRange;
@@ -50,14 +53,35 @@ public class UnitStats : MonoBehaviour
     public int maxHP;
     public int hitDie;
 
+    [Header("Other")]
+    public int dodgeTimer;
+
     public void Start()
     {
+        SetScriptManager();
         SetVariables();
+    }
+
+    private void OnEnable()
+    {
+        GeneralActions.onDodge += UpdateArmorClass;
+        TurnController.onTurnChange += SetDodgeTimer;
+    }
+
+    private void OnDisable()
+    {
+        GeneralActions.onDodge -= UpdateArmorClass;
+        TurnController.onTurnChange -= SetDodgeTimer;
+    }
+
+    public void SetScriptManager()
+    {
+        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
+        scriptManager.ConnectScripts();
     }
 
     private void SetVariables()
     {
-
         //Set Ability Modifiers
         strengthModifier = (int)Mathf.Floor((strength - 10) / 2);
         dexterityModifier = (int)Mathf.Floor((dexterity - 10) / 2);
@@ -69,6 +93,8 @@ public class UnitStats : MonoBehaviour
         //Set Armor Class
         //[Update] Need to Update to include armor when applicable
         armorClass = (10 + dexterityModifier);
+        baseArmorClass = armorClass;
+
 
         //Set Proficiency
         if (unitLevel <= 4)
@@ -142,6 +168,31 @@ public class UnitStats : MonoBehaviour
         {
             spellAttackModifier = 0;
             spellSaveModifier = 0;
+        }
+    }
+
+    public void UpdateArmorClass()
+    {
+        if (scriptManager.scriptBattleController.isDodging == true)
+        {
+            armorClass += 3;
+        }
+
+        else
+        {
+            armorClass = baseArmorClass;
+        }
+    }
+
+    public void SetDodgeTimer()
+    {
+        dodgeTimer++;
+
+        if (dodgeTimer == scriptManager.scriptTurnController.numberOfTeams)
+        {
+            UpdateArmorClass();
+            scriptManager.scriptBattleController.ResetActionBools();
+            dodgeTimer = 0;
         }
     }
 }

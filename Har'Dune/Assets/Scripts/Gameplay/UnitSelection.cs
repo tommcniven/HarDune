@@ -52,7 +52,7 @@ public class UnitSelection : MonoBehaviour
             {
                 if (GameMenuController.menuOpen == false && scriptManager.scriptGameController.isGameOver == false)
                 {
-                    scriptManager.scriptGameMenuController.OpenGameMenu();
+                    scriptManager.scriptGameMenuController.OpenMainMenu();
                 }
             }
         }

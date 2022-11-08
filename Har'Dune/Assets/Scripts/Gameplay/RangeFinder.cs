@@ -9,7 +9,6 @@ public class RangeFinder : MonoBehaviour
     public MovementController scriptMovementController;
 
 
-    //Highlight Total Range (Movement + Max Attack Range) for Movement State (Selected)
     public void HighlightUnitRange()
     {
         //Reference Variables
@@ -18,6 +17,7 @@ public class RangeFinder : MonoBehaviour
         var tilesOnMap = scriptTileMap.tilesOnMap;
         var selectedUnitTotalRange = scriptTileMap.selectedUnitTotalRange;
 
+        //Set Variables
         HashSet<Node> movementRange = new HashSet<Node>();
         HashSet<Node> attackableTiles = new HashSet<Node>();
         HashSet<Node> enemyUnitsInMovementRange = new HashSet<Node>();
@@ -25,9 +25,7 @@ public class RangeFinder : MonoBehaviour
         Node selectedUnitNode = tileGraph[selectedUnit.GetComponent<UnitController>().x, selectedUnit.GetComponent<UnitController>().y];
         movementRange = scriptMovementController.GetMovementRange();
         attackableTiles = GetAttackRange(movementRange, attackRange, selectedUnitNode);
-        // Remove scriptTileMap ^^^
 
-        //Check Attackable Tiles for Units
         foreach (Node n in attackableTiles)
         {
             //Unit on Tile
@@ -49,7 +47,6 @@ public class RangeFinder : MonoBehaviour
         selectedUnitTotalRange = GetTotalRange(movementRange, attackableTiles);
     }
 
-    //Get Total Range (Movemnet Range + Attack Range) for Movement State (Selected)
     public HashSet<Node> GetTotalRange(HashSet<Node> totalMovementRange, HashSet<Node> totalAttackableTiles)
     {
         HashSet<Node> totalRange = new HashSet<Node>();
@@ -58,8 +55,6 @@ public class RangeFinder : MonoBehaviour
         return totalRange;
     }
 
-
-    //Get Total Attackable Tiles (Neighbord Nodes + Neighbor Node's Neighbors within Attack Range) for Movement State (Selected)
     public HashSet<Node> GetAttackRange(HashSet<Node> movementHighlight, int attackRange, Node unitInitialNode)
     {
         HashSet<Node> tempNeighorNodes = new HashSet<Node>();
@@ -67,13 +62,11 @@ public class RangeFinder : MonoBehaviour
         HashSet<Node> checkedNodes = new HashSet<Node>();
         HashSet<Node> totalAttackableTiles = new HashSet<Node>();
 
-        //Add All Nodes in Movement Highlight into Variable(neighborNodes)
         foreach (Node n in movementHighlight)
         {
             neighborNodes = new HashSet<Node>();
             neighborNodes.Add(n);
 
-            //Add Each Neighboring Node & Each Neighbor to those Nodes within the Attack Range to the Variable(tempNeighborNodes)
             for (int i = 0; i < attackRange; i++)
             {
                 foreach (Node t in neighborNodes)
@@ -84,7 +77,6 @@ public class RangeFinder : MonoBehaviour
                     }
                 }
 
-                //Set Variable(neighborNodes) to Temp Neighbor Nodes, then reset Temp Neighbor Nodes
                 neighborNodes = tempNeighorNodes;
                 tempNeighorNodes = new HashSet<Node>();
 
@@ -104,25 +96,19 @@ public class RangeFinder : MonoBehaviour
         return totalAttackableTiles;
     }
 
-    //Get Attackable Units (Neighbord Nodes + Neighbor Node's Neighbors within Attack Range) for Movement State (Selected)
     public HashSet<Node> GetAttackableUnits()
     {
-        //Reference Variables
+        //Set Variables
         var tileGraph = scriptTileMap.tileGraph;
         var selectedUnit = scriptTileMap.selectedUnit;
-
-        //Set Variables
         HashSet<Node> tempNeighborNodes = new HashSet<Node>();
         HashSet<Node> neighborNodes = new HashSet<Node>();
         HashSet<Node> checkedNodes = new HashSet<Node>();
         Node selectedUnitNode = tileGraph[selectedUnit.GetComponent<UnitController>().x, selectedUnit.GetComponent<UnitController>().y];
         int attackRange = selectedUnit.GetComponent<UnitStats>().attackRange;
-
-        //Add Initial Node to Neighbor Nodes
         neighborNodes = new HashSet<Node>();
         neighborNodes.Add(selectedUnitNode);
 
-        //Add Each Neighboring Node & Each Neighbor to those Nodes within the Attack Range to the Variable(tempNeighborNodes)
         for (int i = 0; i < attackRange; i++)
         {
             foreach (Node n in neighborNodes)
@@ -135,7 +121,6 @@ public class RangeFinder : MonoBehaviour
                 }
             }
 
-            //Set Variable(neighborNodes) to Temp Neighbor Nodes, then reset Temp Neighbor Nodes
             neighborNodes = tempNeighborNodes;
             tempNeighborNodes = new HashSet<Node>();
         }

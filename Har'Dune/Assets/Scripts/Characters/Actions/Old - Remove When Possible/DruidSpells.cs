@@ -50,7 +50,7 @@ public class DruidSpells : MonoBehaviour
     //Start Druidcraft Cast
     public void StartDruidcraftSpell()
     {
-        scriptManager.scriptGameMenuController.WaitButton();
+        scriptManager.scriptGeneralActions.WaitAction();
         scriptManager.scriptBattleController.ResetActionBools();
     }
 

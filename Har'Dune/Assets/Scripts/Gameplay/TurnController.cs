@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class TurnController : MonoBehaviour
     public TMP_Text currentTeamUI;
     public int numberOfTeams = 2;
     public int currentTeam = 0;
+    public static event Action onTurnChange;
 
     public void Awake()
     {
@@ -65,6 +67,12 @@ public class TurnController : MonoBehaviour
         if (currentTeam == numberOfTeams)
         {
             currentTeam = 0;
+        }
+
+        //Dodge Timer
+        if (scriptManager.scriptBattleController.isDodging)
+        {
+            onTurnChange?.Invoke();
         }
     }
 

@@ -17,11 +17,12 @@ public class GameMenuController : MonoBehaviour
     public static bool menuOpen = false;
 
     [Header("Main Menus")]
-    public GameObject gameMenuPanel;
+    public GameObject mainMenu;
+    public GameObject optionsMenu;
     public GameObject characterMenu;
     public GameObject attacksMenu;
     public GameObject actionsMenu;
-    public GameObject optionsMenu;
+    public GameObject spellbookMenu;
 
     public void Awake()
     {
@@ -39,7 +40,7 @@ public class GameMenuController : MonoBehaviour
             }
             else
             {
-                OpenGameMenu();
+                OpenMainMenu();
             }
         }
 
@@ -59,11 +60,12 @@ public class GameMenuController : MonoBehaviour
 
     public void CloseAllMenus()
     {
+        mainMenu.SetActive(false);
+        //optionsMenu.SetActive(false);
         characterMenu.SetActive(false);
-        gameMenuPanel.SetActive(false);
-        scriptSpellbookMenu.spellbookMenu.SetActive(false); //Old -- Remove When Possible
-        actionsMenu.SetActive(false);
         attacksMenu.SetActive(false);
+        actionsMenu.SetActive(false);
+        spellbookMenu.SetActive(false);
         menuOpen = false;
     }
 
@@ -91,17 +93,7 @@ public class GameMenuController : MonoBehaviour
         }
     }
 
-    public void WaitButton()
-    {
-        scriptManager.scriptMovementController.DisableMovementRangeHighlight();
-        scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().Wait();
-        scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().SetWaitAnimation();
-        scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().SetMovementState(3);
-        scriptManager.scriptUnitSelection.DeselectUnit();
-        CloseAllMenus();
-    }
-
-    public void OpenGameMenu()
+    public void OpenMainMenu()
     {
         //Get Mouse Position
         Vector3 mousePosition = Input.mousePosition;
@@ -109,17 +101,17 @@ public class GameMenuController : MonoBehaviour
         float y = mousePosition.y;
 
         //Set Menu at Mouse Position
-        gameMenuPanel.transform.position = new Vector3(x, y - 50f);
+        mainMenu.transform.position = new Vector3(x, y - 50f);
 
         //Set Variables
-        gameMenuPanel.SetActive(true);
+        mainMenu.SetActive(true);
         menuOpen = true;
         FindObjectOfType<AudioManager>().Play("Open Menu");
     }
 
-    public void CloseGameMenu()
+    public void CloseMainMenu()
     {
-        gameMenuPanel.SetActive(false);
+        mainMenu.SetActive(false);
         menuOpen = false;
     }
 

@@ -60,7 +60,7 @@ public class MovementController : MonoBehaviour
                     }
                 }
             }
-            //Combine Highlighted Areas, Set Final Movement Highlight UI, then Reset the Variable (tempHighlightUI)
+
             highlightUI = temphighlightUI;
             movementHighlight.UnionWith(highlightUI);
             temphighlightUI = new HashSet<Node>();
