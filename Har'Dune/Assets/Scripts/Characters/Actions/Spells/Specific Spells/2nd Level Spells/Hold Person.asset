@@ -21,6 +21,9 @@ MonoBehaviour:
     higher, you can target one additional humanoid for each slot level above 2nd.
     The humanoids must be within 30 feet of each other when you target them.
   spellSchool: Enchantment
+  spellDamageType: '-'
+  spellAttackDice: 0
+  spellAttackDamage: 0
   spellLevel: 2
   spellCastingTime: 1 Action
   spellRange: 6

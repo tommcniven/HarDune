@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class GeneralActions : MonoBehaviour
 {
+    // Steps for Adding Action:
+    // 1. Copy & Paste New Weapon Action from GrappleAction()
+    // 2. Add Action Bool to Battle Controller Script
+    // 3. Done!
+
     [Header("Scripts")]
     public ScriptManager scriptManager;
 
@@ -196,10 +201,9 @@ public class GeneralActions : MonoBehaviour
         int initiatorActionModifier = GetActionModifier(initiator);
         int recipientActionModifier = GetActionModifier(recipient);
 
-        //Rolls
-        int initiatorRoll = scriptManager.scriptDiceRoller.RollD20(initiatorActionModifier);
-        int recipientRoll = scriptManager.scriptDiceRoller.RollD20(recipientActionModifier);
-
+        //Roll Dice
+        int initiatorRoll = scriptManager.scriptBattleController.ActionRoll(initiatorActionModifier);
+        int recipientRoll = scriptManager.scriptBattleController.ActionRoll(recipientActionModifier);
 
         //Compare Rolls
         if (initiatorRoll >= recipientRoll)
@@ -221,23 +225,9 @@ public class GeneralActions : MonoBehaviour
 
     public void ApplyConditions(GameObject initiator, GameObject recipient)
     {
-        //State Machine Variable References
-        //int normal = 0;
-        //int charmed = 1;
-        //int deafend = 2;
-        //int frightened = 3;
-        int grappled = 4;
-        //int paralyzed = 5;
-        //int petrified = 6;
-        //int restrained = 7;
-        //int stunned = 8;
-        //int hidden = 9;
-        //int unconscious = 10;
-
-        //Set Conditions
-        if (scriptManager.scriptBattleController.isGrappling == true)
+        if (scriptManager.scriptBattleController.isGrappling)
         {
-            recipient.GetComponent<UnitController>().SetConditionState(grappled);
+            recipient.GetComponent<UnitController>().SetConditionState(4); //Apply Grappled Condition
             recipient.GetComponent<UnitStats>().movementSpeed = 0;
             recipient.GetComponent<UnitStats>().maxAttackRange = 1;
             Debug.Log(initiator.GetComponent<UnitStats>().unitName + " Grapple Roll Was Success & " + recipient.GetComponent<UnitStats>().unitName + " is Grappled");

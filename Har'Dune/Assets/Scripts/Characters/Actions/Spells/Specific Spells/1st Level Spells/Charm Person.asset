@@ -23,9 +23,13 @@ MonoBehaviour:
     or higher, you can target one additional creature for each slot level above 1st.
     The creatures must be within 30 feet of each other when you target them.  '
   spellSchool: Enchantment
+  spellDamageType: '-'
+  spellAttackDice: 0
+  spellAttackDamage: 0
   spellLevel: 1
   spellCastingTime: 1 Action
   spellRange: 3
   spellComponents: V, S
   spellDuration: 1 Hour
+  spellIsConcentration: 0
   sepllIconArtwork: {fileID: 21300000, guid: 8dff98bc0abed2648a814a6c511b4927, type: 3}

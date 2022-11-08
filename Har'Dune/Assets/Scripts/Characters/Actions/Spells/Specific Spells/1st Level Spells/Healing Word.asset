@@ -19,9 +19,13 @@ MonoBehaviour:
   spellAtHigherLevels: 'When you cast this spell using a spell slot of 2nd level
     or higher, the healing increases by 1d4 for each slot level above 1st. '
   spellSchool: Evocation
+  spellDamageType: '-'
+  spellAttackDice: 0
+  spellAttackDamage: 0
   spellLevel: 1
   spellCastingTime: 1 Bonus Action
   spellRange: 6
   spellComponents: V
   spellDuration: Instantaneous
+  spellIsConcentration: 0
   sepllIconArtwork: {fileID: 21300000, guid: 70605d58a15b68b4bb80faf63d482deb, type: 3}

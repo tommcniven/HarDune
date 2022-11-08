@@ -19,6 +19,9 @@ MonoBehaviour:
     then ends.  '
   spellAtHigherLevels: N/A
   spellSchool: Divination
+  spellDamageType: '-'
+  spellAttackDice: 0
+  spellAttackDamage: 0
   spellLevel: 0
   spellCastingTime: 1 Action
   spellRange: 1

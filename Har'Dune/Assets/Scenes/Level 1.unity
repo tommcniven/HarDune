@@ -2501,8 +2501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptManager: {fileID: 0}
-  scriptUnitStats_SelectedUnit: {fileID: 0}
-  weaponSO: {fileID: 0}
   weaponReference: {fileID: 0}
 --- !u!1 &148156222
 GameObject:
@@ -10981,6 +10979,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Menu Item Selected
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1906944882}
+        m_TargetAssemblyTypeName: Spellcasting, Assembly-CSharp
+        m_MethodName: CastFrostbite
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &655017578
@@ -24729,6 +24739,7 @@ MonoBehaviour:
   scriptUnitStats: {fileID: 0}
   scriptDiceRoller: {fileID: 0}
   scriptGeneralActions: {fileID: 0}
+  scriptSpellcasting: {fileID: 0}
 --- !u!1 &1447422455
 GameObject:
   m_ObjectHideFlags: 0
@@ -29054,10 +29065,13 @@ MonoBehaviour:
   lightCrossbowAttack: 0
   scimitarAttack: 0
   daggerThrowAttack: 0
-  druidcraft: 0
   frostbite: 0
-  cureWounds: 0
+  guidance: 0
+  iceKnife: 0
+  healingWord: 0
   charmPerson: 0
+  barkskin: 0
+  holdPerson: 0
 --- !u!114 &1667033356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32872,8 +32886,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1906944881}
+  - component: {fileID: 1906944882}
   m_Layer: 0
-  m_Name: Spells
+  m_Name: Spellcasting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32896,6 +32911,21 @@ Transform:
   m_Father: {fileID: 1583469675}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1906944882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906944880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf6ecfad9d36b224a9a98875eafb8088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptManager: {fileID: 0}
+  spellReference: {fileID: 0}
+  selectedSpell: 
 --- !u!1 &1910107676
 GameObject:
   m_ObjectHideFlags: 0

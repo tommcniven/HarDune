@@ -18,6 +18,9 @@ MonoBehaviour:
     less than 16, regardless of what kind of armor it is wearing.  "
   spellAtHigherLevels: N/A
   spellSchool: Transmutation
+  spellDamageType: '-'
+  spellAttackDice: 0
+  spellAttackDamage: 0
   spellLevel: 2
   spellCastingTime: 1 Action
   spellRange: 1

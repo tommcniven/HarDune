@@ -20,9 +20,13 @@ MonoBehaviour:
   spellAtHigherLevels: "The spell\u2019s damage increases by 1d6 when you reach 5th
     level (2d6), 11th level (3d6), and 17th level (4d6)."
   spellSchool: Evocation
+  spellDamageType: Cold
+  spellAttackDice: 1
+  spellAttackDamage: 6
   spellLevel: 0
   spellCastingTime: 1 Action
   spellRange: 6
   spellComponents: V, S
   spellDuration: Instantaneous
+  spellIsConcentration: 0
   sepllIconArtwork: {fileID: 21300000, guid: 200f8debbfc2e614e98c96e4a22f5f79, type: 3}

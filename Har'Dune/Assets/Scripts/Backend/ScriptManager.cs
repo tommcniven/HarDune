@@ -21,6 +21,7 @@ public class ScriptManager : MonoBehaviour
     public UnitStats scriptUnitStats;
     public DiceRoller scriptDiceRoller;
     public GeneralActions scriptGeneralActions;
+    public Spellcasting scriptSpellcasting;
 
     public void ConnectScripts()
     {
@@ -39,5 +40,6 @@ public class ScriptManager : MonoBehaviour
         scriptWeaponAttack = GameObject.Find("Weapon Attacks").GetComponent<WeaponAttack>();
         scriptDiceRoller = GameObject.Find("Dice Roller").GetComponent<DiceRoller>();
         scriptGeneralActions = GameObject.Find("General Actions").GetComponent<GeneralActions>();
+        scriptSpellcasting = GameObject.Find("Spellcasting").GetComponent<Spellcasting>();
     }
 }

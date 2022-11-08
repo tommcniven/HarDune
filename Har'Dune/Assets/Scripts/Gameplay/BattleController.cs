@@ -30,10 +30,13 @@ public class BattleController : MonoBehaviour
     public bool daggerThrowAttack = false;
 
     [Header("Spells")]
-    public bool druidcraft = false;
     public bool frostbite = false;
-    public bool cureWounds = false;
+    public bool guidance = false;
+    public bool iceKnife = false;
+    public bool healingWord = false;
     public bool charmPerson = false;
+    public bool barkskin = false;
+    public bool holdPerson = false;
 
     public void Awake()
     {
@@ -58,7 +61,7 @@ public class BattleController : MonoBehaviour
 
                 if (spellSelected)
                 {
-                    //scriptManager.scriptSpellcasting.StartSpell();
+                    scriptManager.scriptSpellcasting.StartSpell();
                 }
             }
         }
@@ -92,10 +95,13 @@ public class BattleController : MonoBehaviour
         daggerThrowAttack = false;
 
         //Spells
-        druidcraft = false;
         frostbite = false;
-        cureWounds = false;
+        guidance = false;
+        iceKnife = false;
+        healingWord = false;
         charmPerson = false;
+        barkskin = false;
+        holdPerson = false;
     }
 
     public bool isUnitDead(GameObject unitCurrentHeatlh)
@@ -159,58 +165,56 @@ public class BattleController : MonoBehaviour
         return rollD20s;
     }
 
-    public int AttackRoll()
+    public int AttackRoll(int attackModifier)
     {
-        UnitStats selectedUnitStats = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitStats>();
         UnitController selectedUnitController = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>();
 
         //Normal
-        if (selectedUnitController.GetComponent<UnitController>().unitAttackState == selectedUnitController.GetComponent<UnitController>().GetAttackState(0))
+        if (selectedUnitController.unitAttackState == selectedUnitController.GetAttackState(0))
         {
-            int attackRoll = RollD20() + selectedUnitStats.attackModifier;
+            int attackRoll = RollD20() + attackModifier;
             return attackRoll;
         }
 
         //Advantage
-        else if (selectedUnitController.GetComponent<UnitController>().unitAttackState == selectedUnitController.GetComponent<UnitController>().GetAttackState(1))
+        else if (selectedUnitController.unitAttackState == selectedUnitController.GetAttackState(1))
         {
-            int attackRoll = RollD20Advantage() + selectedUnitStats.attackModifier;
+            int attackRoll = RollD20Advantage() + attackModifier;
             return attackRoll;
         }
 
         //Disadvantage
-        else if (selectedUnitController.GetComponent<UnitController>().unitAttackState == selectedUnitController.GetComponent<UnitController>().GetAttackState(2))
+        else if (selectedUnitController.unitAttackState == selectedUnitController.GetAttackState(2))
         {
-            int attackRoll = RollD20Disadvantage() + selectedUnitStats.attackModifier;
+            int attackRoll = RollD20Disadvantage() + attackModifier;
             return attackRoll;
         }
 
         return 100;
     }
 
-    public int ActionRoll()
+    public int ActionRoll(int actionModifier)
     {
-        UnitStats selectedUnitStats = NewMethod();
-        UnitController selectedUnitController = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>();
+        UnitController selectedUnit = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>();
 
         //Normal
-        if (selectedUnitController.GetComponent<UnitController>().unitActionState == selectedUnitController.GetComponent<UnitController>().GetActionState(0))
+        if (selectedUnit.unitActionState == selectedUnit.GetActionState(0))
         {
-            int attackRoll = RollD20() + selectedUnitStats.attackModifier;
+            int attackRoll = RollD20() + actionModifier;
             return attackRoll;
         }
 
         //Advantage
-        else if (selectedUnitController.GetComponent<UnitController>().unitActionState == selectedUnitController.GetComponent<UnitController>().GetActionState(1))
+        else if (selectedUnit.unitActionState == selectedUnit.GetActionState(1))
         {
-            int attackRoll = RollD20Advantage() + selectedUnitStats.attackModifier;
+            int attackRoll = RollD20Advantage() + actionModifier;
             return attackRoll;
         }
 
         //Disadvantage
-        else if (selectedUnitController.GetComponent<UnitController>().unitActionState == selectedUnitController.GetComponent<UnitController>().GetActionState(2))
+        else if (selectedUnit.unitActionState == selectedUnit.GetActionState(2))
         {
-            int attackRoll = RollD20Disadvantage() + selectedUnitStats.attackModifier;
+            int attackRoll = RollD20Disadvantage() + actionModifier;
             return attackRoll;
         }
 

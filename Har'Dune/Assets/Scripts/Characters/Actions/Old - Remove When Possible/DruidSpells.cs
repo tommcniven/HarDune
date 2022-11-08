@@ -15,32 +15,6 @@ public class DruidSpells : MonoBehaviour
         SetScriptManager();
     }
 
-    void Update()
-    {
-        //Click to Use Respective Attack on Enemy Units
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (scriptManager.scriptBattleController.battleStatus)
-            {
-                if (scriptManager.scriptBattleController.frostbite)
-                {
-                    CastFrostbiteSpell();
-                    scriptManager.scriptBattleController.ResetActionBools();
-                }
-                else if (scriptManager.scriptBattleController.charmPerson)
-                {
-                    CastCharmPersonSpell();
-                    scriptManager.scriptBattleController.ResetActionBools();
-                }
-                else if (scriptManager.scriptBattleController.cureWounds)
-                {
-                    CastCureWoundsSpell();
-                    scriptManager.scriptBattleController.ResetActionBools();
-                }
-            }
-        }
-    }
-
     public void SetScriptManager()
     {
         scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
@@ -167,7 +141,7 @@ public class DruidSpells : MonoBehaviour
         var recipientUnit = recipient.GetComponent<UnitController>();
         var recipientStats = recipient.GetComponent<UnitStats>();
 
-        int recipientConSave = scriptManager.scriptBattleController.AttackRoll() + recipientStats.constitutionModifier;
+        int recipientConSave = scriptManager.scriptBattleController.AttackRoll(recipientStats.constitutionModifier);
         int initiatorDamageRoll = Random.Range(1, 6);
         int initiatorCritDamageRoll = Random.Range(1, 6) + Random.Range(1, 6);
 
@@ -336,7 +310,7 @@ public class DruidSpells : MonoBehaviour
         var recipientUnit = recipient.GetComponent<UnitController>();
         var recipientStats = recipient.GetComponent<UnitStats>();
 
-        int recipientWisdomSave = scriptManager.scriptBattleController.AttackRoll() + recipientStats.wisdomModifier;
+        int recipientWisdomSave = scriptManager.scriptBattleController.AttackRoll(recipientStats.wisdomModifier);
 
         //Initiator Attack Roll Hits
         if (recipientWisdomSave <= initiatorStats.spellSaveModifier)
@@ -380,7 +354,6 @@ public class DruidSpells : MonoBehaviour
     public void StartCureWoundsSpell()
     {
         //Set Variables
-        scriptManager.scriptBattleController.cureWounds = true;
         scriptManager.scriptBattleController.battleStatus = true;
         scriptUnitStats.attackRange = 1;
 

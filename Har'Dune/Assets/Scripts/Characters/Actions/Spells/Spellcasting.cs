@@ -2,25 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponAttack : MonoBehaviour
+public class Spellcasting : MonoBehaviour
 {
-    // Steps for Adding Weapon:
-    // 1. Create New SO Weapon from Asset Menu
-    // 2. Create New Empty Game Object as Child of Weapon Attacks
-    // 3. Attach Weapon Script to Game Object
-    // 4. Copy & Paste New Weapon Attack from GreatswordAttack()
-    // 5. Add Weapon Attack Bool to Battle Controller Script
-    // 6. Add Weapon Attack Bool to GetSelectedWeapon()
-    // 7. Add Weapon to be Removed from Attack Options in ResetAttackMenuOptions()
-    // 8. Done!
-
-
     [Header("Scripts")]
     public ScriptManager scriptManager;
-    public WeaponReference weaponReference;
+    public SpellReference spellReference;
 
     [Header("Debug Variables")]
-    string selectedWeapon;
+    public string selectedSpell;
 
     public void Awake()
     {
@@ -33,98 +22,62 @@ public class WeaponAttack : MonoBehaviour
         scriptManager.ConnectScripts();
     }
 
-    public void GetSelectedWeapon()
+    public void GetSelectedSpell()
     {
-        if (scriptManager.scriptBattleController.unarmedStrike == true)
+        if (scriptManager.scriptBattleController.frostbite == true)
         {
-            weaponReference = GameObject.Find("Unarmed Strike").GetComponent<WeaponReference>();
-            selectedWeapon = "Unarmed Strike";
+            spellReference = GameObject.Find("Frostbite").GetComponent<SpellReference>();
+            selectedSpell = "Frostbite";
         }
 
-        if (scriptManager.scriptBattleController.greatswordAttack == true)
+        if (scriptManager.scriptBattleController.guidance == true)
         {
-            weaponReference = GameObject.Find("Greatsword").GetComponent<WeaponReference>();
-            selectedWeapon = "Greatsword";
+            spellReference = GameObject.Find("Guidance").GetComponent<SpellReference>();
+            selectedSpell = "Guidance";
         }
 
-        if (scriptManager.scriptBattleController.daggerAttack == true)
+        if (scriptManager.scriptBattleController.iceKnife == true)
         {
-            weaponReference = GameObject.Find("Dagger").GetComponent<WeaponReference>();
-            selectedWeapon = "Dagger";
+            spellReference = GameObject.Find("Ice Knife").GetComponent<SpellReference>();
+            selectedSpell = "Ice Knife";
         }
 
-        if (scriptManager.scriptBattleController.quarterstaffAttack == true)
+        if (scriptManager.scriptBattleController.healingWord == true)
         {
-            weaponReference = GameObject.Find("Quarterstaff").GetComponent<WeaponReference>();
-            selectedWeapon = "Quarterstaff";
+            spellReference = GameObject.Find("Healing Word").GetComponent<SpellReference>();
+            selectedSpell = "Healing Word";
         }
 
-        if(scriptManager.scriptBattleController.lightCrossbowAttack == true)
+        if (scriptManager.scriptBattleController.charmPerson == true)
         {
-            weaponReference = GameObject.Find("Light Crossbow").GetComponent<WeaponReference>();
-            selectedWeapon = "Light Crossbow";
+            spellReference = GameObject.Find("Charm Person").GetComponent<SpellReference>();
+            selectedSpell = "Charm Person";
         }
 
-        if(scriptManager.scriptBattleController.scimitarAttack == true)
+        if (scriptManager.scriptBattleController.barkskin == true)
         {
-            weaponReference = GameObject.Find("Scimitar").GetComponent<WeaponReference>();
-            selectedWeapon = "Scimitar";
+            spellReference = GameObject.Find("Barksin").GetComponent<SpellReference>();
+            selectedSpell = "Barksin";
         }
 
-        if(scriptManager.scriptBattleController.daggerThrowAttack == true)
+        if (scriptManager.scriptBattleController.holdPerson == true)
         {
-            weaponReference = GameObject.Find("Dagger Throw").GetComponent<WeaponReference>();
-            selectedWeapon = "Dagger Throw";
+            spellReference = GameObject.Find("Hold Person").GetComponent<SpellReference>();
+            selectedSpell = "Hold Person";
         }
     }
 
 
+    // Spells //
+    // Spells //
+    // Spells //
 
-    // Weapon Attacks //
-    // Weapon Attacks //
-    // Weapon Attacks //
-
-    public void UnarmedStrike() //Called from Class Button
+    public void CastFrostbite() //Called from Class Button
     {
-        scriptManager.scriptBattleController.unarmedStrike = true;
+        scriptManager.scriptBattleController.frostbite = true;
         SetVariables();
     }
 
-    public void GreatswordAttack() //Called from Class Button
-    {
-        scriptManager.scriptBattleController.greatswordAttack = true;
-        SetVariables();
-    }
-
-    public void DaggerAttack() //Called from Class Button
-    {
-        scriptManager.scriptBattleController.daggerAttack = true;
-        SetVariables();
-    }
-
-    public void QuarterstaffAttack() //Called from Class Button
-    {
-        scriptManager.scriptBattleController.quarterstaffAttack = true;
-        SetVariables();
-    }
-
-    public void LightCrossbowAttack() //Called from Class Button
-    {
-        scriptManager.scriptBattleController.lightCrossbowAttack = true;
-        SetVariables();
-    }
-
-    public void ScimitarAttack() //Called from Class Button
-    {
-        scriptManager.scriptBattleController.scimitarAttack = true;
-        SetVariables();
-    }
-
-    public void DaggerThrowAttack() //Called from Class Button
-    {
-        scriptManager.scriptBattleController.daggerThrowAttack = true;
-        SetVariables();
-    }
 
 
 
@@ -136,23 +89,23 @@ public class WeaponAttack : MonoBehaviour
 
     public void SetVariables()
     {
-        GetSelectedWeapon();
+        GetSelectedSpell();
         scriptManager.scriptBattleController.battleStatus = true;
-        scriptManager.scriptBattleController.attackSelected = true;
-        UnitStats selectedUnit = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitStats>();
-        selectedUnit.attackRange = weaponReference.weapon.attackRange;
-        selectedUnit.damageType = weaponReference.weapon.weaponDamageType;
+        scriptManager.scriptBattleController.spellSelected = true;
+        GameObject selectedUnit = scriptManager.scriptTileMap.selectedUnit;
+        selectedUnit.GetComponent<UnitStats>().attackRange = spellReference.spell.spellRange;
+        selectedUnit.GetComponent<UnitStats>().damageType = spellReference.spell.spellDamageType;
         scriptManager.scriptGameMenuController.CloseAllMenus();
-        HighlightAttackRange();
+        HighlightSpellRange();
     }
 
-    public void HighlightAttackRange()
+    public void HighlightSpellRange()
     {
         scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
         scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
-    public void StartAttack()
+    public void StartSpell()
     {
         //Set Variables
         RaycastHit hit;
@@ -180,7 +133,7 @@ public class WeaponAttack : MonoBehaviour
                         if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
                         {
                             //Attack then Deselect
-                            StartCoroutine(AttackTarget(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(CastSpell(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                             StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
                     }
@@ -202,14 +155,14 @@ public class WeaponAttack : MonoBehaviour
                 if (unitClicked.GetComponent<UnitController>().currentHP > 0)
                 {
                     //Attack then Deselect
-                    StartCoroutine(AttackTarget(scriptManager.scriptTileMap.selectedUnit, unitClicked));
+                    StartCoroutine(CastSpell(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                     StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitClicked));
                 }
             }
         }
     }
 
-    public IEnumerator AttackTarget(GameObject initiator, GameObject recipient)
+    public IEnumerator CastSpell(GameObject initiator, GameObject recipient)
     {
         //Set Variables
         float timeElapsed = 0;
@@ -242,37 +195,33 @@ public class WeaponAttack : MonoBehaviour
 
     public void DealDamage(GameObject initiator, GameObject recipient)
     {
-        //Set Initiator & Recipient
+        //Reference Variables
+        GetSelectedSpell();
+        int damageRoll = 0;
         UnitController initiatorUnit = initiator.GetComponent<UnitController>();
         UnitStats initiatorStats = initiator.GetComponent<UnitStats>();
         UnitController recipientUnit = recipient.GetComponent<UnitController>();
         UnitStats recipientStats = recipient.GetComponent<UnitStats>();
-        int damageRoll = 0;
-
-        //Get Weapon Selected
-        GetSelectedWeapon();
-
-        //Set Weapon Variables
-        int attackDice = weaponReference.weapon.attackDice;
-        int attackDamage = weaponReference.weapon.attackDamage;
-
-        //Roll Weapon Dice
-        for (int dice = 0; dice < attackDice; dice++)
-        {
-            var randomRoll = Random.Range(1, attackDamage);
-            damageRoll += randomRoll;
-        }
-       
-        //Set Rolls to Variables
-        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll(initiatorStats.attackModifier);
-        int initiatorDamageRoll = damageRoll + initiatorStats.damageModifier;
-        int initiatorCritDamageRoll = damageRoll + damageRoll + initiatorStats.damageModifier;
+        int attackDice = spellReference.spell.spellAttackDice;
+        int attackDamage = spellReference.spell.spellAttackDamage;
         int recipientArmorClass = recipientStats.armorClass;
 
-        //Apply Rolls -- Deal Damage
+        //Roll Dice
+        for (int dice = 0; dice < attackDice; dice++)
+        {
+            int randomRoll = Random.Range(1, attackDamage);
+            damageRoll += randomRoll;
+        }
+
+        //Set Rolls to Variables
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll(initiatorStats.spellAttackModifier);
+        int initiatorDamageRoll = damageRoll + initiatorStats.spellAttackModifier;
+        int initiatorCritDamageRoll = damageRoll + damageRoll + initiatorStats.spellAttackModifier;
+
+        //Compare Rolls
         if (initiatorAttackRoll > recipientArmorClass) //Initiator Attack Roll Hits
         {
-            if (initiatorAttackRoll - initiatorStats.attackModifier == 20) //Critical Hit
+            if (initiatorAttackRoll - initiatorStats.spellAttackModifier == 20) //Critical Hit
             {
                 recipientUnit.DealDamage(initiatorCritDamageRoll);
                 FindObjectOfType<AudioManager>().Play("Greatsword Attack"); //Note -- Need to Update to Sound Scriptable Object
@@ -280,12 +229,12 @@ public class WeaponAttack : MonoBehaviour
                 Debug.Log(initiatorStats.unitName + " Rolled a Crit, so " + recipientStats.unitName + " took " + initiatorCritDamageRoll + " damage");
             }
 
-            else //No Critical Hit
+            else //Hit Without Critical
             {
                 recipientUnit.DealDamage(initiatorDamageRoll);
                 FindObjectOfType<AudioManager>().Play("Greatsword Attack");
                 StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(initiatorDamageRoll));
-                Debug.Log(initiatorStats.unitName + "'s " + selectedWeapon + " Attack Roll of " + initiatorAttackRoll + " was higher than " + recipientStats.unitName + "'s AC of " + recipientArmorClass + ", so " + recipientStats.unitName + " took " + initiatorDamageRoll + " damage");
+                Debug.Log(initiatorStats.unitName + "'s " + selectedSpell + " Attack Roll of " + initiatorAttackRoll + " was higher than " + recipientStats.unitName + "'s AC of " + recipientArmorClass + ", so " + recipientStats.unitName + " took " + initiatorDamageRoll + " damage");
             }
 
             if (scriptManager.scriptBattleController.isUnitDead(recipient)) //Kill Dead Units & Check for Winner
@@ -297,17 +246,26 @@ public class WeaponAttack : MonoBehaviour
                 return;
             }
 
+            ApplyConditions(initiator, recipient);
             scriptManager.scriptBattleController.battleStatus = false;
         }
 
         else //Initiator Attack Roll Does Not Hit
         {
             FindObjectOfType<AudioManager>().Play("Attack Missed");
-            Debug.Log(initiatorStats.unitName + "'s " + selectedWeapon + " Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
+            Debug.Log(initiatorStats.unitName + "'s " + selectedSpell + " Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
             scriptManager.scriptBattleController.battleStatus = false;
         }
 
         initiatorUnit.GetComponent<UnitController>().SetAttackState(0); //Remove Disadvantage
         scriptManager.scriptBattleController.ResetActionBools();
+    }
+
+    public void ApplyConditions(GameObject initiator, GameObject recipient)
+    {
+        if (scriptManager.scriptBattleController.frostbite)
+        {
+            recipient.GetComponent<UnitController>().SetAttackState(2); //Set Disadvantage
+        }
     }
 }
