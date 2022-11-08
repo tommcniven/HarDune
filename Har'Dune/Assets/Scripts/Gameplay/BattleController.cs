@@ -10,6 +10,9 @@ public class BattleController : MonoBehaviour
 
     [Header("Statuses")]
     public bool battleStatus = false;
+    public bool attackSelected = false;
+    public bool actionSelected = false;
+    public bool spellSelected = false;
 
     [Header("Actions")]
     public bool grappleAction = false;
@@ -39,13 +42,26 @@ public class BattleController : MonoBehaviour
 
     public void Update()
     {
-        //Start Attack on Click
         if (Input.GetMouseButtonDown(0))
         {
             if (scriptManager.scriptBattleController.battleStatus)
             {
-                scriptManager.scriptWeaponAttack.StartAttack();
-                scriptManager.scriptBattleController.ResetActionBools();
+                if (attackSelected)
+                {
+                    scriptManager.scriptWeaponAttack.StartAttack();
+                }
+
+                if (actionSelected)
+                {
+                    scriptManager.scriptGeneralActions.StartAction();
+                }
+
+                if (spellSelected)
+                {
+                    //scriptManager.scriptSpellcasting.StartSpell();
+                }
+
+                //ResetActionBools();
             }
         }
     }
@@ -58,6 +74,11 @@ public class BattleController : MonoBehaviour
 
     public void ResetActionBools()
     {
+        //Selections
+        attackSelected = false;
+        actionSelected = false;
+        spellSelected = false;
+
         //Actions
         grappleAction = false;
         hideAction = false;

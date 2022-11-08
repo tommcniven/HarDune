@@ -13773,9 +13773,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 127807580}
-        m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
-        m_MethodName: GreatswordAttack
+      - m_Target: {fileID: 1492882508}
+        m_TargetAssemblyTypeName: GeneralActions, Assembly-CSharp
+        m_MethodName: HideAction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22068,9 +22068,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 127807580}
+      - m_Target: {fileID: 1492882506}
         m_TargetAssemblyTypeName: WeaponAttack, Assembly-CSharp
-        m_MethodName: GreatswordAttack
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -24723,6 +24723,7 @@ MonoBehaviour:
   scriptWeaponAttack: {fileID: 0}
   scriptUnitStats: {fileID: 0}
   scriptDiceRoller: {fileID: 0}
+  scriptGeneralActions: {fileID: 0}
 --- !u!1 &1447422455
 GameObject:
   m_ObjectHideFlags: 0
@@ -29034,6 +29035,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptManager: {fileID: 0}
   battleStatus: 0
+  attackSelected: 0
+  actionSelected: 0
+  spellSelected: 0
   grappleAction: 0
   hideAction: 0
   dodgeAction: 0

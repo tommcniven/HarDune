@@ -15,19 +15,6 @@ public class GeneralActions : MonoBehaviour
         SetScriptManager();
     }
 
-    public void Update()
-    {
-        //Click to Use Respective Attack on Enemy Units
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (scriptManager.scriptBattleController.battleStatus)
-            {
-                StartAction();
-                scriptManager.scriptBattleController.ResetActionBools();
-            }
-        }
-    }
-
     public void SetScriptManager()
     {
         scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
@@ -43,7 +30,15 @@ public class GeneralActions : MonoBehaviour
 
         if (scriptManager.scriptBattleController.hideAction == true)
         {
-            actionModifier = unit.GetComponent<UnitStats>().dexterityModifier;
+            if (unit == scriptManager.scriptTileMap.selectedUnit)
+            {
+                actionModifier = unit.GetComponent<UnitStats>().dexterityModifier;
+            }
+
+            else
+            {
+                actionModifier = unit.GetComponent<UnitStats>().wisdomModifier;
+            }
         }
 
         return actionModifier;
@@ -60,22 +55,19 @@ public class GeneralActions : MonoBehaviour
     public void GrappleAction() //Called from Class Button
     {
         scriptManager.scriptBattleController.grappleAction = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitStats>().attackRange = 1;
+        SetVariables();
         HighlightActionRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
-        StartAction();
+        //StartAction();
     }
 
 
 
-    public void StartHide()
+    public void HideAction()
     {
         scriptManager.scriptBattleController.hideAction = true;
-        scriptManager.scriptBattleController.battleStatus = true;
-        StartAction();
-        //scriptManager.scriptGameMenuController.WaitButton();
-        //scriptManager.scriptBattleController.ResetActionBools();
+        SetVariables();
+        //StartAction();
     }
 
 
@@ -86,6 +78,13 @@ public class GeneralActions : MonoBehaviour
 
 
     
+   public void SetVariables()
+    {
+        scriptManager.scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.actionSelected = true;
+        scriptManager.scriptGameMenuController.CloseAllMenus();
+    }
+
     public void HighlightActionRange()
     {
         scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
@@ -179,41 +178,60 @@ public class GeneralActions : MonoBehaviour
     public void CompareRolls(GameObject initiator, GameObject recipient)
     {
         //Set Variables
-        var initiatorUnit = initiator.GetComponent<UnitController>();
-        var initiatorStats = initiator.GetComponent<UnitStats>();
         int initiatorActionModifier = GetActionModifier(initiator);
-        var recipientUnit = recipient.GetComponent<UnitController>();
-        var recipientStats = recipient.GetComponent<UnitStats>();
         int recipientActionModifier = GetActionModifier(recipient);
 
         //Rolls
         int initiatorRoll = scriptManager.scriptDiceRoller.RollD20(initiatorActionModifier);
         int recipientRoll = scriptManager.scriptDiceRoller.RollD20(recipientActionModifier);
 
+
         //Compare Rolls
         if (initiatorRoll >= recipientRoll)
         {
+            ApplyConditions(initiator, recipient);
+            Instantiate(recipient.GetComponent<UnitController>().damageParticles, recipient.transform.position, recipient.transform.rotation);
             scriptManager.scriptBattleController.battleStatus = false;
-            ApplyConditions(initiatorUnit, recipientUnit);
-            Instantiate(recipientUnit.GetComponent<UnitController>().damageParticles, recipient.transform.position, recipient.transform.rotation);
         }
 
         else
         {
             scriptManager.scriptBattleController.battleStatus = false;
+            Debug.Log("Action Roll was Unsuccessful");
+
         }
+
+        scriptManager.scriptBattleController.ResetActionBools();
     }
 
-    public void ApplyConditions(UnitController initiator, UnitController recipient)
+    public void ApplyConditions(GameObject initiator, GameObject recipient)
     {
+        //State Machine Variable References
+        int normal = 0;
+        int charmed = 1;
+        int deafend = 2;
+        int frightened = 3;
+        int grappled = 4;
+        int paralyzed = 5;
+        int petrified = 6;
+        int restrained = 7;
+        int stunned = 8;
+        int hidden = 9;
+        int unconscious = 10;
+
+        //Set Conditions
         if (scriptManager.scriptBattleController.grappleAction == true)
         {
-            recipient.SetConditionState(4); //Set Condition State as Grappled
+            recipient.GetComponent<UnitController>().SetConditionState(grappled);
+            recipient.GetComponent<UnitStats>().movementSpeed = 0;
+            Debug.Log(initiator.GetComponent<UnitStats>().unitName + " Grapple Roll Was Success & " + recipient.GetComponent<UnitStats>().unitName + " is Grappled");
         }
 
         if (scriptManager.scriptBattleController.hideAction == true)
         {
-            initiator.SetConditionState(9); //Set Condition State as Hidden
+            initiator.GetComponent<UnitController>().SetConditionState(hidden);
+            Debug.Log(initiator.GetComponent<UnitStats>().unitName + " Hide Roll Was Success & " + initiator.GetComponent<UnitStats>().unitName + " is Hidden");
+
         }
     }
 }

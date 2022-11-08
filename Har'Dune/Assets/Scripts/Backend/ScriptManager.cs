@@ -20,6 +20,7 @@ public class ScriptManager : MonoBehaviour
     public WeaponAttack scriptWeaponAttack;
     public UnitStats scriptUnitStats;
     public DiceRoller scriptDiceRoller;
+    public GeneralActions scriptGeneralActions;
 
     public void ConnectScripts()
     {
@@ -37,5 +38,6 @@ public class ScriptManager : MonoBehaviour
         scriptPathFinder = GameObject.Find("Path Finder").GetComponent<PathFinder>();
         scriptWeaponAttack = GameObject.Find("Weapon Attacks").GetComponent<WeaponAttack>();
         scriptDiceRoller = GameObject.Find("Dice Roller").GetComponent<DiceRoller>();
+        scriptGeneralActions = GameObject.Find("General Actions").GetComponent<GeneralActions>();
     }
 }

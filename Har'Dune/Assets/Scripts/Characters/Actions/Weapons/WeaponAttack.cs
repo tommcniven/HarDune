@@ -89,77 +89,63 @@ public class WeaponAttack : MonoBehaviour
     public void UnarmedStrike() //Called from Class Button
     {
         scriptManager.scriptBattleController.unarmedStrike = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
     public void GreatswordAttack() //Called from Class Button
     {
         scriptManager.scriptBattleController.greatswordAttack = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
     public void DaggerAttack() //Called from Class Button
     {
         scriptManager.scriptBattleController.daggerAttack = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
     public void QuarterstaffAttack() //Called from Class Button
     {
         scriptManager.scriptBattleController.quarterstaffAttack = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
     public void LightCrossbowAttack() //Called from Class Button
     {
         scriptManager.scriptBattleController.lightCrossbowAttack = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
     public void ScimitarAttack() //Called from Class Button
     {
         scriptManager.scriptBattleController.scimitarAttack = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
     public void DaggerThrowAttack() //Called from Class Button
     {
         scriptManager.scriptBattleController.daggerThrowAttack = true;
-        scriptManager.scriptBattleController.battleStatus = true;
         GetSelectedWeapon();
         SetVariables();
         HighlightAttackRange();
-        scriptManager.scriptGameMenuController.CloseAllMenus();
         StartAttack();
     }
 
@@ -173,10 +159,12 @@ public class WeaponAttack : MonoBehaviour
 
     public void SetVariables()
     {
-        //Set Variables
+        scriptManager.scriptBattleController.battleStatus = true;
+        scriptManager.scriptBattleController.attackSelected = true;
         UnitStats selectedUnit = scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitStats>();
         selectedUnit.attackRange = weaponReference.weapon.attackRange;
         selectedUnit.damageType = weaponReference.weapon.weaponDamageType;
+        scriptManager.scriptGameMenuController.CloseAllMenus();
     }
 
     public void HighlightAttackRange()
@@ -341,5 +329,6 @@ public class WeaponAttack : MonoBehaviour
         }
 
         initiatorUnit.GetComponent<UnitController>().SetAttackState(0); //Remove Disadvantage
+        scriptManager.scriptBattleController.ResetActionBools();
     }
 }
