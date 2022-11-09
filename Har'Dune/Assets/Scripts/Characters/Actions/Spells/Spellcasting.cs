@@ -11,6 +11,9 @@ public class Spellcasting : MonoBehaviour
     [Header("Debug Variables")]
     public string selectedSpell;
 
+    [Header("Unit References")]
+    public int spellcastingModifier;
+
     public void Awake()
     {
         SetScriptManager();
@@ -22,45 +25,66 @@ public class Spellcasting : MonoBehaviour
         scriptManager.ConnectScripts();
     }
 
+    public int GetSpellcastingModifier(GameObject unit)
+    {
+        if (scriptManager.scriptBattleController.isAttackSpell)
+        {
+            spellcastingModifier = unit.GetComponent<UnitStats>().spellAttackModifier;
+        }
+
+        if (scriptManager.scriptBattleController.isAttackSpellSave)
+        {
+            spellcastingModifier = unit.GetComponent<UnitStats>().spellSaveModifier;
+        }
+
+        if (scriptManager.scriptBattleController.isHealingSpell)
+        {
+            spellcastingModifier = unit.GetComponent<UnitStats>().spellAttackModifier - unit.GetComponent<UnitStats>().proficiency;
+            Debug.Log("isHealingSpellCheck");
+        }
+
+        return spellcastingModifier;
+    }
+
     public void GetSelectedSpell()
     {
-        if (scriptManager.scriptBattleController.frostbite == true)
+        if (scriptManager.scriptBattleController.frostbite)
         {
             spellReference = GameObject.Find("Frostbite").GetComponent<SpellReference>();
             selectedSpell = "Frostbite";
         }
 
-        if (scriptManager.scriptBattleController.guidance == true)
+        if (scriptManager.scriptBattleController.guidance)
         {
             spellReference = GameObject.Find("Guidance").GetComponent<SpellReference>();
             selectedSpell = "Guidance";
         }
 
-        if (scriptManager.scriptBattleController.iceKnife == true)
+        if (scriptManager.scriptBattleController.iceKnife)
         {
             spellReference = GameObject.Find("Ice Knife").GetComponent<SpellReference>();
             selectedSpell = "Ice Knife";
         }
 
-        if (scriptManager.scriptBattleController.healingWord == true)
+        if (scriptManager.scriptBattleController.healingWord)
         {
             spellReference = GameObject.Find("Healing Word").GetComponent<SpellReference>();
             selectedSpell = "Healing Word";
         }
 
-        if (scriptManager.scriptBattleController.charmPerson == true)
+        if (scriptManager.scriptBattleController.charmPerson)
         {
             spellReference = GameObject.Find("Charm Person").GetComponent<SpellReference>();
             selectedSpell = "Charm Person";
         }
 
-        if (scriptManager.scriptBattleController.barkskin == true)
+        if (scriptManager.scriptBattleController.barkskin)
         {
             spellReference = GameObject.Find("Barksin").GetComponent<SpellReference>();
             selectedSpell = "Barksin";
         }
 
-        if (scriptManager.scriptBattleController.holdPerson == true)
+        if (scriptManager.scriptBattleController.holdPerson)
         {
             spellReference = GameObject.Find("Hold Person").GetComponent<SpellReference>();
             selectedSpell = "Hold Person";
@@ -72,10 +96,45 @@ public class Spellcasting : MonoBehaviour
     // Spells //
     // Spells //
 
-    public void CastFrostbite() //Called from Class Button
+    public void CastFrostbite() //Called from Action Menu Button
     {
         scriptManager.scriptBattleController.frostbite = true;
+        scriptManager.scriptBattleController.isAttackSpell = true;
         SetVariables();
+        HighlightSpellRange();
+    }
+
+    public void CastGuidance() //Called from Action Menu Button
+    {
+        scriptManager.scriptBattleController.guidance = true;
+        scriptManager.scriptBattleController.isModifier = true;
+        SetVariables();
+        HighlightFriendlySpellRange();
+    }
+
+    public void CastIceKnife() //Called from Action Menu Button
+    {
+        scriptManager.scriptBattleController.iceKnife = true;
+        scriptManager.scriptBattleController.isAttackSpell = true;
+        SetVariables();
+        HighlightSpellRange();
+    }
+
+    public void CastCharmPerson() //Called from Action Menu Button
+    {
+        scriptManager.scriptBattleController.charmPerson = true;
+        scriptManager.scriptBattleController.isAttackSpellSave = true;
+        SetVariables();
+        HighlightSpellRange();
+    }
+
+    public void CastHealingWord() //Called from Action Menu Button
+    {
+        scriptManager.scriptBattleController.healingWord = true;
+        scriptManager.scriptBattleController.isHealingSpell = true;
+        SetVariables();
+        HighlightFriendlySpellRange();
+        Debug.Log("CastHealingWord()");
     }
 
 
@@ -96,12 +155,17 @@ public class Spellcasting : MonoBehaviour
         selectedUnit.GetComponent<UnitStats>().attackRange = spellReference.spell.spellRange;
         selectedUnit.GetComponent<UnitStats>().damageType = spellReference.spell.spellDamageType;
         scriptManager.scriptGameMenuController.CloseAllMenus();
-        HighlightSpellRange();
     }
 
     public void HighlightSpellRange()
     {
         scriptManager.scriptRangeFinder.HighlightAttackableUnitsInRange();
+        scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
+    }
+
+    public void HighlightFriendlySpellRange()
+    {
+        scriptManager.scriptRangeFinder.HighlightFriendlyUnitsInRange();
         scriptManager.scriptTileMap.HighlightNodeUnitIsOccupying();
     }
 
@@ -126,16 +190,40 @@ public class Spellcasting : MonoBehaviour
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
                     int unitY = unitOnTile.GetComponent<UnitController>().y;
 
-                    //Opposing Team & Within Attackable Tiles
-                    if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
+                    if (scriptManager.scriptBattleController.isAttackSpell || scriptManager.scriptBattleController.isAttackSpellSave)
                     {
-                        //Unit is Alive
-                        if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
+                        //Enemy Unit on Attackable Tile
+                        if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                         {
-                            //Attack then Deselect
+                            //Unit is Alive
+                            if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
+                            {
+                                //Attack then Deselect
+                                StartCoroutine(CastSpell(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                                StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            }
+                        }
+                    }
+
+                    else if (scriptManager.scriptBattleController.isHealingSpell)
+                    {
+                        //Teamate on Attackable Tile
+                        if (unitOnTile.GetComponent<UnitController>().teamNumber == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
+                        {
+                            //Heal then Deselect
                             StartCoroutine(CastSpell(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                             StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
                         }
+                    }
+
+                    else if (scriptManager.scriptBattleController.isModifier)
+                    {
+                        if (unitOnTile.GetComponent<UnitController>().teamNumber == scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]) && unitOnTile != scriptManager.scriptTileMap.selectedUnit)
+                        {
+                            StartCoroutine(CastSpell(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                            StartCoroutine(scriptManager.scriptUnitSelection.DeselectUnitAfterMovement(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
+                        }
+
                     }
                 }
             }
@@ -168,7 +256,7 @@ public class Spellcasting : MonoBehaviour
         float timeElapsed = 0;
         Vector3 initiatorPosition = initiator.transform.position;
         Vector3 recipientPosition = recipient.transform.position;
-        initiator.GetComponent<UnitController>().SetRunAnimation();
+        initiator.GetComponent<UnitController>().SetSpellcastAnimation();
 
         //Move
         while (timeElapsed < .25f)
@@ -183,6 +271,7 @@ public class Spellcasting : MonoBehaviour
         {
             StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().strengthModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             DealDamage(initiator, recipient);
+            //scriptSpellSlots.UpdateSpellSlots();
             yield return new WaitForEndOfFrame();
         }
 
@@ -197,6 +286,7 @@ public class Spellcasting : MonoBehaviour
     {
         //Reference Variables
         GetSelectedSpell();
+        GetSpellcastingModifier(initiator);
         int damageRoll = 0;
         UnitController initiatorUnit = initiator.GetComponent<UnitController>();
         UnitStats initiatorStats = initiator.GetComponent<UnitStats>();
@@ -214,50 +304,66 @@ public class Spellcasting : MonoBehaviour
         }
 
         //Set Rolls to Variables
-        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll(initiatorStats.spellAttackModifier);
-        int initiatorDamageRoll = damageRoll + initiatorStats.spellAttackModifier;
-        int initiatorCritDamageRoll = damageRoll + damageRoll + initiatorStats.spellAttackModifier;
+        int initiatorAttackRoll = scriptManager.scriptBattleController.AttackRoll(spellcastingModifier);
+        int initiatorDamageRoll = damageRoll + spellcastingModifier;
+        int initiatorCritDamageRoll = damageRoll + damageRoll + spellcastingModifier;
 
         //Compare Rolls
-        if (initiatorAttackRoll > recipientArmorClass) //Initiator Attack Roll Hits
+        if (scriptManager.scriptBattleController.isAttackSpell)
         {
-            if (initiatorAttackRoll - initiatorStats.spellAttackModifier == 20) //Critical Hit
+            if (initiatorAttackRoll > recipientArmorClass) //Initiator Attack Roll Hits
             {
-                recipientUnit.DealDamage(initiatorCritDamageRoll);
-                FindObjectOfType<AudioManager>().Play("Greatsword Attack"); //Note -- Need to Update to Sound Scriptable Object
-                StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(initiatorCritDamageRoll));
-                Debug.Log(initiatorStats.unitName + " Rolled a Crit, so " + recipientStats.unitName + " took " + initiatorCritDamageRoll + " damage");
+                if (initiatorAttackRoll - spellcastingModifier == 20) //Critical Hit
+                {
+                    recipientUnit.DealDamage(initiatorCritDamageRoll);
+                    FindObjectOfType<AudioManager>().Play("Greatsword Attack"); //Note -- Need to Update to Sound Scriptable Object
+                    StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(initiatorCritDamageRoll));
+                    Debug.Log(initiatorStats.unitName + " Rolled a Crit, so " + recipientStats.unitName + " took " + initiatorCritDamageRoll + " damage");
+                }
+
+                else //Hit Without Critical
+                {
+                    recipientUnit.DealDamage(initiatorDamageRoll);
+                    FindObjectOfType<AudioManager>().Play("Greatsword Attack"); //Note -- Need to Update to Sound Scriptable Object
+                    StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(initiatorDamageRoll));
+                    Debug.Log(initiatorStats.unitName + "'s " + selectedSpell + " Attack Roll of " + initiatorAttackRoll + " was higher than " + recipientStats.unitName + "'s AC of " + recipientArmorClass + ", so " + recipientStats.unitName + " took " + initiatorDamageRoll + " damage");
+                }
+
+                if (scriptManager.scriptBattleController.isUnitDead(recipient)) //Kill Dead Units & Check for Winner
+                {
+                    recipient.transform.parent = null; //Required for UnitDie()
+                    recipientUnit.UnitDie();
+                    scriptManager.scriptBattleController.battleStatus = false;
+                    scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
+                    return;
+                }
+
+                ApplyConditions(initiator, recipient);
             }
 
-            else //Hit Without Critical
+            else //Initiator Attack Roll Does Not Hit
             {
-                recipientUnit.DealDamage(initiatorDamageRoll);
-                FindObjectOfType<AudioManager>().Play("Greatsword Attack");
-                StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(initiatorDamageRoll));
-                Debug.Log(initiatorStats.unitName + "'s " + selectedSpell + " Attack Roll of " + initiatorAttackRoll + " was higher than " + recipientStats.unitName + "'s AC of " + recipientArmorClass + ", so " + recipientStats.unitName + " took " + initiatorDamageRoll + " damage");
-            }
-
-            if (scriptManager.scriptBattleController.isUnitDead(recipient)) //Kill Dead Units & Check for Winner
-            {
-                recipient.transform.parent = null; //Required for UnitDie()
-                recipientUnit.UnitDie();
+                FindObjectOfType<AudioManager>().Play("Attack Missed"); //Note -- Need to Update to Sound Scriptable Object
+                Debug.Log(initiatorStats.unitName + "'s " + selectedSpell + " Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
                 scriptManager.scriptBattleController.battleStatus = false;
-                scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, recipient);
-                return;
             }
-
-            ApplyConditions(initiator, recipient);
-            scriptManager.scriptBattleController.battleStatus = false;
         }
 
-        else //Initiator Attack Roll Does Not Hit
+        else if (scriptManager.scriptBattleController.isHealingSpell)
         {
-            FindObjectOfType<AudioManager>().Play("Attack Missed");
-            Debug.Log(initiatorStats.unitName + "'s " + selectedSpell + " Attack Roll of " + initiatorAttackRoll + " was lower than " + recipientStats.unitName + "'s AC of " + recipientArmorClass);
-            scriptManager.scriptBattleController.battleStatus = false;
+            recipientUnit.HealDamage(initiatorDamageRoll);
+            StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(initiatorDamageRoll));
+            Debug.Log(recipientStats.unitName + " was healed for " + initiatorDamageRoll + " by " + initiatorStats.unitName);
         }
 
+        else if (scriptManager.scriptBattleController.isModifier)
+        {
+            ApplyConditions(initiator, recipient);
+        }
+
+        //Reset Variables
         initiatorUnit.GetComponent<UnitController>().SetAttackState(0); //Remove Disadvantage
+        scriptManager.scriptBattleController.battleStatus = false;
         scriptManager.scriptBattleController.ResetActionBools();
     }
 
@@ -266,6 +372,17 @@ public class Spellcasting : MonoBehaviour
         if (scriptManager.scriptBattleController.frostbite)
         {
             recipient.GetComponent<UnitController>().SetAttackState(2); //Set Disadvantage
+        }
+
+        if (scriptManager.scriptBattleController.guidance)
+        {
+            recipient.GetComponent<UnitController>().SetAttackState(1); //Set Advantage
+            //Note -- Change to Use Guidance Button Beside Ability Check Menu (Menu not yet made)
+        }
+
+        if (scriptManager.scriptBattleController.charmPerson)
+        {
+
         }
     }
 }

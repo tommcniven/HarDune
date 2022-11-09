@@ -15000,6 +15000,18 @@ MonoBehaviour:
           m_StringArgument: Menu Item Selected
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1906944882}
+        m_TargetAssemblyTypeName: Spellcasting, Assembly-CSharp
+        m_MethodName: CastHealingWord
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &870263227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18419,6 +18431,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Menu Item Selected
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1906944882}
+        m_TargetAssemblyTypeName: Spellcasting, Assembly-CSharp
+        m_MethodName: CastGuidance
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1131787908
@@ -25257,6 +25281,18 @@ MonoBehaviour:
           m_StringArgument: Menu Item Selected
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1906944882}
+        m_TargetAssemblyTypeName: Spellcasting, Assembly-CSharp
+        m_MethodName: CastIceKnife
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1471499923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29072,6 +29108,10 @@ MonoBehaviour:
   charmPerson: 0
   barkskin: 0
   holdPerson: 0
+  isAttackSpell: 0
+  isHealingSpell: 0
+  isDiceModifier: 0
+  isAttackSpellSave: 0
 --- !u!114 &1667033356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32926,6 +32966,7 @@ MonoBehaviour:
   scriptManager: {fileID: 0}
   spellReference: {fileID: 0}
   selectedSpell: 
+  spellcastingModifier: 0
 --- !u!1 &1910107676
 GameObject:
   m_ObjectHideFlags: 0

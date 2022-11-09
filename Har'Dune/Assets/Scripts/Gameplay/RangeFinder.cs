@@ -8,7 +8,6 @@ public class RangeFinder : MonoBehaviour
     public TileMap scriptTileMap;
     public MovementController scriptMovementController;
 
-
     public void HighlightUnitRange()
     {
         //Reference Variables

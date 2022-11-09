@@ -38,6 +38,12 @@ public class BattleController : MonoBehaviour
     public bool barkskin = false;
     public bool holdPerson = false;
 
+    [Header("Spell Type")]
+    public bool isAttackSpell = false;
+    public bool isAttackSpellSave = false;
+    public bool isHealingSpell = false;
+    public bool isModifier = false;
+
     public void Awake()
     {
         SetScriptManager();
@@ -102,6 +108,12 @@ public class BattleController : MonoBehaviour
         charmPerson = false;
         barkskin = false;
         holdPerson = false;
+
+        //Spell Type
+        isAttackSpell = false;
+        isAttackSpellSave = false;
+        isHealingSpell = false;
+        isModifier = false;
     }
 
     public bool isUnitDead(GameObject unitCurrentHeatlh)

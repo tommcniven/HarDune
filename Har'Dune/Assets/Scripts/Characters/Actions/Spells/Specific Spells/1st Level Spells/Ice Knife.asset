@@ -21,9 +21,9 @@ MonoBehaviour:
   spellAtHigherLevels: 'When you cast this spell using a spell slot of 2nd level
     or higher, the cold damage increases by 1d6 for each slot level above 1st. '
   spellSchool: Conjuration
-  spellDamageType: Cold
-  spellAttackDice: 0
-  spellAttackDamage: 0
+  spellDamageType: Piercing
+  spellAttackDice: 1
+  spellAttackDamage: 10
   spellLevel: 1
   spellCastingTime: 1 Action
   spellRange: 6
