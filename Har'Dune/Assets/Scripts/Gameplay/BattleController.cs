@@ -44,6 +44,9 @@ public class BattleController : MonoBehaviour
     public bool isHealingSpell = false;
     public bool isModifier = false;
 
+    [Header("Spell Condition")]
+    public bool isConditionApplied = false;
+
     public void Awake()
     {
         SetScriptManager();
@@ -114,6 +117,9 @@ public class BattleController : MonoBehaviour
         isAttackSpellSave = false;
         isHealingSpell = false;
         isModifier = false;
+
+        //Conditions
+        isConditionApplied = false;
     }
 
     public bool isUnitDead(GameObject unitCurrentHeatlh)

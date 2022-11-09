@@ -265,6 +265,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1943374291}
     m_Modifications:
+    - target: {fileID: 1852209712, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
+      propertyPath: maxHP
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: 33290b8a9c4759546adbb2f46fb82dba,
         type: 3}
       propertyPath: scriptAudioManager
@@ -329,6 +333,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275521981178448823, guid: 33290b8a9c4759546adbb2f46fb82dba,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
@@ -8410,6 +8419,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4275521981178448823, guid: 89eeff820680b9343af35c25512b8454,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89eeff820680b9343af35c25512b8454, type: 3}
 --- !u!4 &514255626 stripped
@@ -10105,6 +10119,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4275521981178448823, guid: dab8d1a38b7dbf745adaa3454ea5906d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
 --- !u!4 &610195104 stripped
@@ -11792,6 +11811,11 @@ PrefabInstance:
       propertyPath: scriptManager
       value: 
       objectReference: {fileID: 1443072390}
+    - target: {fileID: 4275521981178448823, guid: 872c9ee814c04334f9d5b64fcb625762,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c9ee814c04334f9d5b64fcb625762, type: 3}
 --- !u!4 &690967319 stripped
@@ -21183,6 +21207,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4275521981178448823, guid: 2fdf122032edbf048afa3ea816726ded,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
 --- !u!4 &1257448877 stripped
@@ -27208,7 +27237,7 @@ PrefabInstance:
     - target: {fileID: 43821925479923861, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
         type: 3}
@@ -27218,7 +27247,7 @@ PrefabInstance:
     - target: {fileID: 43821925479923861, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43821925479923861, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
         type: 3}
@@ -27254,6 +27283,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275521981178448823, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7, type: 3}
@@ -29109,9 +29143,9 @@ MonoBehaviour:
   barkskin: 0
   holdPerson: 0
   isAttackSpell: 0
-  isHealingSpell: 0
-  isDiceModifier: 0
   isAttackSpellSave: 0
+  isHealingSpell: 0
+  isModifier: 0
 --- !u!114 &1667033356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32967,6 +33001,8 @@ MonoBehaviour:
   spellReference: {fileID: 0}
   selectedSpell: 
   spellcastingModifier: 0
+  splashRange: 0
+  spellSaveModifier: 0
 --- !u!1 &1910107676
 GameObject:
   m_ObjectHideFlags: 0

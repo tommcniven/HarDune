@@ -42,7 +42,9 @@ public class UnitStats : MonoBehaviour
     [Header("Spellcasting")]
     public int spellAttackModifier;
     public int spellSaveModifier;
+    public int spellSaveDC;
     public string spellDamageType;
+    public int splashRange;
 
     [Header("Movement")]
     public int movementSpeed;
@@ -94,6 +96,7 @@ public class UnitStats : MonoBehaviour
         //[Update] Need to Update to include armor when applicable
         armorClass = (10 + dexterityModifier);
         baseArmorClass = armorClass;
+        spellSaveDC = 8 + spellAttackModifier;
 
 
         //Set Proficiency

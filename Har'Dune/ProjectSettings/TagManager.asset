@@ -9,6 +9,7 @@ TagManager:
   - UI
   - Unit
   - Pause Camera
+  - Unit Container
   layers:
   - Default
   - TransparentFX

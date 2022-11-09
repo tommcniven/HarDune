@@ -13,6 +13,10 @@ public class Spellcasting : MonoBehaviour
 
     [Header("Unit References")]
     public int spellcastingModifier;
+    public int splashRange;
+    public int spellSaveModifier;
+    public int UnitX;
+    public int unitY;
 
     public void Awake()
     {
@@ -44,6 +48,44 @@ public class Spellcasting : MonoBehaviour
         }
 
         return spellcastingModifier;
+    }
+
+    public int GetSpellSaveModifier(GameObject unit)
+    {
+        GetSelectedSpell();
+
+        
+        if (spellReference.spell.spellSaveType == "Strength")
+        {
+            spellSaveModifier = unit.GetComponent<UnitStats>().strengthModifier;
+        }
+
+        if (spellReference.spell.spellSaveType == "Dexterity")
+        {
+            spellSaveModifier = unit.GetComponent<UnitStats>().dexterityModifier;
+        }
+
+        if (spellReference.spell.spellSaveType == "Constitution")
+        {
+            spellSaveModifier = unit.GetComponent<UnitStats>().constitutionModifier;
+        }
+
+        if (spellReference.spell.spellSaveType == "Intelligence")
+        {
+            spellSaveModifier = unit.GetComponent<UnitStats>().intelligenceModifier;
+        }
+
+        if (spellReference.spell.spellSaveType == "Wisdom")
+        {
+            spellSaveModifier = unit.GetComponent<UnitStats>().wisdomModifier;
+        }
+
+        if (spellReference.spell.spellSaveType == "Charisma")
+        {
+            spellSaveModifier = unit.GetComponent<UnitStats>().charismaModifier;
+        }
+
+        return spellSaveModifier;
     }
 
     public void GetSelectedSpell()
@@ -139,7 +181,6 @@ public class Spellcasting : MonoBehaviour
 
 
 
-
     // Template For Weapon Attacks //
     // Template For Weapon Attacks //
     // Template For Weapon Attacks //
@@ -154,6 +195,7 @@ public class Spellcasting : MonoBehaviour
         GameObject selectedUnit = scriptManager.scriptTileMap.selectedUnit;
         selectedUnit.GetComponent<UnitStats>().attackRange = spellReference.spell.spellRange;
         selectedUnit.GetComponent<UnitStats>().damageType = spellReference.spell.spellDamageType;
+        splashRange = spellReference.spell.splashRange;
         scriptManager.scriptGameMenuController.CloseAllMenus();
     }
 
@@ -176,15 +218,11 @@ public class Spellcasting : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         HashSet<Node> attackableTiles = scriptManager.scriptRangeFinder.GetAttackableUnits();
 
-
-        //Click
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit)) //Click
         {
-            //Clicked a Tile
-            if (hit.transform.gameObject.CompareTag("Tile"))
+            if (hit.transform.gameObject.CompareTag("Tile")) //Clicked Tile
             {
-                //Unit on Clicked Tile
-                if (hit.transform.GetComponent<ClickableTile>().unitOnTile != null)
+                if (hit.transform.GetComponent<ClickableTile>().unitOnTile != null) //Unit Exists on Clicked Tile
                 {
                     GameObject unitOnTile = hit.transform.GetComponent<ClickableTile>().unitOnTile;
                     int unitX = unitOnTile.GetComponent<UnitController>().x;
@@ -195,8 +233,7 @@ public class Spellcasting : MonoBehaviour
                         //Enemy Unit on Attackable Tile
                         if (unitOnTile.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
                         {
-                            //Unit is Alive
-                            if (unitOnTile.GetComponent<UnitController>().currentHP > 0)
+                            if (unitOnTile.GetComponent<UnitController>().currentHP > 0) //Unit is Alive
                             {
                                 //Attack then Deselect
                                 StartCoroutine(CastSpell(scriptManager.scriptTileMap.selectedUnit, unitOnTile));
@@ -229,8 +266,7 @@ public class Spellcasting : MonoBehaviour
             }
         }
 
-        //Clicked a Unit
-        else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit"))
+        else if (hit.transform.parent != null && hit.transform.parent.gameObject.CompareTag("Unit")) //Clicked Unit
         {
             GameObject unitClicked = hit.transform.parent.gameObject;
             int unitX = unitClicked.GetComponent<UnitController>().x;
@@ -239,8 +275,7 @@ public class Spellcasting : MonoBehaviour
             //Opposing Team & Within Attackable Tiles
             if (unitClicked.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber && attackableTiles.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY]))
             {
-                //Unit is Alive
-                if (unitClicked.GetComponent<UnitController>().currentHP > 0)
+                if (unitClicked.GetComponent<UnitController>().currentHP > 0) //Unit is Alive
                 {
                     //Attack then Deselect
                     StartCoroutine(CastSpell(scriptManager.scriptTileMap.selectedUnit, unitClicked));
@@ -295,6 +330,8 @@ public class Spellcasting : MonoBehaviour
         int attackDice = spellReference.spell.spellAttackDice;
         int attackDamage = spellReference.spell.spellAttackDamage;
         int recipientArmorClass = recipientStats.armorClass;
+        GameObject selectedUnit = scriptManager.scriptTileMap.selectedUnit;
+
 
         //Roll Dice
         for (int dice = 0; dice < attackDice; dice++)
@@ -331,6 +368,11 @@ public class Spellcasting : MonoBehaviour
 
                 if (scriptManager.scriptBattleController.isUnitDead(recipient)) //Kill Dead Units & Check for Winner
                 {
+                    //Save Unit Location for Potential Splash Damage
+                    UnitX = recipient.GetComponent<UnitController>().x;
+                    unitY = recipient.GetComponent<UnitController>().y;
+
+                    //Kill unit & Check for Winner
                     recipient.transform.parent = null; //Required for UnitDie()
                     recipientUnit.UnitDie();
                     scriptManager.scriptBattleController.battleStatus = false;
@@ -338,7 +380,10 @@ public class Spellcasting : MonoBehaviour
                     return;
                 }
 
-                ApplyConditions(initiator, recipient);
+                if (scriptManager.scriptBattleController.isConditionApplied == false)
+                {
+                    ApplyConditions(initiator, recipient);
+                }
             }
 
             else //Initiator Attack Roll Does Not Hit
@@ -353,16 +398,100 @@ public class Spellcasting : MonoBehaviour
         {
             recipientUnit.HealDamage(initiatorDamageRoll);
             StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(initiatorDamageRoll));
-            Debug.Log(recipientStats.unitName + " was healed for " + initiatorDamageRoll + " by " + initiatorStats.unitName);
+
+            if (scriptManager.scriptBattleController.isConditionApplied == false)
+            {
+                ApplyConditions(initiator, recipient);
+            }
         }
 
         else if (scriptManager.scriptBattleController.isModifier)
         {
-            ApplyConditions(initiator, recipient);
+            if (scriptManager.scriptBattleController.isConditionApplied == false)
+            {
+                ApplyConditions(initiator, recipient);
+            }
         }
 
         //Reset Variables
         initiatorUnit.GetComponent<UnitController>().SetAttackState(0); //Remove Disadvantage
+        scriptManager.scriptBattleController.battleStatus = false;
+        scriptManager.scriptBattleController.ResetActionBools();
+    }
+
+    public void DealSplashDamage(GameObject initiator, GameObject recipient)
+    {
+        //Set Variables
+        GetSelectedSpell();
+        initiator.GetComponent<UnitStats>().splashRange = spellReference.spell.splashRange;
+        UnitX = recipient.GetComponent<UnitController>().x;
+        unitY = recipient.GetComponent<UnitController>().y;
+        HashSet<Node> splashUnitNodes = scriptManager.scriptRangeFinder.GetSplashUnits(initiator, UnitX, unitY);
+        GameObject[] activeUnits = GameObject.FindGameObjectsWithTag("Unit");
+        Vector2 unitPosition = transform.position;
+
+        //Damage Variables
+        int spellcastingModifier = GetSpellcastingModifier(initiator);
+        int spellSaveModifier = GetSpellSaveModifier(recipient);
+        int attackDice = spellReference.spell.spellAttackDice;
+        int attackDamage = spellReference.spell.spellAttackDamage;
+        int damageRoll = 0;
+
+        for (int dice = 0; dice < attackDice; dice++) //Roll Dice
+        {
+            int randomRoll = Random.Range(1, attackDamage);
+            damageRoll += randomRoll;
+        }
+
+        foreach (GameObject activeUnit in activeUnits) //Get Units
+        {
+            GameObject unit = activeUnit.transform.gameObject;
+            int unitX = unit.GetComponent<UnitController>().x;
+            int unitY = unit.GetComponent<UnitController>().y;
+
+            if (splashUnitNodes.Contains(scriptManager.scriptTileMap.tileGraph[unitX, unitY])) //Unit in Splash Range
+            {
+                if (unit.GetComponent<UnitController>().teamNumber != scriptManager.scriptTileMap.selectedUnit.GetComponent<UnitController>().teamNumber) //Enemy
+                {
+                    if (unit.GetComponent<UnitController>().currentHP > 0) //Alive
+                    {
+                        int spellSaveRoll = scriptManager.scriptBattleController.AttackRoll(spellSaveModifier);
+
+                        if (initiator.GetComponent<UnitStats>().spellSaveDC >= spellSaveRoll) //Failed Roll
+                        {
+                            int spellDamage = damageRoll + spellcastingModifier;
+                            unit.GetComponent<UnitController>().DealDamage(spellDamage);
+                            FindObjectOfType<AudioManager>().Play("Greatsword Attack"); //Note -- Need to Update to Sound Scriptable Object
+                            StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(spellDamage));
+                        }
+
+                        else if (initiator.GetComponent<UnitStats>().spellSaveDC < spellSaveRoll && spellReference.spell.isHalfDamageApplied)
+                        {
+                            int spellDamage = damageRoll / 2 + spellcastingModifier;
+                            unit.GetComponent<UnitController>().DealDamage(spellDamage);
+                            FindObjectOfType<AudioManager>().Play("Greatsword Attack"); //Note -- Need to Update to Sound Scriptable Object
+                            StartCoroutine(recipient.GetComponent<UnitController>().DisplayDamage(spellDamage));
+                        }
+
+                        if (scriptManager.scriptBattleController.isUnitDead(unit)) //Kill Dead Units & Check for Winner
+                        {
+                            //Save Unit Location for Potential Splash Damage
+                            UnitX = recipient.GetComponent<UnitController>().x;
+                            unitY = recipient.GetComponent<UnitController>().y;
+
+                            //Kill unit & Check for Winner
+                            unit.transform.parent = null; //Required for UnitDie()
+                            unit.GetComponent<UnitController>().UnitDie();
+                            scriptManager.scriptGameController.CheckIfUnitsRemain(initiator, unit);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        //Reset Variables
+        initiator.GetComponent<UnitController>().SetAttackState(0); //Remove Disadvantage
         scriptManager.scriptBattleController.battleStatus = false;
         scriptManager.scriptBattleController.ResetActionBools();
     }
@@ -372,17 +501,25 @@ public class Spellcasting : MonoBehaviour
         if (scriptManager.scriptBattleController.frostbite)
         {
             recipient.GetComponent<UnitController>().SetAttackState(2); //Set Disadvantage
+            scriptManager.scriptBattleController.isConditionApplied = true;
         }
 
         if (scriptManager.scriptBattleController.guidance)
         {
             recipient.GetComponent<UnitController>().SetAttackState(1); //Set Advantage
+            scriptManager.scriptBattleController.isConditionApplied = true;
             //Note -- Change to Use Guidance Button Beside Ability Check Menu (Menu not yet made)
+        }
+
+        if (scriptManager.scriptBattleController.iceKnife)
+        {
+            DealSplashDamage(initiator, recipient);
+            scriptManager.scriptBattleController.isConditionApplied = true;
         }
 
         if (scriptManager.scriptBattleController.charmPerson)
         {
-
+            scriptManager.scriptBattleController.isConditionApplied = true;
         }
     }
 }

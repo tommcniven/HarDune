@@ -22,12 +22,18 @@ MonoBehaviour:
     or higher, the cold damage increases by 1d6 for each slot level above 1st. '
   spellSchool: Conjuration
   spellDamageType: Piercing
+  spellSaveType: Dexterity
   spellAttackDice: 1
   spellAttackDamage: 10
+  splashRange: 1
+  splashAttackDice: 2
+  SplashAttackDamage: 6
   spellLevel: 1
   spellCastingTime: 1 Action
   spellRange: 6
   spellComponents: S, M (a drop of water or piece of ice)
   spellDuration: Instantaneous
   spellIsConcentration: 0
+  isHalfDamageApplied: 1
+  isTwoPartSpell: 1
   sepllIconArtwork: {fileID: 21300000, guid: 3acb40faa542f064aa6a6011a5bff53a, type: 3}

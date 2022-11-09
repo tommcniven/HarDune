@@ -381,7 +381,6 @@ public class TileMap : MonoBehaviour
                 unitOnTeam.GetComponent<UnitController>().occupiedTile = tilesOnMap[unitX, unitY];
                 tilesOnMap[unitX, unitY].GetComponent<ClickableTile>().unitOnTile = unitOnTeam.gameObject;
             }
-            
         }
     }
 

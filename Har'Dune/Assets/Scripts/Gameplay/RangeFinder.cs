@@ -97,9 +97,8 @@ public class RangeFinder : MonoBehaviour
 
     public HashSet<Node> GetAttackableUnits()
     {
-        //Set Variables
-        var tileGraph = scriptTileMap.tileGraph;
-        var selectedUnit = scriptTileMap.selectedUnit;
+        Node[,] tileGraph = scriptTileMap.tileGraph;
+        GameObject selectedUnit = scriptTileMap.selectedUnit;
         HashSet<Node> tempNeighborNodes = new HashSet<Node>();
         HashSet<Node> neighborNodes = new HashSet<Node>();
         HashSet<Node> checkedNodes = new HashSet<Node>();
@@ -109,6 +108,34 @@ public class RangeFinder : MonoBehaviour
         neighborNodes.Add(selectedUnitNode);
 
         for (int i = 0; i < attackRange; i++)
+        {
+            foreach (Node n in neighborNodes)
+            {
+                foreach (Node nn in n.neighbors)
+                {
+                    //Add Furthest Attackable Tiles
+                    tempNeighborNodes.Add(nn);
+                    tempNeighborNodes.Add(n);
+                }
+            }
+
+            neighborNodes = tempNeighborNodes;
+            tempNeighborNodes = new HashSet<Node>();
+        }
+
+        return neighborNodes;
+    }
+
+    public HashSet<Node> GetSplashUnits(GameObject initiator, int x, int y)
+    {
+        Node[,] tileGraph = scriptTileMap.tileGraph;
+        Node recipientNode = tileGraph[x, y];
+        int splashRange = initiator.GetComponent<UnitStats>().splashRange;
+        HashSet<Node> tempNeighborNodes = new HashSet<Node>();
+        HashSet<Node> neighborNodes = new HashSet<Node>();
+        neighborNodes.Add(recipientNode);
+
+        for (int i = 0; i < splashRange; i++)
         {
             foreach (Node n in neighborNodes)
             {
