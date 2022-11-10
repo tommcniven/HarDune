@@ -58,6 +58,9 @@ public class UnitStats : MonoBehaviour
     [Header("Other")]
     public int dodgeTimer;
 
+    [Header("Condition")]
+    public bool isBarkskinApplied = false;
+
     public void Start()
     {
         SetScriptManager();

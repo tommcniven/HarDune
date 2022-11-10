@@ -35,5 +35,5 @@ MonoBehaviour:
   spellDuration: Instantaneous
   spellIsConcentration: 0
   isHalfDamageApplied: 1
-  isTwoPartSpell: 1
+  isDamagingSpell: 1
   sepllIconArtwork: {fileID: 21300000, guid: 3acb40faa542f064aa6a6011a5bff53a, type: 3}

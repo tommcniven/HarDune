@@ -40,7 +40,7 @@ public class BattleController : MonoBehaviour
 
     [Header("Spell Type")]
     public bool isAttackSpell = false;
-    public bool isAttackSpellSave = false;
+    public bool isSpellSave = false;
     public bool isHealingSpell = false;
     public bool isModifier = false;
 
@@ -114,7 +114,7 @@ public class BattleController : MonoBehaviour
 
         //Spell Type
         isAttackSpell = false;
-        isAttackSpellSave = false;
+        isSpellSave = false;
         isHealingSpell = false;
         isModifier = false;
 

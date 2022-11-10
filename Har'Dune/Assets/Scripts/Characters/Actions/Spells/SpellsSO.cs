@@ -24,5 +24,6 @@ public class SpellsSO : ScriptableObject
     public string spellDuration;
     public bool spellIsConcentration;
     public bool isHalfDamageApplied;
+    public bool isDamagingSpell;
     public Sprite sepllIconArtwork;
 }

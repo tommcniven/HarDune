@@ -708,7 +708,7 @@ public class UnitController : MonoBehaviour
             unitConditionState = ConditionState.Hidden;
         }
 
-        else if (i == 9)
+        else if (i == 10)
         {
             unitConditionState = ConditionState.Unconscious;
         }
