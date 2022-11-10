@@ -13080,8 +13080,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -153.25}
-  m_SizeDelta: {x: 250, y: 75.5}
+  m_AnchoredPosition: {x: 125, y: -196}
+  m_SizeDelta: {x: 250, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &761948279
 MonoBehaviour:
@@ -21381,8 +21381,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -67.75}
-  m_SizeDelta: {x: 250, y: 75.5}
+  m_AnchoredPosition: {x: 125, y: -82}
+  m_SizeDelta: {x: 250, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1269972392
 MonoBehaviour:
@@ -22782,6 +22782,7 @@ MonoBehaviour:
   scriptSpellbookMenu: {fileID: 1309683195}
   mainMenu: {fileID: 910098638}
   optionsMenu: {fileID: 0}
+  UnitMenuCanvas: {fileID: 692878828}
   characterMenu: {fileID: 1835389170}
   attacksMenu: {fileID: 493913354}
   actionsMenu: {fileID: 975145177}
@@ -26434,8 +26435,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -324.25}
-  m_SizeDelta: {x: 250, y: 75.5}
+  m_AnchoredPosition: {x: 125, y: -310}
+  m_SizeDelta: {x: 250, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1566663991
 MonoBehaviour:
@@ -29171,7 +29172,6 @@ MonoBehaviour:
   isHealingSpell: 0
   isModifier: 0
   isConditionApplied: 0
-  isDamagingSpell: 0
 --- !u!114 &1667033356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33037,7 +33037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptManager: {fileID: 0}
   spellReference: {fileID: 0}
-  selectedSpell: 
   spellcastingModifier: 0
   splashRange: 0
   spellSaveModifier: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -17,6 +18,7 @@ public class UnitController : MonoBehaviour
     public SpellSaveStates unitSpellSaveState;
     public SpellCastStates unitSpellCastState;
     public ConditionState unitConditionState;
+    public static event Action onConditionChange;
 
     [Header("Info")]
     public int teamNumber;
@@ -661,56 +663,67 @@ public class UnitController : MonoBehaviour
         if (i == 0)
         {
             unitConditionState = ConditionState.Normal;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 1)
         {
             unitConditionState = ConditionState.Charmed;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 2)
         {
             unitConditionState = ConditionState.Deafened;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 3)
         {
             unitConditionState = ConditionState.Frightened;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 4)
         {
             unitConditionState = ConditionState.Grappled;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 5)
         {
             unitConditionState = ConditionState.Paralyzed;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 6)
         {
             unitConditionState = ConditionState.Petrified;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 7)
         {
             unitConditionState = ConditionState.Restrained;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 8)
         {
             unitConditionState = ConditionState.Stunned;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 9)
         {
             unitConditionState = ConditionState.Hidden;
+            onConditionChange?.Invoke();
         }
 
         else if (i == 10)
         {
             unitConditionState = ConditionState.Unconscious;
+            onConditionChange?.Invoke();
         }
     }
 }

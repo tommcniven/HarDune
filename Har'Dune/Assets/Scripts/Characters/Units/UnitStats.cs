@@ -36,6 +36,7 @@ public class UnitStats : MonoBehaviour
     public int attackModifier;
     public int damageModifier;
     public int maxAttackRange;
+    public int baseAttackRange;
     public int attackRange;
     public string damageType;
 
@@ -71,12 +72,14 @@ public class UnitStats : MonoBehaviour
     {
         GeneralActions.onDodge += UpdateArmorClass;
         TurnController.onTurnChange += SetDodgeTimer;
+        UnitController.onConditionChange += UpdateUnitCondition;
     }
 
     private void OnDisable()
     {
         GeneralActions.onDodge -= UpdateArmorClass;
         TurnController.onTurnChange -= SetDodgeTimer;
+        UnitController.onConditionChange += UpdateUnitCondition;
     }
 
     public void SetScriptManager()
@@ -98,8 +101,11 @@ public class UnitStats : MonoBehaviour
         //Set Armor Class
         //[Update] Need to Update to include armor when applicable
         armorClass = (10 + dexterityModifier);
-        baseArmorClass = armorClass;
         spellSaveDC = 8 + spellAttackModifier;
+
+        //Set Base Values
+        baseArmorClass = armorClass;
+        baseAttackRange = maxAttackRange;
 
 
         //Set Proficiency
@@ -199,6 +205,98 @@ public class UnitStats : MonoBehaviour
             UpdateArmorClass();
             scriptManager.scriptBattleController.ResetActionBools();
             dodgeTimer = 0;
+        }
+    }
+
+    public void UpdateUnitCondition()
+    {
+        var unitConditionState = transform.GetComponent<UnitController>().unitConditionState;
+
+        if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Normal)
+        {
+            transform.GetComponent<UnitController>().SetActionState(0); //Reverses Frightened
+            maxAttackRange = baseAttackRange; //Reverse Paralyzed, Petrified, Stunned, & Unconscious
+            movementSpeed = baseMovementSpeed; //Reverse Grappled
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Charmed)
+        {
+            //Note -- Add Icon
+            //Note -- Add "A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects"
+            //Note -- Add "The charmer has advantage on any ability check to interact soially with the creature"
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Deafened)
+        {
+            //Note -- Add Icon
+            //Note -- Add "The deafened creature can't hear and automatically fails any ability check that requires hearing"
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Frightened)
+        {
+            transform.GetComponent<UnitController>().SetActionState(2);
+            //Note -- Add Icon
+            //Note -- Add "The creature can't willingly move closer to the source of its fear"
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Grappled)
+        {
+            movementSpeed = 0;
+            //Note -- Add Icon
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Paralyzed)
+        {
+            maxAttackRange = 0;
+            movementSpeed = 0;
+            //Note -- Add Icon
+            //Note -- Turn off Attack, Action, and Spellbook Menu
+            //Note -- Add "The creature automatically fails Strength & Dexterity Saving Throws
+            //Note -- Add "Attack rolls gainst the creature have advantage"
+            //Note -- Add "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature"
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Petrified)
+        {
+            maxAttackRange = 0;
+            movementSpeed = 0;
+            //Note -- Add Icon
+            //Note -- Turn off Attack, Action, and Spellbook Menu
+            //Note -- Add "The creature automatically fails Strength & Dexterity Saving Throws"
+            //Note -- Add "Attack rolls gainst the creature have advantage"
+            //Note -- Add "The creature has resistance to all damage"
+            //Note -- Add "The creature is imune to poison and disease, although a poison or disease already in its system is usspended, not neutrailized"
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Restrained)
+        {
+            movementSpeed = 0;
+            //Note -- Add Icon
+            //Note -- Add "Attack rolls gainst the creature have advantage"
+            //Note -- Add "The creature has disadvantage on Dexterity Saving THrows"
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Stunned)
+        {
+            maxAttackRange = 0;
+            movementSpeed = 0;
+            //Note -- Add Icon
+            //Note -- Turn off Attack, Action, and Spellbook Menu
+            //Note -- Add "The creature automatically fails Strength & Dexterity Saving Throws"
+            //Note -- Add "Attack rolls gainst the creature have advantage"
+        }
+
+        else if (transform.GetComponent<UnitController>().unitConditionState == UnitController.ConditionState.Unconscious)
+        {
+            maxAttackRange = 0;
+            movementSpeed = 0;
+            //Note -- Add Animation
+            //Note -- Add New Character Artwork
+            //Note -- Turn off Attack, Action, and Spellbook Menu
+            //Note -- Add "The creature falls prone"
+            //Note -- Add "The creature automatically fails Strength & Dexterity Saving Throws"
+            //Note -- Add "Attack rolls gainst the creature have advantage"
+            //Note -- Add "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature"
         }
     }
 }

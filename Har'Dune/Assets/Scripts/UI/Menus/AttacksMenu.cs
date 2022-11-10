@@ -26,7 +26,7 @@ public class AttacksMenu : MonoBehaviour
         scriptManager.ConnectScripts();
     }
 
-    public void OpenAttacksMenu()
+    public void OpenAttacksMenu() //Called from Character Menu Button
     {
         //Set Menus
         scriptManager.scriptGameMenuController.scriptCharacterMenu.CloseCharacterMenu();

@@ -16,9 +16,14 @@ public class GameMenuController : MonoBehaviour
     [Header("Menu Variables")]
     public static bool menuOpen = false;
 
-    [Header("Main Menus")]
+    [Header("Main Menu")]
     public GameObject mainMenu;
+
+    [Header("Options Menu")]
     public GameObject optionsMenu;
+
+    [Header("UnitMenu Menus")]
+    public GameObject UnitMenuCanvas;
     public GameObject characterMenu;
     public GameObject attacksMenu;
     public GameObject actionsMenu;
