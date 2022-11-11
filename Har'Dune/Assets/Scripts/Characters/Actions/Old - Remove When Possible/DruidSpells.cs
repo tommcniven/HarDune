@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DruidSpells : MonoBehaviour
 {
+    /*
     [Header("Scripts")]
     public UnitStats scriptUnitStats;
     public UnitController scriptUnitController;
@@ -467,4 +468,5 @@ public class DruidSpells : MonoBehaviour
 
         scriptManager.scriptBattleController.battleStatus = false;
     }
+    */
 }

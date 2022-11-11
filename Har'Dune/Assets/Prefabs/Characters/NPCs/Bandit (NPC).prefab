@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f94c51c4883581418d7c192ae40d667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scriptManager: {fileID: 0}
   unitName: Bandit
   unitClass: Bandit
   unitSubClass: Bandit
@@ -211,19 +212,25 @@ MonoBehaviour:
   wisdomModifier: 0
   charismaModifier: 0
   armorClass: 0
+  baseArmorClass: 0
   attackModifier: 0
   damageModifier: 0
   maxAttackRange: 1
+  baseAttackRange: 0
   attackRange: 0
   damageType: 
   spellAttackModifier: 0
   spellSaveModifier: 0
+  spellSaveDC: 0
   spellDamageType: 
+  splashRange: 0
   movementSpeed: 6
   baseMovementSpeed: 6
   visualMovementSpeed: 0.15
   maxHP: 12
   hitDie: 0
+  dodgeTimer: 0
+  isBarkskinApplied: 0
 --- !u!114 &5314087781843051225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,9 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98eee5727ee95ba4f86586312f9b6f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 490869808}
-  scriptUnitController: {fileID: 43821925479923858}
   scriptManager: {fileID: 0}
+  actionModifier: 0
 --- !u!1 &43821926285726086
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +646,7 @@ GameObject:
   - component: {fileID: 462595136}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Unit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

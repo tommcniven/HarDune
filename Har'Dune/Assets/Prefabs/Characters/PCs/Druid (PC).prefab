@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 43821925479923858}
   - component: {fileID: 1020390254}
   - component: {fileID: 2097794358152281852}
-  - component: {fileID: 1257448879}
   - component: {fileID: 1257448880}
   m_Layer: 0
   m_Name: Druid (PC)
@@ -169,6 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f94c51c4883581418d7c192ae40d667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scriptManager: {fileID: 0}
   unitName: Baedaldas Springstar
   unitClass: Druid
   unitSubClass: Circle of Stars
@@ -188,19 +188,25 @@ MonoBehaviour:
   wisdomModifier: 0
   charismaModifier: 0
   armorClass: 0
+  baseArmorClass: 0
   attackModifier: 0
   damageModifier: 0
   maxAttackRange: 3
+  baseAttackRange: 0
   attackRange: 0
   damageType: 
   spellAttackModifier: 0
   spellSaveModifier: 0
+  spellSaveDC: 0
   spellDamageType: 
+  splashRange: 0
   movementSpeed: 6
   baseMovementSpeed: 6
   visualMovementSpeed: 0.15
   maxHP: 0
   hitDie: 8
+  dodgeTimer: 0
+  isBarkskinApplied: 0
 --- !u!114 &2097794358152281852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,25 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98eee5727ee95ba4f86586312f9b6f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1020390254}
-  scriptUnitController: {fileID: 43821925479923858}
   scriptManager: {fileID: 0}
---- !u!114 &1257448879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43821925479923859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cac8fcebf9e5ec4489d3770b18671ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1020390254}
-  scriptUnitController: {fileID: 43821925479923858}
-  scriptSpellSlots: {fileID: 1257448880}
-  scriptManager: {fileID: 0}
+  actionModifier: 0
 --- !u!114 &1257448880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,19 +233,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f02f83c5c891d040827a73a30ba1918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptUnitStats: {fileID: 1020390254}
-  scriptTileMap: {fileID: 0}
-  scriptGameMenuController: {fileID: 0}
-  maxLevelOneSpellSlots: 0
-  maxLevelTwoSpellSlots: 0
-  maxLevelThreeSpellSlots: 0
-  maxLevelFourSpellSlots: 0
-  maxLevelFiveSpellSlots: 0
-  currentLevelOneSpellSlots: 0
-  currentLevelTwoSpellSlots: 0
-  currentLevelThreeSpellSlots: 0
-  currentLevelFourSpellSlots: 0
-  currentLevelFiveSpellSlots: 0
+  scriptManager: {fileID: 0}
+  scriptSpellBookMenu: {fileID: 0}
+  max_Level1_SpellSlots: 0
+  max_Level2_SpellSlots: 0
+  max_Level3_SpellSlots: 0
+  max_Level4_SpellSlots: 0
+  max_Level5_SpellSlots: 0
+  current_Level1_SpellSlots: 0
+  current_Level2_SpellSlots: 0
+  current_Level3_SpellSlots: 0
+  current_Level4_SpellSlots: 0
+  current_Level5_SpellSlots: 0
 --- !u!1 &43821925669178090
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +746,7 @@ GameObject:
   - component: {fileID: 462595136}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Unit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

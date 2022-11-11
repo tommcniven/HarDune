@@ -265,10 +265,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1943374291}
     m_Modifications:
-    - target: {fileID: 1852209712, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
-      propertyPath: maxHP
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: 33290b8a9c4759546adbb2f46fb82dba,
         type: 3}
       propertyPath: scriptAudioManager
@@ -333,11 +329,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4275521981178448823, guid: 33290b8a9c4759546adbb2f46fb82dba,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
@@ -2251,7 +2242,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1257448879}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Spells, Assembly-CSharp
         m_MethodName: StartFrostbiteSpell
         m_Mode: 1
@@ -2730,7 +2721,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1257448879}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DruidSpells, Assembly-CSharp
         m_MethodName: StartCharmPersonSpell
         m_Mode: 1
@@ -3028,7 +3019,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1257448879}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Spells, Assembly-CSharp
         m_MethodName: StartDruidcraftSpell
         m_Mode: 1
@@ -4486,7 +4477,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1257448879}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DruidSpells, Assembly-CSharp
         m_MethodName: StartCureWoundsSpell
         m_Mode: 1
@@ -8419,11 +8410,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4275521981178448823, guid: 89eeff820680b9343af35c25512b8454,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89eeff820680b9343af35c25512b8454, type: 3}
 --- !u!4 &514255626 stripped
@@ -10050,10 +10036,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 533756627}
     m_Modifications:
-    - target: {fileID: 1510347755, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
-      propertyPath: dexterityModifier
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: dab8d1a38b7dbf745adaa3454ea5906d,
         type: 3}
       propertyPath: scriptAudioManager
@@ -10118,11 +10100,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4275521981178448823, guid: dab8d1a38b7dbf745adaa3454ea5906d,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
@@ -11811,11 +11788,6 @@ PrefabInstance:
       propertyPath: scriptManager
       value: 
       objectReference: {fileID: 1443072390}
-    - target: {fileID: 4275521981178448823, guid: 872c9ee814c04334f9d5b64fcb625762,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872c9ee814c04334f9d5b64fcb625762, type: 3}
 --- !u!4 &690967319 stripped
@@ -21138,10 +21110,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 533756627}
     m_Modifications:
-    - target: {fileID: 1257448880, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
-      propertyPath: scriptGameMenuController
-      value: 
-      objectReference: {fileID: 1309683190}
     - target: {fileID: 43821925479923858, guid: 2fdf122032edbf048afa3ea816726ded,
         type: 3}
       propertyPath: scriptAudioManager
@@ -21207,11 +21175,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4275521981178448823, guid: 2fdf122032edbf048afa3ea816726ded,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
 --- !u!4 &1257448877 stripped
@@ -21226,18 +21189,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1257448876}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1257448879 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1257448879, guid: 2fdf122032edbf048afa3ea816726ded,
-    type: 3}
-  m_PrefabInstance: {fileID: 1257448876}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257448878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cac8fcebf9e5ec4489d3770b18671ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1263553918
 GameObject:
   m_ObjectHideFlags: 0
@@ -27303,11 +27254,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4275521981178448823, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7, type: 3}
