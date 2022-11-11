@@ -290,7 +290,6 @@ public class DruidSpells : MonoBehaviour
         {
             StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_CharmPerson(initiator, recipient);
-            scriptSpellSlots.UpdateLevelOneCurrentSpellSlots();
             yield return new WaitForEndOfFrame();
         }
 
@@ -434,7 +433,6 @@ public class DruidSpells : MonoBehaviour
         {
             StartCoroutine(scriptManager.scriptCameraShake.ShakeCamera(.2f, initiator.GetComponent<UnitStats>().spellAttackModifier, scriptManager.scriptBattleController.GetDirection(initiator, recipient)));
             RollDice_HealDamage_CureWounds(initiator, recipient);
-            scriptSpellSlots.UpdateLevelOneCurrentSpellSlots();
             yield return new WaitForEndOfFrame();
         }
 

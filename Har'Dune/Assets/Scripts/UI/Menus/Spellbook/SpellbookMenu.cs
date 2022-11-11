@@ -12,6 +12,15 @@ public class SpellbookMenu : MonoBehaviour
     [Header("Spellbook Menu")]
     public GameObject spellbookMenu;
 
+    [Header("Spells")]
+    public GameObject button_Frostbite;
+    public GameObject button_Guidance;
+    public GameObject button_IceKnife;
+    public GameObject button_HealingWord;
+    public GameObject button_CharmPerson;
+    public GameObject button_Barkskin;
+    public GameObject button_HoldPerson;
+
     [Header("Current Spell Slots")]
     public TMP_Text current_1stLevelSpellSlots;
     public TMP_Text current_2ndLevelSpellSlots;
@@ -45,8 +54,8 @@ public class SpellbookMenu : MonoBehaviour
     {
         SpellSlots unitSpellSlots = scriptManager.scriptTileMap.selectedUnit.GetComponent<SpellSlots>();
 
-        current_1stLevelSpellSlots.SetText(unitSpellSlots.currentLevelOneSpellSlots.ToString());
-        current_2ndLevelSpellSlots.SetText(unitSpellSlots.currentLevelTwoSpellSlots.ToString());
+        current_1stLevelSpellSlots.SetText(unitSpellSlots.current_Level1_SpellSlots.ToString());
+        current_2ndLevelSpellSlots.SetText(unitSpellSlots.current_Level2_SpellSlots.ToString());
 
         yield return new WaitForEndOfFrame();
     }
@@ -55,8 +64,8 @@ public class SpellbookMenu : MonoBehaviour
     {
         SpellSlots unitSpellSlots = scriptManager.scriptTileMap.selectedUnit.GetComponent<SpellSlots>();
 
-        max_1stLevelSpellSlots.SetText(unitSpellSlots.maxLevelOneSpellSlots.ToString());
-        max_2ndLevelSpellSlots.SetText(unitSpellSlots.maxLevelTwoSpellSlots.ToString());
+        max_1stLevelSpellSlots.SetText(unitSpellSlots.max_Level1_SpellSlots.ToString());
+        max_2ndLevelSpellSlots.SetText(unitSpellSlots.max_Level2_SpellSlots.ToString());
 
         yield return new WaitForEndOfFrame();
     }

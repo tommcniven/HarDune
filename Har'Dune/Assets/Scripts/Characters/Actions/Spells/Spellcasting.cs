@@ -358,6 +358,7 @@ public class Spellcasting : MonoBehaviour
         Vector3 initiatorPosition = initiator.transform.position;
         Vector3 recipientPosition = recipient.transform.position;
         initiator.GetComponent<UnitController>().SetSpellcastAnimation();
+        initiator.GetComponent<SpellSlots>().UpdateSpellSlots();
 
         //Move
         while (timeElapsed < .25f)

@@ -22861,6 +22861,13 @@ MonoBehaviour:
   scriptManager: {fileID: 0}
   scriptSpellReference: {fileID: 0}
   spellbookMenu: {fileID: 70476638}
+  button_Frostbite: {fileID: 655017575}
+  button_Guidance: {fileID: 1131787905}
+  button_IceKnife: {fileID: 1471499920}
+  button_HealingWord: {fileID: 870263224}
+  button_CharmPerson: {fileID: 1305577326}
+  button_Barkskin: {fileID: 1624266559}
+  button_HoldPerson: {fileID: 1711673674}
   current_1stLevelSpellSlots: {fileID: 548478159}
   current_2ndLevelSpellSlots: {fileID: 522936721}
   max_1stLevelSpellSlots: {fileID: 994377753}

@@ -68,6 +68,12 @@ public class UnitStats : MonoBehaviour
         SetVariables();
     }
 
+    public void SetScriptManager()
+    {
+        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
+        scriptManager.ConnectScripts();
+    }
+
     private void OnEnable()
     {
         GeneralActions.onDodge += UpdateArmorClass;
@@ -80,12 +86,6 @@ public class UnitStats : MonoBehaviour
         GeneralActions.onDodge -= UpdateArmorClass;
         TurnController.onTurnChange -= SetDodgeTimer;
         UnitController.onConditionChange += UpdateUnitCondition;
-    }
-
-    public void SetScriptManager()
-    {
-        scriptManager = GameObject.Find("Script Manager").GetComponent<ScriptManager>();
-        scriptManager.ConnectScripts();
     }
 
     private void SetVariables()
