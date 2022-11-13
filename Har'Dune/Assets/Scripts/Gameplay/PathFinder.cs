@@ -27,7 +27,6 @@ public class PathFinder : MonoBehaviour
         scriptManager.ConnectScripts();
     }
 
-
     public List<Node> GenerateRouteToCursor(int x, int y)
     {
         //Selected Unit is Standing on Tile Selected

@@ -56,11 +56,12 @@ public class UnitStats : MonoBehaviour
     public int maxHP;
     public int hitDie;
 
-    [Header("Other")]
-    public int dodgeTimer;
+    [Header("Vision")]
+    public int visionRange;
 
     [Header("Condition")]
     public bool isBarkskinApplied = false;
+    public int dodgeTimer;
 
     public void Start()
     {

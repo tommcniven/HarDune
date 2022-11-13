@@ -265,6 +265,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1943374291}
     m_Modifications:
+    - target: {fileID: 1852209712, guid: 33290b8a9c4759546adbb2f46fb82dba, type: 3}
+      propertyPath: visionRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: 33290b8a9c4759546adbb2f46fb82dba,
         type: 3}
       propertyPath: scriptAudioManager
@@ -892,6 +896,7 @@ Transform:
   - {fileID: 1912780015}
   - {fileID: 952169794}
   - {fileID: 1214710551}
+  - {fileID: 834141253}
   m_Father: {fileID: 1231107875}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3555,6 +3560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptTileMap: {fileID: 1667033354}
   scriptMovementController: {fileID: 706497134}
+  fogUI: {fileID: 0}
 --- !u!1 &227210972
 GameObject:
   m_ObjectHideFlags: 0
@@ -8341,6 +8347,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 533756627}
     m_Modifications:
+    - target: {fileID: 1569001030, guid: 89eeff820680b9343af35c25512b8454, type: 3}
+      propertyPath: visionRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1793399118, guid: 89eeff820680b9343af35c25512b8454, type: 3}
       propertyPath: scriptManager
       value: 
@@ -10036,6 +10046,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 533756627}
     m_Modifications:
+    - target: {fileID: 1510347755, guid: dab8d1a38b7dbf745adaa3454ea5906d, type: 3}
+      propertyPath: visionRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: dab8d1a38b7dbf745adaa3454ea5906d,
         type: 3}
       propertyPath: scriptAudioManager
@@ -11718,6 +11732,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1943374291}
     m_Modifications:
+    - target: {fileID: 1507672890, guid: 872c9ee814c04334f9d5b64fcb625762, type: 3}
+      propertyPath: visionRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: 872c9ee814c04334f9d5b64fcb625762,
         type: 3}
       propertyPath: scriptAudioManager
@@ -14258,6 +14276,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825087355}
   m_CullTransparentMesh: 0
+--- !u!1 &834141252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 834141253}
+  m_Layer: 0
+  m_Name: Fog Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &834141253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834141252}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 47165980}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &836697842
 GameObject:
   m_ObjectHideFlags: 0
@@ -21110,6 +21158,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 533756627}
     m_Modifications:
+    - target: {fileID: 1020390254, guid: 2fdf122032edbf048afa3ea816726ded, type: 3}
+      propertyPath: visionRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: 2fdf122032edbf048afa3ea816726ded,
         type: 3}
       propertyPath: scriptAudioManager
@@ -23657,6 +23709,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329306652}
   m_CullTransparentMesh: 0
+--- !u!1 &1330080149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1330080150}
+  m_Layer: 0
+  m_Name: Fog of War
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1330080150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330080149}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.846849, y: -1.8001523, z: 4.7038493}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1667033353}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1351894598
 GameObject:
   m_ObjectHideFlags: 0
@@ -27190,6 +27272,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1943374291}
     m_Modifications:
+    - target: {fileID: 490869808, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7, type: 3}
+      propertyPath: visionRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 43821925479923858, guid: 6acbe6f6ea63db04088fc5b7eb2f36d7,
         type: 3}
       propertyPath: scriptAudioManager
@@ -28995,6 +29081,7 @@ Transform:
   - {fileID: 1534542141}
   - {fileID: 1470635124}
   - {fileID: 1049145462}
+  - {fileID: 1330080150}
   m_Father: {fileID: 80582670}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29065,12 +29152,14 @@ MonoBehaviour:
   mapUI: {fileID: 3026057191975821090, guid: 41666af9af755b940a08bbf676955815, type: 3}
   mapCursorUI: {fileID: 2809973883653077971, guid: 817e2138e088b2446ac4fe4a4b84be15,
     type: 3}
+  fogUI: {fileID: 2809973883653077971, guid: 8793de88095755f4c9bb30da669a88aa, type: 3}
   mapUnitMovementUI: {fileID: 7574935962785293978, guid: 97a08a6113dffb44888c9b21c5e79581,
     type: 3}
   tileTypesContainer: {fileID: 1780963486}
   mapContainer: {fileID: 1912780014}
   cursorContainer: {fileID: 952169793}
   pathfindingContainer: {fileID: 1214710550}
+  fogContainer: {fileID: 834141252}
   mapSizeX: 19
   mapSizeY: 12
   selectedUnit: {fileID: 0}

@@ -192,4 +192,29 @@ public class MovementController : MonoBehaviour
 
         return false;
     }
+
+    public void EnableFogOfWar(HashSet<Node> movementToHighlight)
+    {
+        var mapTiles = scriptTileMap.mapTiles;
+        var lightTileHighlight = scriptTileMap.lightTileHighlight;
+
+        foreach (Node n in movementToHighlight)
+        {
+            mapTiles[n.x, n.y].GetComponent<Renderer>().material = lightTileHighlight;
+            mapTiles[n.x, n.y].GetComponent<MeshRenderer>().enabled = true;
+        }
+    }
+
+    public void DisableFogOfWar()
+    {
+        var mapTiles = scriptTileMap.mapTiles;
+
+        foreach (GameObject tile in mapTiles)
+        {
+            if (tile.GetComponent<Renderer>().enabled == true)
+            {
+                tile.GetComponent<Renderer>().enabled = false;
+            }
+        }
+    }
 }

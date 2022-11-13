@@ -8,6 +8,9 @@ public class RangeFinder : MonoBehaviour
     public TileMap scriptTileMap;
     public MovementController scriptMovementController;
 
+    [Header("Move to Fog of War Script")]
+    public Material fogUI;
+
     public void HighlightUnitRange()
     {
         //Reference Variables
@@ -199,5 +202,37 @@ public class RangeFinder : MonoBehaviour
             mapTiles[n.x, n.y].GetComponent<Renderer>().material = blueBorderTileHighlight;
             mapTiles[n.x, n.y].GetComponent<MeshRenderer>().enabled = true;
         }
+    }
+
+    public HashSet<Node> GetVisionRange()
+    {
+        //Reference Variables
+        Node[,] tileGraph = scriptTileMap.tileGraph;
+        HashSet<Node> visibleNodes = new HashSet<Node>();
+        HashSet<Node> tempVisibleNodes = new HashSet<Node>();
+        GameObject selectedUnit = scriptTileMap.selectedUnit;
+        int visionRange = selectedUnit.GetComponent<UnitStats>().visionRange;
+
+        //Set Variables
+        Node selectedUnitNode = tileGraph[selectedUnit.GetComponent<UnitController>().x, selectedUnit.GetComponent<UnitController>().y];
+        visibleNodes.Add(selectedUnitNode);
+
+        for (int i = 0; i < visionRange; i++)
+        {
+            foreach (Node node in visibleNodes)
+            {
+                foreach (Node node_2 in node.neighbors)
+                {
+                    //Add Furthest Attackable Tiles
+                    tempVisibleNodes.Add(node_2);
+                    tempVisibleNodes.Add(node);
+                }
+            }
+
+            visibleNodes = tempVisibleNodes;
+            tempVisibleNodes = new HashSet<Node>();
+        }
+
+        return visibleNodes;
     }
 }

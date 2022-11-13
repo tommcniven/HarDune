@@ -29,6 +29,7 @@ public class TileMap : MonoBehaviour
     public GameObject[,] tilesOnMap;
     public GameObject mapUI;
     public GameObject mapCursorUI;
+    public GameObject fogUI;
     public GameObject mapUnitMovementUI;
     public List<Node> currentPath = null;
     public Node[,] tileGraph;
@@ -37,6 +38,7 @@ public class TileMap : MonoBehaviour
     public GameObject[,] mapTiles;
     public GameObject[,] pathfindingTiles;
     public GameObject[,] cursorTiles;
+    public GameObject[,] fogTiles;
     
     //Tile Containers
     [Header("Containers")]
@@ -44,6 +46,7 @@ public class TileMap : MonoBehaviour
     public GameObject mapContainer;
     public GameObject cursorContainer;
     public GameObject pathfindingContainer;
+    public GameObject fogContainer;
 
     [Header("Board Size")]
     public int mapSizeX = 19;
@@ -329,6 +332,7 @@ public class TileMap : MonoBehaviour
         mapTiles = new GameObject[mapSizeX, mapSizeY];
         pathfindingTiles = new GameObject[mapSizeX, mapSizeY];
         cursorTiles = new GameObject[mapSizeX, mapSizeY];
+        fogTiles = new GameObject[mapSizeX, mapSizeY];
         int index;
 
         //Generate Map Visuals
@@ -361,6 +365,11 @@ public class TileMap : MonoBehaviour
                 GameObject cursorGridUI = Instantiate(mapCursorUI, new Vector3(x, 0.504f, y), Quaternion.Euler(90f, 0, 0));
                 cursorGridUI.transform.SetParent(cursorContainer.transform);              
                 cursorTiles[x, y] = cursorGridUI;
+
+                //Fog Grid
+                GameObject fogGridUI = Instantiate(fogUI, new Vector3(x, 0.505f, y), Quaternion.Euler(90f, 0, 0));
+                fogGridUI.transform.SetParent(fogContainer.transform);
+                fogTiles[x, y] = fogGridUI;
             }
         }
     }
